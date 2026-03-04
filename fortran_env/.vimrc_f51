@@ -41,7 +41,7 @@ highlight ColorColumn ctermbg=Red guibg=#440000 " Linha guia discreta
 
 " --- ATALHO PARA PULAR PRO CÓDIGO ---
 " Aperte a tecla TAB para pular direto para a coluna 7 (início do código)
-inoremap <Tab> <C-O>6\|
+inoremap <Tab> <C-O>7\|
 
 " --- IDENTAÇÃO AUTOMÁTICA ---
 filetype plugin indent on

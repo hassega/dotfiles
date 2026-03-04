@@ -1,0 +1,2379 @@
+;
+; INFORMATION FILE FOR FORTRAN 5.1 SETUP *** HD525
+;
+
+[macro]
+VERS = "5.1"
+
+; default directory names (must end with \)
+DEFDIRBASE     = "C:\FORTRAN\"
+DEFDIRBINB     = "BINB\"
+DEFDIRBINP     = "BINP\"
+DEFDIRBIN      = "BIN\"
+DEFDIRLIB      = "LIB\"
+DEFDIRINCL     = "INCLUDE\"
+DEFDIRINIT     = "INIT\"
+DEFDIRHELP     = "HELP\"
+DEFDIRSOURCE   = "SOURCE\"
+
+DEFDIRDLL      = "C:\OS2\DLL\"
+DEFDIRWIN      = "C:\WINDOWS\"
+
+PACKINGLIST = "PACKING.LST"
+READMEFILE  = "README.DOC"
+
+COPYRIGHT   = "Copyright (C) 1986, 1990 Microsoft Corp. All rights reserved."
+
+; filename of linker, and backup name used during version checking
+LINK_NAME      = "link.exe"
+TEMP_LINK_NAME = "$$$link.tmp"
+
+; ************** lists ********************
+
+[list sdisks]
+0:x,   " "
+1:x,   "disk1"
+2:x,   "disk2"
+3:x,   "disk3"
+4:x,   "disk4"
+5:x,   "disk5"
+6:x,   "disk6"
+
+; not only must these paths be relative to setup.exe, they must be
+; relative to each other, so that from within any dir, the relative
+; path will get you to any other dir.  This means that setup.exe must
+; be in one of the named dirs.
+[list netsetup]
+0:x,   " "
+1:x,   "..\DISK1"
+2:x,   "..\DISK2"
+3:x,   "..\DISK3"
+4:x,   "..\DISK4"
+5:x,   "..\DISK5"
+6:x,   "..\DISK6"
+
+; very rarely used
+[list ddisks]
+1:x,  "the destination disk, tape, or cartridge"
+
+; LIBRARY-BUILDING LISTS and MACROS
+
+[macro]
+LIB_EXE       = "LIB.EXE"
+LIB_GRMONDO   = " +GRAPHICS.LIB"
+LIB_GRTEXTP   = " +GRTEXTP.LIB"
+LIB_ERRTEXT   = " -BUILD.OBJ -ERRDIC.OBJ +NBUILD.OBJ"
+LIB_CCOMPAT1  = " -CVT.OBJ"
+LIB_CCOMPAT2  = " -FCCVT.OBJ"
+LIB_CCOMPATRM = " +MCLIB1.LIB"
+LIB_CCOMPATRL = " +LCLIB1.LIB"
+LIB_CCOMPATPM = " +MCLIB2.LIB"
+LIB_CCOMPATPL = " +LCLIB2.LIB"
+LIB_WINDLL    = " -DBGMSG.OBJ"
+LIB_WMIXCCOMP = " +MIXEDPAT.OBJ"
+LIB_WMIXNCOMP = " +MIXEDSTB.OBJ"
+
+; These are used in the building of the mondo library names
+LIB_BASE      = "LIBF"
+MATH_LETTERS  = "E7A"
+MODEL_LETTERS = "ML"
+MODE_LETTERS  = "RP"
+WEEN_LIBBASE  = "LLIBFEW"
+WEEN_DLLBASE  = "LDLLFEW"
+
+[list libbuild]
+;   the number is insignificant, the filename is the library to build,
+;   the description is the lib operations line
+
+4:mlibfer, "+LIBH.LIB +MLIBFOR.LIB +MLIBFP.LIB +EM.LIB +MGRAPHFP.LIB +MLIBFOR1.LIB"
+4:mlibfep, "+LIBH.LIB +MLIBFOR.LIB +MLIBFP.LIB +EM.LIB +MGRAPHFP.LIB +MLIBFOR2.LIB"
+4:mlibfar, "+LIBH.LIB +MLIBFOR.LIB +MLIBFA.LIB +MGRAPHFA.LIB +MLIBFOR1.LIB"
+4:mlibfap, "+LIBH.LIB +MLIBFOR.LIB +MLIBFA.LIB +MGRAPHFA.LIB +MLIBFOR2.LIB"
+4:mlibf7r, "+LIBH.LIB +MLIBFOR.LIB +MLIBFP.LIB +87.LIB +MGRAPHFP.LIB +MLIBFOR1.LIB"
+4:mlibf7p, "+LIBH.LIB +MLIBFOR.LIB +MLIBFP.LIB +87.LIB +MGRAPHFP.LIB +MLIBFOR2.LIB"
+
+4:llibfer, "+LIBH.LIB +LLIBFOR.LIB +LLIBFP.LIB +EM.LIB +MGRAPHFP.LIB +LLIBFOR1.LIB"
+4:llibfep, "+LIBH.LIB +LLIBFOR.LIB +LLIBFP.LIB +EM.LIB +MGRAPHFP.LIB +LLIBFOR2.LIB"
+4:llibfar, "+LIBH.LIB +LLIBFOR.LIB +LLIBFA.LIB +MGRAPHFA.LIB +LLIBFOR1.LIB"
+4:llibfap, "+LIBH.LIB +LLIBFOR.LIB +LLIBFA.LIB +MGRAPHFA.LIB +LLIBFOR2.LIB"
+4:llibf7r, "+LIBH.LIB +LLIBFOR.LIB +LLIBFP.LIB +87.LIB +MGRAPHFP.LIB +LLIBFOR1.LIB"
+4:llibf7p, "+LIBH.LIB +LLIBFOR.LIB +LLIBFP.LIB +87.LIB +MGRAPHFP.LIB +LLIBFOR2.LIB"
+
+4:llibfew,  "+OLDNAMES.LIB +QWIN.LIB +LIBH.LIB +LLIBFPW.LIB +LCLIBW1.LIB +__FPMATH.OBJ +LLIBFW.LIB +LLIBFW1.LIB +LIBW.LIB"
+4:llibfewc, "+LIBH.LIB +LLIBFPW.LIB +__FPMATH.OBJ +LLIBFW.LIB +LLIBFW1.LIB"
+4:ldllfew,  "+LLIBFWD.LIB +LLIBFWD1.LIB +LLIBFPW.LIB +LIBH.LIB +OLDNAMES.LIB +LCLIBWD1.LIB +LIBW.LIB +__FPMATH.OBJ +WDDBGMSG.OBJ"
+4:ldllfewc, "+LLIBFWD.LIB +LLIBFWD1.LIB +LLIBFPW.LIB +LIBH.LIB +__FPMATH.OBJ +WDDBGMSG.OBJ"
+
+; ****** FILE LAYOUT ******
+;
+;  disk#: path [, "descr"][, size = xxx][, dest = x][, comment=][, actions]
+;
+;     action codes: rename, append, noreplace, ignoreerr (default; synonym
+;           is "nonvital"), vital, timestamp, nocopy, root
+;     dest= B(Bound), R(Real), P(Protected), I(Include), T(Init),
+;      H(Help), L(Lib), S(Source), D(DLL), W(Windows)
+;
+;        [dest setting gets propagated down a list, but not across lists]
+;        [comment=^ shares comment string with previous file (in same list)]
+;
+
+[list  copy_always  1]
+1: setup.exe,	     DEST=B, comment="Setup program -- installs product", NOCOPY, size=106595
+1: f510.inf,	     comment="Setup program information file", NOCOPY, size=71577
+1: packing.lst,	     comment="This listing of files for Microsoft FORTRAN 5.1", NOCOPY, size=14187
+1: decomp.exe,	     comment="Decompression Utility", size=35921
+1: readme.doc,	     comment="Documentation Information for Microsoft FORTRAN 5.1", size=24333
+2: lib.exe,	     comment="Library maintenance utility", size=55248
+2: helpmake.exe,     comment="Utility to create/modify help files", size=67193
+2: link.exe,	     comment="Linker", size=144159
+2: exehdr.exe,	     comment="EXE file modification utility", size=46277
+2: ilink.exe,	     comment="Incremental linker", size=104335
+2: ilinkstb.ovl,     comment="ILINK overlay", size=4222
+2: implib.exe,	     comment="Import library creation utility", size=34727
+2: cvpack.exe,	     comment="CodeView information optimization utility", size=49661
+2: fl.exe,	     comment="Compiler driver", size=40896
+2: fl.err,	     comment="Error message file for FL", size=1190
+2: f1.exe,	     comment="Compiler pass 1", size=197451
+2: fl.msg,	     comment=" ", size=2280
+2: f1l.exe,	     comment="Compiler, large model pass 1", size=246456
+2: f1.err,	     comment="Error message file for compiler, pass 1", size=21311
+2: f2.exe,	     comment="Compiler pass 2", size=200923
+2: f3.exe,	     comment="Compiler pass 3", size=143139
+2: f3s.exe,	     comment="Compiler, small model pass 3", size=98218
+2: f23.err,	     comment="Error message file for compiler, pass 2 & 3", size=3025
+
+6: flib.fi,	     DEST=I, comment="Include file", size=6467
+6: flib.fd,	     comment=^, size=6493
+6: fgraph.fd,	     comment=^, size=12140
+6: fgraph.fi,	     comment=^, size=13403
+
+4: nbuild.obj,	     DEST=L, comment="Error message stub file (use with BIND)", size=636
+
+[list  copy_always_lib  1]
+4: libh.lib,	     DEST=L, comment="General helper library", size=21033
+
+[list  if_real_exes  1]
+1: cv.exe,	     DEST=R, comment="DOS CodeView debugger", TIMESTAMP, size=521696
+1: qh.exe,	     comment="Quick Help program", size=70065
+1: himem.sys,	     comment="HIMEM driver program", size=11304
+1: fixshift.com,     comment="Fixes BIOS bug for some compatible keyboards", size=690
+1: nmake.exe,	     comment="MS-DOS New Program maintenance utility", size=82891
+1: msherc.com,	     comment="TSR to support Hercules card graphics", size=6947
+1: nmk.com,	     comment="Real mode PWB loader for NMAKE", size=2869
+1: smartdrv.sys,     comment="DOS disk cache device driver", size=7746
+1: ramdrive.sys,     comment="DOS virtual disk device driver", size=5719
+
+[list  if_prot_exes  1]
+3: cvp.exe,	     DEST=P, comment="OS/2 CodeView debugger", TIMESTAMP, size=364504
+3: qh.exe,	     comment="Quick Help program", size=59471
+3: nmake.exe,	     comment="OS/2 New program maintenance utility", size=87869
+
+2: bind.exe,	     DEST=B, comment="Bound program creation utility", size=39255
+
+1: mshelp.dll,	     DEST=D, comment="DLL for Microsoft Help system", size=8196
+
+6: bsedos.fi,	     DEST=I, comment="Include file for OS/2", size=52344
+6: bsesub.fi,	     comment=^, size=31412
+6: bse.fi,	     comment=^, size=983
+6: bsedos.fd,	     comment=^, size=19175
+6: bsesub.fd,	     comment=^, size=13421
+6: bseerr.fd,	     comment=^, size=36906
+6: bse.fd,	     comment=^, size=850
+6: os2.fd,	     comment=^, size=483
+6: os2.fi,	     comment=^, size=617
+6: os2def.fd,	     comment=^, size=7032
+
+[list  if_windows   1]
+3: cvw.exe,	     DEST=R, comment="Needed for Windows", size=413664
+
+3: cvwin.dll,	     DEST=B, comment=^, size=12800
+3: windebug.386,     comment=^, size=5233
+2: winstub.exe,	     comment=^, size=610
+2: fl.def,	     comment=^, size=359
+
+3: vcv.386,	     DEST=W, comment=^, "SYSTEM\vcv.386", RENAME, size=9273
+3: system.pre,	     comment=^, size=1297
+5: qwin.hlp,	     comment=^, size=22171
+
+4: noqwin.lib,	    DEST=L, comment="Windows specific obj file", size=453
+
+[list if_win_libs  1]
+4: oldnames.lib,     DEST=L, comment="Windows specific lib", size=5135
+4: qwin.lib,	     comment=^, size=44249
+4: llibfpw.lib,	     comment=^, size=70381
+4: lclibw1.lib,	     comment=^, size=26107
+4: __fpmath.obj,     comment=^, size=45
+4: llibfw.lib,	     comment=^, size=83845
+4: llibfw1.lib,	     comment=^, size=22719
+4: libw.lib,	     comment=^, size=89601
+4: mixedpat.obj,     comment=^, size=152
+4: mixedstb.obj,     comment=^, size=117
+
+[list if_win_dll  1]
+4: llibfwd.lib,	     DEST=L, comment="Windows DLL file", size=83333
+4: wddbgmsg.obj,     comment=^, size=188
+4: llibfwd1.lib,     comment=^, size=19107
+4: lclibwd1.lib,     comment=^, size=22453
+
+[list  if_emulator  1]
+4: em.lib,	     DEST=L, comment="Floating point library for emulator", size=16921
+
+[list  if_chipmath  1]
+4: 87.lib,	     DEST=L, comment="Floating point library for math coprocessor", size=4633
+
+[list  if_altmath  1]
+4: mgraphfa.lib,     DEST=L, comment="Graphics FP library (medium/large model)", size=4131
+
+[list  if_no_alt  1]
+4: mgraphfp.lib,     DEST=L, comment="Graphics FP library (medium/large model)", size=4131
+
+[list if_medium   1]
+4: mlibfor.lib,	     DEST=L, comment="Medium model standard library", size=81285
+
+[list  if_medium_real  1]
+4: mlibfor1.lib,     DEST=L, comment="DOS run-time library (medium model)", size=19613
+
+[list  if_medium_prot  1]
+4: mlibfor2.lib,     DEST=L, comment="OS/2 run-time library (medium model)", size=19619
+
+[list  if_medium_noalt  1]
+4: mlibfp.lib,	     DEST=L, comment="Floating point library (medium model)", size=70413
+
+[list  if_medium_alt  1]
+4: mlibfa.lib,	     DEST=L, comment="Alternate math library (medium model)", size=91229
+
+[list  if_medium_ccompat  1]
+4: mclib1.lib,	     DEST=L, comment="C compatibility library", size=27715
+4: mclib2.lib,	     comment=^, size=25145
+
+[list  if_large       1]
+4: llibfor.lib,	     DEST=L, comment="Large model standard library", size=83333
+
+[list  if_large_real  1]
+4: llibfor1.lib,     DEST=L, comment="DOS run-time library (large model)", size=20125
+
+[list  if_large_prot  1]
+4: llibfor2.lib,     DEST=L, comment="OS/2 run-time library (large model)", size=19619
+
+[list  if_large_noalt  1]
+4: llibfp.lib,	     DEST=L, comment="Floating point library (large model)", size=71951
+
+[list  if_large_alt  1]
+4: llibfa.lib,	     DEST=L, comment="Alternate math library (large model)", size=92253
+
+[list  if_large_ccompat	1]
+4: lclib1.lib,	     DEST=L, comment="C compatibility library", size=28739
+4: lclib2.lib,	     comment=^, size=26169
+
+[list  if_real_graphics 1]
+4: graphics.lib,     DEST=L, comment="DOS Graphics library", size=89001
+1: helvb.fon,	     comment="Font file", size=50880
+1: modern.fon,	     comment=^, size=7584
+1: roman.fon,	     comment=^, size=11120
+1: script.fon,	     comment=^, size=10304
+1: tmsrb.fon,	     comment=^, size=45936
+1: courb.fon,	     comment=^, size=19088
+
+[list if_prot_graphics 1]
+4: grtextp.lib,      DEST=L, comment="OS/2 Text Graphics library", size=18707
+4: txtonly.obj,      comment="Allows graphics calls to be stubbed out", size=393
+
+[list  if_prot_libs  1]
+4: apilmr.obj,	     DEST=L, comment="Gives OS/2 bound programs 64K DGROUP", size=112
+4: api.lib,	     comment="Family API stub library for OS/2 Bound programs", size=74240
+4: os2.lib,	     comment="OS/2 API library for OS/2", size=117151
+4: llibfmt.lib,	     comment="OS/2 multi-thread run-time library", size=235895
+
+[list  if_dll_libs  1]
+4: fdllobjs.lib,     DEST=L, comment="Object file for dynamic link run-time library", size=236407
+4: frtdll.obj,	     comment="Startup code for dynamic link library", size=752
+4: frtlib.obj,	     comment="Startup code for dynamic link run-time", size=1393
+4: frtexe.obj,	     comment="Startup code for exe files that use a DLL", size=1146
+4: frtlib.lib,	     comment="OS/2 DLL library", size=35328
+
+4: frtlib.dll,	     DEST=D, comment="OS/2 Dynamic Link version of FORTRAN run-time library", size=88526
+
+[list  if_mouse  1]
+1: mouse.com,	     DEST=R, comment="DOS mouse driver", size=31833
+
+[list  if_pwb  1]
+2: exp.exe,	     DEST=B, comment="File expunge program", size=41487
+2: rm.exe,	     comment="File deletion program", size=33337
+2: undel.exe,	     comment="File restore program", size=42659
+2: pwbrmake.exe,     comment="Programmer's WorkBench", size=58123
+
+3: tools.pre,	     DEST=T, comment="Sample macros for PWB", size=4840
+
+[list  if_pwb_real  1]
+1: pwbed.exe,	     DEST=R, comment="DOS Programmer's WorkBench", TIMESTAMP, size=417616
+1: pwbrowse.mxt,     comment=^, size=35128
+1: pwb.com,	     comment=^, size=2933
+1: pwbhelp.mxt,	     comment=^, size=28946
+1: pwbc.mxt,	     comment=^, size=22114
+1: pwbutils.mxt,     comment=^, size=18674
+1: pwbfort.mxt,	     comment=^, size=22590
+
+[list  if_pwb_prot  1]
+3: pwb.exe,	     DEST=P, comment="OS/2 Programmer's WorkBench", TIMESTAMP, size=321439
+3: pwbhelp.pxt,	     comment=^, size=18434
+3: pwbc.pxt,	     comment=^, size=17985
+3: pwbutils.pxt,     comment=^, size=15468
+3: pwbrowse.pxt,     comment=^, size=33094
+3: pwbfort.pxt,	     comment=^, size=14560
+
+[list  if_brief	1]
+3: brief.ini,	     DEST=T, comment="Brief emulation macros for PWB", "tools.ini", APPEND, size=10030
+
+[list if_help 1]
+5: utilerr.hlp,	     DEST=H, comment="Utilities error message help file", size=129215
+5: fl.hlp,	     comment="Compiler command line help", size=180312
+5: utils.hlp,	     comment="Utilities help file", size=182039
+5: link.hlp,	     comment="Help file for linker", size=108925
+5: forlang.hlp,	     comment="FORTRAN language help file", size=241067
+6: pwb.hlp,	     comment="PWB help file", size=394456
+5: qh.hlp,	     comment="Quick Help help file", size=25205
+5: cv.hlp,	     comment="CodeView help file", size=263577
+
+[list  if_samples  1]
+6: source.doc,	     DEST=S, comment="Documentation for sample programs", size=2717
+6: realg.for,	     comment="graphics example", "SAMPLES\realg.for", RENAME, size=4625
+6: sine.for,	     comment=^, "SAMPLES\sine.for", RENAME, size=5050
+6: coltext.for,	     comment=^, "SAMPLES\coltext.for", RENAME, size=1286
+6: cga.for,	     comment=^, "SAMPLES\cga.for", RENAME, size=1236
+6: ega.for,	     comment=^, "SAMPLES\ega.for", RENAME, size=1193
+6: horizon.for,	     comment=^, "SAMPLES\horizon.for", RENAME, size=2026
+6: graphic.for,	     comment=^, "SAMPLES\graphic.for", RENAME, size=2164
+6: color.for,	     comment=^, "SAMPLES\color.for", RENAME, size=751
+6: sampler.for,	     comment=^, "SAMPLES\sampler.for", RENAME, size=2366
+6: animate.for,	     comment=^, "SAMPLES\animate.for", RENAME, size=1780
+6: cgapal.for,	     comment=^, "SAMPLES\cgapal.for", RENAME, size=1513
+6: cursor.for,	     comment=^, "SAMPLES\cursor.for", RENAME, size=1858
+6: figure.for,	     comment=^, "SAMPLES\figure.for", RENAME, size=2375
+6: page.for,	     comment=^, "SAMPLES\page.for", RENAME, size=2059
+6: text.for,	     comment=^, "SAMPLES\text.for", RENAME, size=1611
+6: fonts.for,	     comment=^, "SAMPLES\fonts.for", RENAME, size=3272
+6: palette.for,	     comment=^, "SAMPLES\palette.for", RENAME, size=4351
+6: fill.for,	     comment=^, "SAMPLES\fill.for", RENAME, size=2975
+6: setrows.for,	     comment=^, "SAMPLES\setrows.for", RENAME, size=744
+6: modes.for,	     comment=^, "SAMPLES\modes.for", RENAME, size=3489
+6: window.for,	     comment=^, "SAMPLES\window.for", RENAME, size=3412
+6: magnify.for,	     comment=^, "SAMPLES\magnify.for", RENAME, size=4732
+6: wrap.for,	     comment=^, "SAMPLES\wrap.for", RENAME, size=2049
+6: fmhello.for,	     comment="OS/2 Sample", "SAMPLES\fmhello.for", RENAME, size=3130
+6: fmtdll.for,	     comment=^, "SAMPLES\fmtdll.for", RENAME, size=938
+6: fmtmain.def,	     comment=^, "SAMPLES\fmtmain.def", RENAME, size=42
+6: fmtmain.for,	     comment=^, "SAMPLES\fmtmain.for", RENAME, size=1028
+6: fmtdll.def,	     comment=^, "SAMPLES\fmtdll.def", RENAME, size=130
+6: mkfdll.cmd,	     comment=^, "SAMPLES\mkfdll.cmd", RENAME, size=2133
+6: fdllobjs.cmd,     comment=^, "SAMPLES\fdllobjs.cmd", RENAME, size=2151
+6: fdllobjs.def,     comment=^, "SAMPLES\fdllobjs.def", RENAME, size=6219
+6: diffhlp.def,	     comment=^, "SAMPLES\diffhlp.def", RENAME, size=65
+6: demoexec.for,     comment="Demo Program", "SAMPLES\demoexec.for", RENAME, size=980
+6: exec.fi,	     comment=^, "SAMPLES\exec.fi", RENAME, size=2011
+6: swhet.for,	     comment=^, "SAMPLES\swhet.for", RENAME, size=10023
+6: sieve.for,	     comment=^, "SAMPLES\sieve.for", RENAME, size=2272
+6: dwhet.for,	     comment=^, "SAMPLES\dwhet.for", RENAME, size=10094
+6: sortdemo.for,     comment=^, "SAMPLES\sortdemo.for", RENAME, size=31701
+6: annuity1.for,     comment="Tutorial Program", "SAMPLES\annuity1.for", RENAME, size=1940
+6: rggraph.for,	     comment=^, "SAMPLES\rggraph.for", RENAME, size=1681
+6: rggrid.for,	     comment=^, "SAMPLES\rggrid.for", RENAME, size=1942
+6: rginit.for,	     comment=^, "SAMPLES\rginit.for", RENAME, size=851
+6: rgmain.for,	     comment=^, "SAMPLES\rgmain.for", RENAME, size=404
+6: rg.mak,	     comment=^, "SAMPLES\rg.mak", RENAME, size=1048
+6: mtrx.for,	     comment=^, "SAMPLES\mtrx.for", RENAME, size=2900
+6: mtrx_w.for,       comment=^, "SAMPLES\mtrx_w.for", RENAME, size=1702
+6: mulmix.c,	     comment=^, "SAMPLES\mulmix.c", RENAME, size=10669
+6: mulc.c,	     comment=^, "SAMPLES\mulc.c", RENAME, size=507
+6: mulmix.h,         comment=^, "SAMPLES\mulmix.h", RENAME, size=521
+6: mulmix.rc,        comment=^, "SAMPLES\mulmix.rc", RENAME, size=1052
+6: mulmix.def,       comment=^, "SAMPLES\mulmix.def", RENAME, size=960
+6: mulmix.mak,       comment=^, "SAMPLES\mulmix.mak", RENAME, size=709
+6: mulf.for,         comment=^, "SAMPLES\mulf.for", RENAME, size=160
+6: mullib.def,       comment=^, "SAMPLES\mullib.def", RENAME, size=245
+6: mulmix_d.def,     comment=^, "SAMPLES\mulmix_d.def", RENAME, size=958
+6: mulmix_d.mak,     comment=^, "SAMPLES\mulmix_d.mak", RENAME, size=848
+6: matlib.def,	     comment=^, "SAMPLES\matlib.def", RENAME, size=274
+6: matlib.for,	     comment=^, "SAMPLES\matlib.for", RENAME, size=842
+6: mtrx_wd.def,      comment=^, "SAMPLES\mtrx_wd.def", RENAME, size=669
+6: mtrx_wd.for,      comment=^, "SAMPLES\mtrx_wd.for", RENAME, size=2449
+6: arc.for,	     comment=^, "SAMPLES\arc.for", RENAME, size=616
+6: star.for,	     comment=^, "SAMPLES\star.for", RENAME, size=1608
+6: scrtxwin.for,     comment=^, "SAMPLES\scrtxwin.for", RENAME, size=3048
+
+[list  if_startup  1]
+5: unit.asm,	     DEST=S, comment="OS independent startup file", "STARTUP\unit.asm", RENAME, size=5050
+6: source.doc,	     comment=^, "STARTUP\source.doc", RENAME, size=2717
+5: startup.bat,	     comment=^, "STARTUP\startup.bat", RENAME, size=1915
+5: makefile,	     comment=^, "STARTUP\makefile", RENAME, size=5250
+5: chkstk.asm,	     comment=^, "STARTUP\chkstk.asm", RENAME, size=3787
+5: chksum.asm,	     comment=^, "STARTUP\chksum.asm", RENAME, size=3617
+5: nulbody.for,	     comment=^, "STARTUP\nulbody.for", RENAME, size=11
+5: startup.doc,	     comment=^, "STARTUP\startup.doc", RENAME, size=1798
+5: cmacros.inc,	     comment=^, "STARTUP\cmacros.inc", RENAME, size=12508
+5: cmacros.new,      comment=^, "STARTUP\cmacros.new", RENAME, size=17710
+5: msdos.inc,	     comment=^, "STARTUP\msdos.inc", RENAME, size=6226
+5: crt0fp.asm,	     comment=^, "STARTUP\crt0fp.asm", RENAME, size=2258
+5: filehand.doc,     comment=^, "STARTUP\filehand.doc", RENAME, size=1069
+5: emoem.asm,	     comment=^, "STARTUP\emoem.asm", RENAME, size=12198
+5: fmsghdr.asm,	     comment=^, "STARTUP\fmsghdr.asm", RENAME, size=2429
+5: heap.inc,	     comment=^, "STARTUP\heap.inc", RENAME, size=3015
+5: rchkstk.asm,	     comment=^, "STARTUP\rchkstk.asm", RENAME, size=3570
+5: setargv.asm,	     comment=^, "STARTUP\setargv.asm", RENAME, size=1027
+5: startup.cmd,	     comment=^, "STARTUP\startup.cmd", RENAME, size=1915
+5: unit.obj,	     comment=^, "STARTUP\unit.obj", RENAME, size=176
+5: version.inc,	     comment=^, "STARTUP\version.inc", RENAME, size=575
+5: rterr.inc,	     comment=^, "STARTUP\rterr.inc", RENAME, size=3764
+
+[list  if_startup_real  1]
+5: DOS\nulbody.lnk,	   DEST=S, comment="DOS specific startup file", "STARTUP\DOS\nulbody.lnk", RENAME, size=138
+5: DOS\crt0.asm,	   comment=^, "STARTUP\DOS\crt0.asm", RENAME, size=13807
+5: DOS\crt0dat.asm,	   comment=^, "STARTUP\DOS\crt0dat.asm", RENAME, size=19539
+5: DOS\crt0msg.asm,	   comment=^, "STARTUP\DOS\crt0msg.asm", RENAME, size=2943
+5: DOS\nmsghdr.asm,	   comment=^, "STARTUP\DOS\nmsghdr.asm", RENAME, size=3433
+5: DOS\stdalloc.asm,	   comment=^, "STARTUP\DOS\stdalloc.asm", RENAME, size=2484
+5: DOS\stdargv.asm,	   comment=^, "STARTUP\DOS\stdargv.asm", RENAME, size=14987
+5: DOS\stdenvp.asm,	   comment=^, "STARTUP\DOS\stdenvp.asm", RENAME, size=7737
+5: DOS\crt0datl.obj,	   comment=^, "STARTUP\DOS\crt0datl.obj", RENAME, size=1969
+5: DOS\crt0datm.obj,	   comment=^, "STARTUP\DOS\crt0datm.obj", RENAME, size=1965
+5: DOS\execmsg.asm,	   comment=^, "STARTUP\DOS\execmsg.asm", RENAME, size=1311
+
+[list  if_startup_prot  1]
+5: OS2\nulbody.lnk,	   DEST=S, comment="OS/2 specific startup file", "STARTUP\OS2\nulbody.lnk", RENAME, size=138
+5: OS2\crt0.asm,	   comment=^, "STARTUP\OS2\crt0.asm", RENAME, size=12051
+5: OS2\crt0dat.asm,	   comment=^, "STARTUP\OS2\crt0dat.asm", RENAME, size=15699
+5: OS2\crt0msg.asm,	   comment=^, "STARTUP\OS2\crt0msg.asm", RENAME, size=2989
+5: OS2\nmsghdr.asm,	   comment=^, "STARTUP\OS2\nmsghdr.asm", RENAME, size=3489
+5: OS2\stdalloc.asm,	   comment=^, "STARTUP\OS2\stdalloc.asm", RENAME, size=2313
+5: OS2\stdargv.asm,	   comment=^, "STARTUP\OS2\stdargv.asm", RENAME, size=14793
+5: OS2\stdenvp.asm,	   comment=^, "STARTUP\OS2\stdenvp.asm", RENAME, size=7253
+5: OS2\crt0datl.obj,	   comment=^, "STARTUP\OS2\crt0datl.obj", RENAME, size=1654
+5: OS2\crt0datm.obj,	   comment=^, "STARTUP\OS2\crt0datm.obj", RENAME, size=1650
+
+[list  if_startup_win 1]
+5: WIN\crt0datl.obj,	   DEST=S, comment="Windows specific startup source file", "STARTUP\WIN\crt0datl.obj", RENAME, size=2194
+5: WIN\crt0datd.obj,	   comment=^, "STARTUP\WIN\crt0datd.obj", RENAME, size=1642
+
+[list  if_patch  1]
+1: patch320.doc,	   DEST=S, comment="DOS 3.20 FP exception patch", "PATCH\patch320.doc", RENAME, size=1192
+1: setrhs.exe,		   comment=^, "PATCH\setrhs.exe", RENAME, size=543
+1: rmrhs.exe,		   comment=^, "PATCH\rmrhs.exe", RENAME, size=543
+1: stkpat.bat,		   comment=^, "PATCH\stkpat.bat", RENAME, size=94
+1: stkpat.scr,		   comment=^, "PATCH\stkpat.scr", RENAME, size=30
+
+; list of files to remove if user wants components of libraries deleted
+[list if_del_comps]
+{include list if_win_libs}
+{include list if_win_dll}
+{include list if_emulator}
+{include list if_chipmath}
+{include list if_altmath}
+{include list if_no_alt}
+{include list if_medium_real}
+{include list if_medium_prot}
+{include list if_medium_noalt}
+{include list if_medium_alt}
+{include list if_medium}
+{include list if_medium_ccompat}
+{include list if_large_real}
+{include list if_large_prot}
+{include list if_large_noalt}
+{include list if_large_alt}
+{include list if_large}
+{include list if_large_ccompat}
+{include list copy_always_lib}
+
+; list of files to search for single-file copy command
+[list search_files]
+{include list copy_always}
+{include list copy_always_lib}
+{include list if_real_exes}
+{include list if_prot_exes}
+{include list if_prot_libs}
+{include list if_emulator}
+{include list if_chipmath}
+{include list if_altmath}
+{include list if_no_alt}
+{include list if_medium_real}
+{include list if_medium_prot}
+{include list if_medium_noalt}
+{include list if_medium_alt}
+{include list if_medium}
+{include list if_medium_ccompat}
+{include list if_large_real}
+{include list if_large_prot}
+{include list if_large_noalt}
+{include list if_large_alt}
+{include list if_large}
+{include list if_large_ccompat}
+{include list if_dll_libs}
+{include list if_mouse}
+{include list if_pwb}
+{include list if_pwb_real}
+{include list if_pwb_prot}
+{include list if_brief}
+{include list if_help}
+{include list if_samples}
+{include list if_startup}
+{include list if_startup_real}
+{include list if_startup_prot}
+{include list if_patch}
+{include list if_windows}
+{include list if_win_libs}
+{include list if_real_graphics}
+{include list if_prot_graphics}
+
+[list remove]
+; required by toolkit (not used by FORTRAN 5.1)
+
+
+;*********** more macros ***************
+[macro]
+;required macros:
+LISTMORE  = " MORE "
+HARDHDR   = "Hard Drive "
+FLOPPYHDR = "Floppy Drive "
+; CHKD is 2-char string used as checkmark in listboxes
+CHKD = "* "
+
+; other macros
+TOGGLEHLP1  = "Use the SPACEBAR to select options.  When the correct"
+TOGGLEHLP2  = "options are selected, press ENTER to continue."
+
+; macros for Packing list generator (not used in Setup)
+DISK        = "DISK"
+DESC_HEADER = "Files                        Description"
+DESC_ULINES = "-----                        -----------"
+PLHEADER    = "Packing List for Microsoft FORTRAN v 5.1"
+
+
+;*********** menus ***************
+
+[menu mainc]
+; leave 2 spaces at front for checkmark
+"  Install Microsoft FORTRAN"
+"  Install Microsoft FORTRAN using defaults"
+"  Run SETUP without installing any files"
+"  View important documentation notes (README.DOC)"
+"  View the packing list (PACKING.LST)"
+"  Copy a file from the distribution disks"
+"  Load or build additional libraries"
+"  Exit SETUP"
+
+[menu yesno]
+"Yes"
+"No"
+
+[menu choose_mode]
+"DOS"
+"OS/2"
+
+[menu choose_target]
+"DOS"
+"OS/2"
+"DOS and Windows"
+
+[menu math_menu]
+"Emulator math"
+"80x87 chip math"
+"Alternate math"
+
+[menu models_menu]
+"Medium memory model"
+"Large memory model"
+
+[menu rename_menu]
+"Rename DOS libraries"
+"Rename OS/2 libraries"
+"Do not rename either set of libraries"
+
+[menu copyanotherm]
+"Return to SETUP Main Menu"
+"Copy another file"
+"Exit SETUP"
+
+[menu anotherhd]
+"Install on a different hard disk"
+"Change my answers to SETUP questions"
+"Continue with installation on this disk"
+"Exit SETUP"
+
+[menu smallhd]
+"Change my answers to SETUP questions"
+"Continue with installation on this disk"
+"Exit SETUP"
+
+; required menus below this point
+[menu timestampm]
+"Continue without overwriting my file"
+"Replace my copy of the file"
+"Exit SETUP"
+
+[menu contorexit]
+"Continue"
+"Exit SETUP"
+
+[menu retry]
+"Try again"
+"Exit SETUP"
+
+[menu formatorretry]
+"Format the disk"
+"Try again (do not format)"
+
+[menu retryorignore]
+"Try again"
+"Ignore the error and continue"
+"Exit SETUP"
+
+[menu readonlyerrm]
+"Try to overwrite"
+"Continue without copying"
+"Exit SETUP"
+
+[menu build_err_m]
+"Return to SETUP Main Menu"
+"Continue building libraries"
+"Exit SETUP"
+
+;***** colors *****
+[color]
+1=high white
+2=blue,white
+3=white,blue
+4=white,black
+
+;********** header and footer screens ************
+
+[screen header]
+{color white,blue}
+{at 2,1}
+Microsoft FORTRAN %VERS Setup
+{at 0,2}
+{line 60,205}
+;
+; footer screens
+;
+[screen exit]
+{clear 0,24,79,24}
+{color black, white}
+{at 67,24}
+CTRL+C=Exit
+;
+;
+[screen ent_exit]
+{clear 0,24,79,24}
+{color black, white}
+{at 2,24}
+ENTER=Continue
+{at 67,24}
+CTRL+C=Exit
+;
+;
+[screen ent_sel_exit]
+{clear 0,24,79,24}
+{color black, white}
+{at 2,24}
+ENTER=Continue
+{at 19,24}
+=Make Selection
+{at 67,24}
+CTRL+C=Exit
+;
+;
+[screen ent_f1_exit]
+{clear 0,24,79,24}
+{color black, white}
+{at 2,24}
+ENTER=Continue
+{at 39,24}
+F1=Additional Information
+{at 67,24}
+CTRL+C=Exit
+;
+;
+[screen ent_sel_f1_exit]
+{clear 0,24,79,24}
+{color black, white}
+{at 2,24}
+ENTER=Continue
+{at 19,24}
+=Make Selection
+{at 39,24}
+F1=Additional Information
+{at 67,24}
+CTRL+C=Exit
+;
+;
+[screen help_footer]
+{clear 0,24,79,24}
+{color white, blue}
+{at 2,24}
+ESC=Return to SETUP
+;{at 30,24}
+;PgDn=Next Screen
+;{at 55,24}
+;PgUp=Previous Screen
+;
+;
+;**********    required screens ************
+;
+[screen helpframe]
+{color black, white}
+{at 2,1}
+^2Additional Information^0
+{at 0,2}
+{line 60,205,blue,white}
+{include screen help_footer}
+;
+;
+[screen mcopying]
+{help nohelp}
+{clear 0,8,80,23}
+{At 10,12}
+SETUP is copying %SPATH%SFILE
+              to %DPATH%DFILE.
+
+There are %NUM files left to copy.
+{include screen exit}
+;
+;
+[screen badmacro]
+Predefined macro "%SECTION" is missing in SETUP.INF
+;
+;
+[screen insdiskpath]
+{help nohelp}
+{include screen header}
+{At 5,8}
+SETUP can't find the file %SFILE.
+
+Please type the drive and directory where this file can be found
+and press ENTER.
+
+You can specify a floppy drive or a hard drive.
+
+{input 10,60,1}
+{include screen ent_exit}
+;
+;
+[screen insdiskpath2]
+{help nohelp}
+{include screen header}
+{At 5,8}
+SETUP can't find the file %SFILE in the directory you specified.
+Please try again now, or exit, find a copy of the file, and rerun
+SETUP later.
+
+Please enter the drive and directory where this file is located
+and press ENTER. You can specify a floppy drive or a hard drive.
+
+{input 10,60,1}
+{include screen ent_exit}
+;
+;
+[screen insdisknopath]
+{help nohelp}
+{include screen header}
+{At 5,8}
+Please insert the disk labeled '%DISKNAME'
+in drive %DRIVE and press ENTER.
+
+{input 15,20,5}
+{include menu contorexit}
+{include screen ent_sel_exit}
+;
+;
+[screen badsdisk]
+{help nohelp}
+{include screen header}
+{At 5,8}
+SETUP can't read the disk in drive %DRIVE. Please be sure the
+correct disk is inserted and the drive door is closed.
+
+{input 15,20,5}
+{include menu contorexit}
+{include screen ent_sel_exit}
+;
+;
+[screen wrongdisk]
+{help nohelp}
+{include screen header}
+{At 5,8}
+This does not appear to be %DISKNAME.
+Please insert the disk labeled '%DISKNAME'
+in drive %DRIVE and press ENTER.
+
+{input 15,20,5}
+{include menu contorexit}
+{include screen ent_sel_exit}
+;
+;
+[screen badddisk]
+{help nohelp}
+{include screen header}
+{At 5,8}
+SETUP can't read the disk in drive %DRIVE.
+
+{input 15,30,4}
+{include menu formatorretry}
+{include screen ent_sel_exit}
+;
+;
+[screen readerr]
+{help nohelp}
+{include screen header}
+{At 5,8}
+An error occurred while reading the file %SFILE.
+
+{input 15,35,5}
+; inserts menu retry or menu retryorignore
+{include screen ent_sel_exit}
+;
+;
+[screen writeerr]
+{help nohelp}
+{include screen header}
+{At 5,8}
+An error occurred while writing the file
+%DPATH%DFILE.
+
+{input 15,35,5}
+; inserts menu retry or menu retryorignore
+{include screen ent_sel_exit}
+;
+;
+[screen createerr]
+{help nohelp}
+{include screen header}
+{At 5,8}
+An error occurred while creating the file
+%DPATH%DFILE.
+
+{input 15,35,5}
+; inserts menu retry or menu retryorignore
+{include screen ent_sel_exit}
+;
+;
+[screen renameerr]
+{help nohelp}
+{include screen header}
+{At 5,8}
+An error occurred while renaming the file
+%SPATH%SFILE to %DFILE.
+
+{input 15,35,5}
+; inserts menu retry or menu retryorignore
+{include screen ent_sel_exit}
+;
+;
+[screen createdirerr]
+{help nohelp}
+{include screen header}
+{At 5,8}
+An error occurred while creating the directory
+%DPATH.
+
+{input 15,35,5}
+; inserts menu retry or menu retryorignore
+{include screen ent_sel_exit}
+;
+;
+[screen timestamperr]
+{help nohelp}
+{include screen header}
+{At 5,8}
+The version of the file %SFILE on your disk is newer than the
+one supplied with Microsoft FORTRAN %VERS.
+
+You can continue the installation process without copying this
+file, or you can overwrite your copy of the file.
+
+SETUP suggests that you not overwrite this file. If you decide
+later that you want the version supplied with FORTRAN %VERS, rename
+your existing file and use SETUP to copy the new version.
+
+{input 15,45,5}
+{include menu timestampm}
+{include screen ent_sel_exit}
+;
+;
+; required screens not used by FORTRAN
+[screen nonvital]
+{clear 0,0,0,0}
+[screen pathtoolong]
+; screen used by floppy-to-floppy setup only
+[screen insnewdisk]
+;
+;
+[screen readonlyerr]
+{help readonly_h}
+{include screen header}
+{at 5,8}
+SETUP is trying to copy to the read-only file
+%DPATH%DFILE on your hard disk.
+
+You can try to overwrite the file, skip the copy if you are sure
+your file is correct, or you can exit SETUP and delete your file.
+
+If the file named above is MSHELP.DLL, press F1 for more information.
+
+{input 15,30,5}
+{include menu readonlyerrm}
+{include screen ent_sel_f1_exit}
+;
+;
+[screen readonly_h]
+{color black, white}
+{at 5,4}
+If you are running QuickHelp as a keyboard monitor under OS/2,
+SETUP is not able to copy over MSHELP.DLL because the file is
+locked for use by QuickHelp.
+
+You can continue with SETUP and the FORTRAN Professional Development
+System will still be installed correctly but you will not have the
+latest version of the Help utility.
+
+After SETUP is finished, you should disable QuickHelp, run SETUP
+again, and choose
+    ^2Copy a file from the distribution disks^0
+from SETUP's Main Menu.  Follow the prompts to copy the file
+MSHELP.DLL to your hard disk.  Then exit SETUP and re-enable
+QuickHelp.
+;
+;
+[screen readme_frame]
+{help nohelp}
+{at 0,23}
+{line 80,220}
+   PgDn=Next screen        PgUp=Previous screen        ESC=Exit README.DOC
+;
+;
+[screen packing_frame]
+{help nohelp}
+{at 0,23}
+{line 80,220}
+   PgDn=Next screen        PgUp=Previous screen        ESC=Exit PACKING.LST
+;
+;
+; ********* FORTRAN SCREENS **********************
+;
+[screen nohelp]
+{color black, white}
+{at 10,10}
+SETUP has no additional information on this topic.
+
+Press ESC to return to SETUP.
+;
+;
+[screen welcome]
+{help nohelp}
+{include screen header}
+{at 5,4}
+%COPYRIGHT
+
+Welcome to the SETUP program for Microsoft FORTRAN %VERS.
+
+If you have not already read the information on SETUP in
+Chapter 2 of "Installing and Using the Professional
+Development System," please do so before continuing. This
+manual contains important information about using SETUP.
+
+The files on the distribution disks are compressed, so you must
+use SETUP to install them. You can also use SETUP to uncompress
+and copy a single file or to view the documentation notes or
+packing list.
+
+If you make a mistake, you can type CTRL+C at any time to quit and
+start over. SETUP never erases files from the distribution disks.
+
+Press ENTER to continue or CTRL+C to exit.
+{include screen ent_exit}
+;
+;
+[screen mainmenu]
+{help mainmenu_h}
+{include screen header}
+{at 35,1}
+^1Main Menu^0
+{at 5,4}
+To install FORTRAN %VERS, press ENTER now.  For more information
+on SETUP, press F1.  To select another option from the box below,
+use the ARROW (,) keys to highlight the selection, then press
+ENTER.
+
+{input 10,55,10}
+{include menu mainc}
+{at 5}
+{include screen ent_sel_f1_exit}
+;
+;
+[screen mainmenu_h]
+{help mainmenu_h2}
+{color black, white}
+{at 5,4}
+SETUP will prompt you for the information it needs. If you're
+unsure of the proper reply for any of the questions, consider
+the defaults a good place to start. Before SETUP installs any
+files, it will give you the opportunity to change your answers.
+
+If you later find you prefer other choices, you can run SETUP again.
+
+If you would like to see SETUP's questions before actually
+installing Microsoft FORTRAN %VERS, select
+    ^2Run SETUP without installing any files^0
+from the Main Menu. SETUP will prompt you through the questions
+but will not copy any files.
+
+If you would like to have the Microsoft FORTRAN Professional
+Development System installed using the most common answers to
+all of SETUP's questions, choose
+    ^2Install the FORTRAN Professional Development System using defaults^0
+from the Main Menu. Before SETUP installs any files, it will give
+you the opportunity to change any of the answers.
+;
+;
+[screen mainmenu_h2]
+{color black, white}
+{at 5,4}
+SETUP asks for information in two ways.  For some questions, you
+will be given a list of choices, which will look like this:
+{at 20}
+{box 15,4,3,white,blue}
+{at 21}
+^2  Choice One ^0
+^3  Choice Two ^0
+
+{at 5}
+You can use the ARROW keys (,) to move the cursor.  If the
+word MORE appears at the bottom of the box, it means there are
+additional choices; press the DOWN ARROW key until you've seen them
+all. When the choice you want is highlighted, press ENTER to continue.
+
+SETUP also asks you to type directory or file names.  You will be
+given a field which looks like this:
+       ^4 C:\FORTRAN\BINP				   ^0
+You can use the BACKSPACE key to erase characters, the ARROW keys to
+move the cursor around in the text, or the HOME and END keys to move
+to the beginning and end of the text.  When the directory or file name
+is correct, press ENTER to continue.
+;
+;
+[screen needhd]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1Hard Disk Needed^0
+{at 5,6}
+SETUP cannot find a hard disk attached to your system. You need a
+hard disk to install Microsoft FORTRAN %VERS.
+
+Some removable hard disk systems look like floppies to SETUP, but
+you can still install FORTRAN %VERS on them. If you have a removable
+hard disk, or if you believe SETUP made an error, press ENTER to
+continue with SETUP.
+
+If you do not have a hard disk, press CTRL+C now to exit SETUP, and
+run SETUP again after you have installed a hard disk.
+
+
+Press ENTER to continue or CTRL+C to exit.
+{include screen ent_exit}
+;
+;
+[screen baddos]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1Warning^0
+{at 5,7}
+SETUP has detected that you are using an operating system other
+than MS-DOS or PC-DOS.
+
+This Microsoft product has been tested and certified for use only
+with the MS-DOS and PC-DOS operating systems. Your use of this
+product with another operating system may void valuable warranty
+protection provided by Microsoft on this product.
+
+
+Press ENTER to continue or CTRL+C to exit.
+{include screen ent_exit}
+;
+;
+[screen host_mode]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1Host Operating System^0
+{At 5,5}
+Microsoft FORTRAN %VERS can run under DOS or OS/2.  However,
+each operating system requires different executable files
+(files with the .EXE extension).
+
+The host operating system is the one under which you intend to
+develop most of your software. You can also set up for both
+operating systems.
+
+Please select the HOST operating system:
+{input 15,35,4}
+{include menu choose_mode }
+{at 12}
+%TOGGLEHLP1
+%TOGGLEHLP2
+{include screen ent_sel_exit}
+;
+;
+[screen target_mode]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1Target Operating System^0
+{At 5,5}
+The Microsoft FORTRAN Professional Development System can produce
+executable files for DOS, Windows, and OS/2.  However, each operating
+system has a different set of libraries and run-time modules.
+
+The target operating system is the one under which you will be
+running the programs you generate.  You can also set up for
+multiple operating systems.
+
+Please select the TARGET operating system:
+{input 15,35,5}
+{include menu choose_target}
+{at 12}
+%TOGGLEHLP1
+%TOGGLEHLP2
+{include screen ent_sel_exit}
+;
+;
+[screen comblibs]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1Combined Libraries^0
+{At 5,5}
+In order to reduce the time spent linking programs, FORTRAN %VERS uses
+"combined libraries" which are files containing two or more "component"
+libraries.  You may choose to leave the libraries in their component forms.
+However, we strongly recommend converting to combined libraries as they
+are used by the FORTRAN %VERS driver program (FL) and by the Microsoft
+Programmer's WorkBench (PWB).
+
+Because combined libraries require large amounts of disk space, you
+should build only those models you need.  SETUP automatically creates
+combined libraries for the memory model, math options, and operating
+modes you specify.  You can build other combined libraries later.
+
+Build combined libraries?
+{input 15,10,4}
+{include menu yesno}
+{include screen ent_sel_exit}
+;
+;
+[screen math_opts]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1Math Options^0
+;{At 5,5}
+{At 5,3}
+There are three options for floating-point math support.  The emulator
+library (the default) uses a math coprocessor if one is present;
+otherwise it emulates the coprocessor in software.  The 80x87 library
+uses the math coprocessor if one is present, but it causes an error if
+the chip is not present at run time.  The alternate-math library never
+uses the coprocessor, even if it is present.  It uses an alternative
+representation of numbers that is faster but less accurate than the
+software emulator if a coprocessor is not present.
+
+You may create combined libraries for any or all of the math options.
+If you requested component libraries rather than combined libraries,
+you need not specify any math options -- no math libraries will be loaded.
+
+Install which math options?
+{input 15,30,5}
+{include menu math_menu}
+{at 12}
+%TOGGLEHLP1
+%TOGGLEHLP2
+{include screen ent_sel_exit}
+;
+;
+[screen mem_models]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1Memory Models^0
+{At 5,5}
+The FORTRAN Professional Development System supports libraries for
+two different memory models.  You may choose either or both of these
+models.  The libraries take up a lot of space, so we recommend you
+select only the model you use most often.  (Note that the large model
+libraries are also used for huge model programs).
+
+If you have requested combined libraries or are installing FORTRAN %VERS
+for the first time, you must specify at least one memory model.
+
+Install which memory models?
+{input 15,30,6}
+{include menu models_menu }
+{at 16}
+%TOGGLEHLP1
+%TOGGLEHLP2
+{include screen ent_sel_exit}
+;
+;
+[screen mem_models_lib]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1Memory Models^0
+{At 5,5}
+The FORTRAN Professional Development System supports libraries for
+two different memory models.  You may choose either, both or neither
+of the models.  The libraries take up a lot of space, so we recommend
+you select only the model you use most often.  (Note that the large
+model libraries are also used for huge model).
+
+Since you have specified only component libraries, and you are using
+the library-building option of SETUP, you need not specify any
+memory models (unless you simply want to load previously unloaded
+math or FORTRAN libraries).
+
+Install which memory models?
+{input 15,30,6}
+{include menu models_menu}
+{at 16}
+%TOGGLEHLP1
+%TOGGLEHLP2
+{include screen ent_sel_exit}
+;
+;
+[screen dll_libs]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1DLL Libraries^0
+{At 5,5}
+You have asked to load OS/2 protected mode libraries.  FORTRAN %VERS
+contains some special libraries that support creation of OS/2 multi-
+thread programs and dynamic-link libraries (DLLs).  If you write multi-
+thread programs or DLLs, you need these libraries.  However, if
+you write only conventional (single-thread) programs, these libraries
+are not needed.
+
+Copy dynamic-link/multithread libraries also?
+{input 15,10,4}
+{include menu yesno}
+{include screen ent_sel_exit}
+;
+;
+[screen win_dll_libs]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1Windows DLL Libraries^0
+{At 5,5}
+
+You have asked to load the FORTRAN Windows libraries.  FORTRAN %VERS
+contains special libraries that support creation of Windows dynamic-
+link libraries (DLLs).  If you intend to write FORTRAN Windows
+applications as DLLs, you need these libraries.  However, if you
+plan to write only conventional Windows programs, these libraries
+are not needed, and they do take considerable space on disk.
+
+Build FORTRAN Windows DLL libraries?
+
+{input 15,10,4}
+{include menu yesno}
+{include screen ent_sel_exit}
+;
+;
+[screen rename_libs]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1Rename Default Libraries^0
+{At 5,5}
+SETUP normally gives each combined library a name of the form mLIBFfs.LIB,
+where <m> is M or L (Medium, or Large model); <f> is A, E, or 7 (Altmath,
+Emulator, or 8087 floating point); and <s> is R or P (Real or Protected).
+
+However, by default the compiler searches for library names which take the
+form mLIBFORf.LIB, without the trailing R or P.  If most of your programs
+are written for only one target mode (R or P), you can have SETUP give
+default names to your libraries, and avoid having to give specific library
+names to the compiler.
+
+Only one set of libraries (real or protected) can have default names.
+
+Rename which libraries?
+{input 15,50,5}
+{include menu rename_menu}
+{include screen ent_sel_exit}
+;
+;
+[screen del_comp]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1Delete Component Libraries^0
+{At 5,5}
+You have chosen to build combined libraries.  After building
+combined libraries, the component libraries are still on your
+disk.  Because the component libraries take up considerable
+space, you should remove them after building combined libraries.
+
+Delete the component libraries when finished?
+{input 15,10,4}
+{include menu yesno}
+{include screen ent_sel_exit}
+;
+;
+[screen graphics]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1DOS Graphics Libraries^0
+{At 5,5}
+FORTRAN %VERS provides a special, model-independent DOS graphics
+library:  GRAPHICS.LIB.  The GRAPHICS.LIB library contains general
+drawing, positioning, and coloring functions.
+
+To use this library, include FGRAPH.FI and FGRAPH.FD in your source.
+Since this library is model-independent, you need not include it in
+the combined libraries.  This saves some disk space at the cost of some
+link speed.  However, you will have to specify the library explicitly
+whenever you need it.
+
+Include GRAPHICS.LIB in combined libraries?
+{input 15,10,4}
+{include menu yesno}
+{include screen ent_sel_exit}
+;
+;
+[screen grtextp]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1OS/2 Graphics Library^0
+{At 5,5}
+The special, model-independent library GRTEXTP.LIB is a subset of
+the DOS graphics library for use on OS/2.  This library allows you
+to write programs which use the text-mode graphics functions and
+run under both OS/2 and DOS.
+
+To use the functions in this library, include FGRAPH.FD & FGRAPH.FI
+in your source.  Since this library is model-independent, it need
+not be included in the combined libraries.  This saves some disk
+space at the cost of some link speed.  However, you will have to
+specify the library explicitly whenever you need it.
+
+Include GRTEXTP.LIB in combined libraries?
+{input 15,10,4}
+{include menu yesno}
+{include screen ent_sel_exit}
+;
+;
+[screen error_text]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1Error Text^0
+{At 5,5}
+
+The run-time files contain error messages which can be displayed
+as a number (only), or as a number followed by a descriptive phrase
+of text.  Error descriptions are informative, and we recommend that
+you include them, but they do take up room in the run-time executable
+files.
+
+Include error descriptions in combined libraries?
+{input 15,10,4}
+{include menu yesno}
+{include screen ent_sel_exit}
+;
+;
+[screen c_compat]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1C Compatibility^0
+{At 5,5}
+
+The C dependent library is for mixed-language applications.
+It must be used in conjunction with the C runtime library.
+
+WARNING:  Selecting this option will generate libraries that
+REQUIRE C LIBRARIES available only in Microsoft C.  The full,
+stand-alone libraries will NOT BE BUILT.  If you select this
+option please read the documentation on mixed language programming.
+
+Install C dependent libraries?
+{input 15,10,4}
+{include menu yesno}
+{include screen ent_sel_exit}
+;
+;
+[screen pwb]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1Programmer's WorkBench^0
+{At 5,6}
+The Programmer's WorkBench is an integrated mouse- and window-
+based development environment.  From within the Programmer's
+WorkBench, you can edit, build, run, and debug your programs,
+as well as access a complete online help system.
+
+Install Microsoft Programmer's WorkBench?
+{input 15,10,4}
+{include menu yesno}
+{include screen ent_sel_exit}
+;
+;
+[screen brief]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1BRIEF Compatibility^0
+{At 5,5}
+The Programmer's WorkBench can be customized with alternate key
+assignments and macros. A set of key assignments and macros that
+emulate the BRIEF (R) editor can be added to the TOOLS.INI file.
+If you do not install BRIEF compatibility, default key assignments
+are used.
+
+If you specify BRIEF compatibility, the BRIEF macros and key
+assignments are appended to your TOOLS.INI file. If you do not
+have a TOOLS.INI file, SETUP creates one.
+
+Install BRIEF compatibility?
+{input 15,10,4}
+{include menu yesno}
+{include screen ent_sel_exit}
+;
+;
+[screen mouse]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1Mouse Driver^0
+{At 5,4}
+If you use a Microsoft Mouse (or a 100%%-compatible pointing
+device), you should use the MOUSE.COM file provided with this
+release. This is the most recent version of the mouse driver and
+contains bug fixes and new features.
+
+To install the mouse driver provided with FORTRAN %VERS, the command
+MOUSE must be executed from AUTOEXEC.BAT or the command line before
+using the Microsoft CodeView debugger, Programmer's WorkBench, or
+Quick Help. MOUSE.COM should be used instead of the MOUSE.SYS
+device driver provided with older versions of Microsoft products.
+
+If you do not use a mouse, you need not copy this file.
+
+Copy the Microsoft Mouse driver?
+{input 15,10,4}
+{include menu yesno}
+{include screen ent_sel_exit}
+;
+;
+[screen patch]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1Floating Point Patch^0
+{At 5,5}
+If you are running IBM(R) PC-DOS 3.20 and trapping floating-point
+exceptions in any of your programs, you may find it necessary to
+patch PC-DOS 3.20 to get proper operation when floating-point
+exceptions occur.
+
+If you choose to copy these files, the required patch files are
+copied into the \PATCH subdirectory of your source file directory.
+See the file PATCH320.DOC in that directory for further
+instructions on making this patch.
+
+Copy the DOS 3.20 patch files?
+{input 15,10,4}
+{include menu yesno}
+{include screen ent_sel_exit}
+;
+;
+[screen samples]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1Sample Programs^0
+{At 5,5}
+There are many sample FORTRAN programs included with this product.
+These programs demonstrate the use of many FORTRAN functions, including
+graphics.  However, they do take up considerable disk space, so
+you may not wish to copy these files.  If you do not copy them now,
+you can install them later by using the file copying option in SETUP's
+Main Menu.
+
+Copy the sample programs?
+{input 15,10,4}
+{include menu yesno}
+{include screen ent_sel_exit}
+;
+;
+[screen startup]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1C Start Up Sources^0
+{At 5,5}
+The source files for start-up routines are provided with this
+product.
+
+If requested, the start-up source files will be put in the \STARTUP
+subdirectory of the source directory.  This directory will contain
+all of the operating system independent source files, the MAKEFILE,
+and the README file.  It also has three subdirectories: \DOS, \OS2, &
+\WIN for the system-dependent files.  Start-up files take up a
+substantial amount of space, so they should be copied only if needed.
+
+Copy the start-up sources?
+{input 15,10,4}
+{include menu yesno}
+{include screen ent_sel_exit}
+;
+;
+[screen helpfiles]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1Help Files^0
+{At 5,5}
+
+FORTRAN %VERS has online help for the FORTRAN language, FORTRAN compiler
+errors, utilities, the Microsoft Programmer's WorkBench (PWB), and for
+the CodeView debugger.  Help can be accessed either from within PWB, or
+via the QuickHelp utility.  We strongly recommend that you choose to
+install the online help files, but these files are quite large, and if
+disk space is a consideration you may choose not to install online help.
+
+Install online help files?
+{input 15,10,4}
+{include menu yesno}
+{include screen ent_sel_exit}
+;
+;
+[screen destdrive]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1Destination Drive^0
+{At 5,5}
+SETUP has found more than one hard drive attached to your system.
+You should select the drive on which you will be installing
+Microsoft FORTRAN %VERS.
+
+This drive will be the default when SETUP asks you to specify
+directory names. If you want to divide this product's components
+among different hard drives, you will be able to change the drive
+letter when specifying the paths.
+
+Please select the destination drive:
+{input 15,20,5}
+; list of drives (built on the fly) goes here
+{include screen ent_sel_exit}
+;
+;
+[screen typedir]
+If the directory does not exist, it will be created.
+
+SETUP proposes the following directory:
+
+{input 5,55,1}
+
+If you want to install these files in a different directory, use
+the BACKSPACE key to erase the current selection, then type the
+directory name.  When the correct directory is displayed, press
+ENTER.
+{include screen ent_exit}
+;
+;
+[screen dirbinb]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1Bound Executable Files^0
+{at 5,5}
+Please specify the directory for bound executable files. All
+executable programs that run in both DOS and OS/2 protected
+mode will be copied to this directory.
+
+{include screen typedir relative}
+;
+;
+[screen dirbinp]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1OS/2 Executable Files^0
+{at 5,5}
+Please specify the directory in which to place the OS/2
+protected-mode executable files.
+
+{include screen typedir relative}
+;
+;
+[screen dirbin]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1DOS Executable Files^0
+{at 5,4}
+Please specify the directory in which to place the DOS executable
+files. If you request both DOS and OS/2 protected-mode executable
+files, DO NOT install them in the same directory, since some (like
+the LINKer) use the same name for both the DOS and OS/2 protected-
+mode versions.
+
+{include screen typedir relative}
+;
+;
+[screen samedir]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1Directory Conflict^0
+{at 5,4}
+You have specified the same directory ( %SECTION )
+for both DOS and OS/2 protected-mode executable files. Some files
+(like the LINKer) use the same name for both the DOS and OS/2
+protected-mode versions, so you MUST specify separate directories.
+
+^1Please specify a DIFFERENT directory for DOS executable files.^0
+
+{include screen typedir relative}
+;
+;
+[screen dirlib]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1Library Files^0
+{at 5,5}
+Please specify the directory in which to place libraries for
+FORTRAN %VERS. This directory contains the combined libraries created
+by SETUP, as well as other libraries that will be copied from the
+source disks.
+
+{include screen typedir relative}
+;
+;
+; source of component directories for library-building
+[screen dirlib_src]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1Source of Component Libraries^0
+{At 5,5}
+Please specify the source of the files for creating the
+combined libraries. This can be a disk drive (such as A:\)
+where you will be prompted to insert the distribution disks,
+or it can be a directory (such as C:\LIB) containing
+the libraries that you kept after running SETUP earlier.
+
+{input 10, 56, 1}
+
+If you want to change the source of these files, use the
+BACKSPACE key to erase the current selection, then type
+the disk or directory name.
+
+When the source shown above is correct, press ENTER to continue.
+{include screen ent_exit}
+;
+;
+[screen dirincl]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1Include Files^0
+{at 5,5}
+Please specify the directory in which to place the include files
+for FORTRAN %VERS.
+
+{include screen typedir relative}
+;
+;
+[screen dirinit]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1Initialization Files^0
+{at 5,5}
+Please specify the directory in which to place the initialization
+files for the Programmer's WorkBench and the CodeView debugger.
+The TOOLS.INI file is placed here.
+
+{include screen typedir relative}
+;
+;
+[screen dirhelp]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1Help Files^0
+{at 5,5}
+Please specify the directory in which to place the help files for
+the online help system. Help files for Microsoft FORTRAN %VERS
+and associated tools are placed here.
+
+{include screen typedir relative}
+;
+;
+[screen dirdll]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1DLL Directory^0
+{At 5,5}
+Several of the protect-mode tools require dynamic-link libraries
+to operate.  The directory specifies where those DLLs should be
+placed.  This directory should be listed in the LIBPATH statement
+of your CONFIG.SYS file.
+
+Please specify the directory in which to place DLLs.
+
+{include screen typedir relative}
+;
+;
+[screen dirwin]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1Windows 3.0 Directory^0
+{At 5,5}
+
+You have choosen to install FORTRAN %VERS files for the Windows operating
+system.  Please specify the directory which contains your Windows
+executable files.
+
+{include screen typedir relative}
+;
+;
+[screen dirsource]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1Source Directory^0
+{at 5,5}
+The source directory contains all of the files that do not belong in
+any of the other directories.  This includes sample FORTRAN programs (if
+requested), start-up source files (if requested), and patch files for DOS
+(if requested).
+
+Please specify the directory in which to place the source files.
+
+{include screen typedir relative}
+;
+;
+[macro]
+; strings used to init the confirm listbox
+INSTALL    = "Install "
+NOINSTALL  = "Do not install "
+COPY       = "Copy "
+NOCOPY     = "Do not copy "
+INCLUDE    = "Include "
+NOINCLUDE  = "Do not include "
+
+NOCHANGES     = "NO CHANGES"
+BOTHOS        = "DOS and OS/2 "
+HOST          = "Host Operating System:  "
+TARGET        = "Target Operating System:  "
+
+TARGETTEMP    = ""
+HOSTTEMP      = ""
+OS2           = "OS/2,"
+DOS           = "DOS,"
+WIN           = "Windows"
+
+PROTREV       = "Target OS/2 version:  "
+PROTREV12     = "OS/2 version 1.2"
+
+DLLLIBS       = "dynamic link/multi-thread libraries"
+WINDLLLIBS    = "Windows dynamic run-time"
+
+MATHTEMP      = ""
+MATHOPTS      = "Math options:  "
+EMULATOR      = "Emulator math, "
+CHIPMATH      = "80x87 chip math, "
+ALTMATH       = "Alternate math"
+NOMATH        = "no math libraries"
+
+MEMTEMP       = ""
+MEMMODELS     = "Memory models:  "
+MEDIUM        = "Medium, "
+LARGE         = "Large"
+NOMODELS      = "no memory models"
+
+HELP_FILES    = "On-line Help Files"
+
+BUILDCOMBLIBS = "Build combined libraries"
+NOCOMBLIBS    = "Do not build combined libraries"
+
+GRMONDO       = "graphics in combined libraries"
+NOGRAPHICS    = "graphics libraries in combined libraries"
+
+INCLGRTEXTP   = "GRTEXTP.LIB in combined libraries"
+ERRORTEXT     = "Error message text"
+CCOMPAT       = "C Compatibility"
+
+DELCOMP       = "Delete component libraries after building combined libraries"
+NODELCOMP     = "Do not delete component libraries after building combined libs"
+
+RENDOS        = "Rename DOS libraries"
+RENOS2        = "Rename OS/2 protected-mode libraries"
+DEFAULTNAMES  = " to default names"
+RENNONE       = "Do not rename libraries to default names"
+
+INSTALLPWB    = "Microsoft Programmer's WorkBench"
+INSTALLBRIEF  = "BRIEF (R) compatibility"
+INSTALLMOUSE  = "Microsoft Mouse software"
+INSTALLPATCH  = "the DOS 3.2 patch files"
+INSTALLSAMPLES= "sample programs"
+INSTALLSTARTUP= "startup sources"
+
+DIRFORBOUND   = "Directory for bound executable files:  "
+DIRFORPROT    = "Directory for OS/2 protected-mode executable files:  "
+DIRFORREAL    = "Directory for DOS executable files:  "
+DIRFORLIB     = "Directory for library files:  "
+DIRFORINCL    = "Directory for include files:  "
+DIRFORINIT    = "Directory for initialization files:  "
+DIRFORHELP    = "Directory for help files:  "
+DIRFORSOURCE  = "Directory for source files:  "
+DIRFORDLL     = "Directory for dynamic link libraries:  "
+DIRFORWIN     = "Directory for Windows:  "
+SRCFORLIB     = "Source for component library files:  "
+;
+;
+[screen confirm]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1Confirm Your Choices^0
+{at 5,4}
+If you are satisfied with your responses, press ENTER to continue.
+Otherwise, use the ARROW (,) keys to select the option to change
+and press ENTER. Your current response is the new default.
+{input 2,77,17}
+; menu is built on the fly
+{include screen ent_sel_exit}
+;
+;
+[screen diskchk]
+{include screen header}
+{at 8, 5}
+{center on}
+Checking disk space requirements. Please wait...
+{center off}
+{include screen exit}
+;
+;
+[screen installing]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1Installing^0
+{at 0,5}
+{center on}
+Installing Microsoft FORTRAN Professional Development System %VERS...
+{center off}
+{include screen exit}
+;
+;
+[screen freespace]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1Not Enough Disk Space^0
+{at 5,5}
+There isn't enough free disk space on drive %DRIVE to install
+FORTRAN %VERS with the options you chose. You need another %NUM K
+of disk space. If SETUP runs out of disk space, the FORTRAN
+Professional Development System may not be installed properly.
+
+You can install fewer optional files, or you can delete existing
+files and run SETUP again. If you believe SETUP misread the free
+space on your hard disk, you can continue.
+
+Please select one of the following:
+{input 15,46,6}
+; menu 'anotherhd' is used if > 1 hard disk, else menu 'smallhd' goes here
+{include screen ent_sel_exit}
+;
+;
+; user only sees this screen if running off hard disk and > 1 floppy drive found
+[screen single_src_drive]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1Copy Files^0
+{At 5,5}
+In order to copy files from the distribution disks, SETUP needs
+to know in which drive you will insert the disks.
+
+You will be prompted to insert the correct disks when SETUP
+needs them.
+
+Please select the source of the distribution disks:
+{input 15,20,5}
+; list of floppy drives (built on the fly) goes here
+{include screen ent_sel_exit}
+;
+;
+[screen single_copy_fname]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1Enter File Name^0
+{at 5,5}
+Enter the base name, without drive or path designation, of the
+file you want to copy. You can use wildcards (*, ?) to specify
+more than one file.
+
+You can view the packing list, which has a short description of
+each file on the distribution disks, from SETUP's Main Menu. To
+return to SETUP's Main Menu, press ENTER without typing a name.
+
+Please enter the name of the file to copy:
+
+{input 25,20,1}
+
+{at 5}
+Do not give a drive or directory name with the file name. Use
+the BACKSPACE key to erase characters. You can use wildcards to
+specify more than one file.
+
+When the file name is correct, press ENTER.
+{include screen ent_exit}
+;
+;
+[screen single_no_match]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1Enter File Name^0
+{at 5,4}
+^1The file name you gave does not match any file on the
+distribution disks.^0
+
+The packing list contains a complete list of files on the
+distribution disks. The packing list can be viewed from SETUP's
+Main Menu. Refer to this list to determine the correct name of
+the file you want to copy. To return to SETUP's Main Menu, press
+ENTER without typing a name.
+
+Please enter the name of the file to copy:
+
+{input 25,20,1}
+
+{at 5}
+Do not give a drive or directory name with the file name. Use
+the BACKSPACE key to erase characters. You can use wildcards to
+specify more than one file.
+
+When the file name is correct, press ENTER.
+{include screen ent_exit}
+;
+;
+[screen multiple_files]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1Choose Files^0
+{at 5,4}
+There is more than one file on the Microsoft FORTRAN %VERS distribution
+disks with the name you gave. You may copy any number of the files.
+Below are the packing list descriptions of each file.
+
+Use the ARROW (,) keys to select a file, then press SPACEBAR
+to mark it. Repeat until you have marked all the files you want to
+copy. When you are ready to copy the files, press ENTER.
+
+{input 5,70,11}
+; listbox is built on the fly
+{include screen ent_sel_exit}
+;
+;
+[screen single_copy_dest]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1Enter Path^0
+{at 5,5}
+The packing list description of this file is:
+    %SFILE -- %SECTION
+
+Enter the full path name (drive and directory) where you
+want the selected file to be copied. Do not enter the name of
+the file, just the name of the directory.
+
+Please enter the drive and directory to which %SFILE should
+be copied:
+
+{input 10,60,1}
+
+{at 5}
+Use the BACKSPACE key to erase characters.
+
+When the drive and directory are correct, press ENTER.
+{include screen ent_exit}
+;
+;
+[screen mult_copy_dest]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1Enter Path^0
+{at 5,5}
+Enter the full path name (drive and directory) where you
+want the selected files to be copied. Do not enter the name of
+the files, just the name of the directory.
+
+Please enter the drive and directory where the files should
+be copied:
+
+{input 10,60,1}
+
+{at 5}
+You can use the BACKSPACE key to erase characters.
+
+When the correct drive and directory is displayed,
+press ENTER.
+{include screen ent_exit}
+;
+;
+[screen single_copying]
+{help nohelp}
+{include screen header}
+{at 5,5}
+Copying...
+
+{include screen exit}
+;
+;
+; notice that this screen is designed to overlay screen single_copying
+[screen single_copy_another]
+{help nohelp}
+{include screen header}
+{at 5,5}
+Copying... finished.
+
+Do you want to copy another file from the distribution disk?
+{input 15,35,5}
+{include menu copyanotherm}
+{include screen ent_sel_exit}
+;
+;
+[screen installworked]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1Installation Complete^0
+{At 5,6}
+SETUP has successfully installed Microsoft FORTRAN %VERS.
+
+
+Press ENTER to continue, or press CTRL+C to exit SETUP.
+{include screen ent_exit}
+;
+;
+[macro]
+NUMERRORS = "0"
+NUMFILES  = "0"
+;
+;
+[screen installerrs]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1Installation Errors^0
+{At 5,6}
+SETUP has not completely installed Microsoft FORTRAN %VERS.
+There were %NUMERRORS errors detected while copying files, and %NUMFILES files
+were not installed because of those errors.
+
+Microsoft FORTRAN %VERS may not work correctly if it is not properly
+installed. Please run SETUP again after correcting the problems.
+
+
+Press ENTER to continue, or press CTRL+C to exit SETUP.
+{include screen ent_exit}
+;
+;
+[screen mult_linkers]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1Multiple Linkers^0
+{At 5,6}
+WARNING:
+
+SETUP has found multiple linkers in the PATH. Be sure to use
+the LINK.EXE that comes with FORTRAN %VERS for linking programs
+assembled with FORTRAN %VERS.
+
+Please press ENTER to continue with SETUP.
+{include screen ent_exit}
+;
+;
+[screen tmpchk]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1TMP Environment Variable^0
+{At 5,3}
+
+^1                      *** WARNING: ***^0
+SETUP has determined that the TMP environment variable is not SET.
+
+The LIB utility requires that TMP be SET to a valid path on your
+hard drive.  If you intend for SETUP to build libraries, then you
+should exit SETUP now and SET the TMP environment variable.
+For example, at the command prompt, type:
+
+     ^1SET TMP=C:\^0
+
+If you do not want to use SETUP to build libraries (i.e. you intend
+to load only component libraries), then you may proceed without a TMP
+environment variable.
+
+Please press ENTER to continue with SETUP, or press CNTL+C to
+exit SETUP.
+{include screen ent_exit}
+;
+;
+[macro]
+UNKNOWN = "of unknown type and version"
+ISVERSION   = "version"
+FOR         = " for "
+LINKDOS     = "DOS"
+LINKOS2     = "OS2"
+INCREMENTAL = "Incremental"
+LINEAR_386  = "Linear-386"
+AND	    = " and "
+MDIRBINB    = " "
+OLDLINKVERS = ""
+NEWLINKVERS = ""
+;
+;
+[screen which_linker]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1Overwrite Linker^0
+{At 5,5}
+The version of LINK.EXE that you have in %MDIRBINB
+is not the version supplied with FORTRAN %VERS.
+
+  Your existing linker is %OLDLINKVERS.
+
+  The new linker is %NEWLINKVERS.
+
+Do you want to overwrite your copy of LINK.EXE?
+{input 15,10,4}
+{include menu yesno}
+{include screen ent_sel_exit}
+;
+;
+[macro]
+MDIRBIN = "\FORTRAN\BIN"
+NEWAUTOEXEC = "NEW-VARS.BAT"
+NEWCONFIG   = "NEW-CONF.SYS"
+NEWSTARTUP  = "NEW-VARS.CMD"
+TOOLSPRE    = "TOOLS.PRE"
+SYSTEMPRE   = "SYSTEM.PRE"
+;
+;
+[screen newfiles_real]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1Environment Settings^0
+{At 5,5}
+SETUP has created the following files to help you configure
+your system for using Microsoft FORTRAN %VERS:
+
+^1%NEWAUTOEXEC^0 is a sample AUTOEXEC.BAT file
+that sets environment variables for use by FORTRAN %VERS.
+This file can be run from the command line to set the environment
+before running the FORTRAN Professional Development System, or it
+can be merged with an existing AUTOEXEC.BAT.
+
+^1%NEWCONFIG^0 is a sample CONFIG.SYS file that
+contains commands that should be copied into your CONFIG.SYS file.
+If these commands are already set in your CONFIG.SYS file, then
+you should use values at least as large as those in the sample
+file in your CONFIG.SYS file.
+
+These files are for DOS only, and are in your real-mode directory.
+{include screen ent_exit}
+;
+;
+[screen newfiles_prot]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1Environment Settings^0
+{At 5,5}
+SETUP has created the following file to help you configure
+your system for using Microsoft FORTRAN %VERS:
+
+^1%NEWSTARTUP^0 is a sample command file that sets
+environment variables for use by the FORTRAN Professional
+Development System.  The file can be run from the command line
+to set the environment before running the FORTRAN Professional
+Development System, or it can be merged with an existing command
+file for the OS/2 command processor.
+
+This file is for use in OS/2 only, and is in your protect-mode
+directory.
+{include screen ent_exit}
+;
+;
+[screen tools_pre]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1Sample PWB Settings^0
+{At 5,5}
+SETUP has created the following file to help you configure
+your system for using Microsoft FORTRAN %VERS:
+
+^1%TOOLSPRE^0 is a sample file that contains various settings used to
+initialize the Programmer's WorkBench (PWB) utility. TOOLS.PRE contains
+special configuration information about the run-time libraries you have
+installed during this SETUP session.
+
+In most cases, you should rename this file to TOOLS.INI or merge
+the contained directives into an existing file of that name.
+
+TOOLS.PRE is located in the directory specified for initialization
+files.
+{include screen ent_exit}
+;
+;
+[screen system_pre]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1Sample Settings for CVW^0
+{At 5,5}
+SETUP has created the following file to help you configure
+your system for using Microsoft FORTRAN %VERS:
+
+^1%SYSTEMPRE^0 is a sample file that contains various settings used to
+initialize Windows.  SYSTEM.PRE contains special configuration
+information for use with CodeView for Windows (CVW).
+
+In most cases, you should merge this file with the SYSTEM.INI
+file in your Windows directory.
+
+SYSTEM.PRE is located in the directory specified for Windows files.
+
+{include screen ent_exit}
+;
+;
+
+[screen himem]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1Memory Utilities^0
+{At 5,5}
+SETUP has copied the files ^1HIMEM.SYS^0, ^1RAMDRIVE.SYS^0, and ^1SMARTDRV.SYS^0 to
+the directory specified for DOS executable files.
+
+HIMEM.SYS allows you to debug programs that approach 640K in size
+by using extended memory on machines with 286, 386, or 486 CPUs.
+
+To avoid possible conflicts, use RAMDRIVE.SYS for memory disk
+emulation and SMARTDRV.SYS for disk caching.  Other disk emulation
+and disk caching programs may conflict with HIMEM.SYS.
+
+The NEW-CONF.SYS file contains a sample entry showing how to install
+HIMEM.SYS in your CONFIG.SYS file.
+
+A more detailed explanation of these three utilities and memory
+configuration (expanded versus extended) is located in Chapter 2
+of "Installing and Using the Professional Development System."
+{include screen ent_exit}
+;
+;
+;******** Library-building screens **********
+[macro]
+LIBLIST = ""
+;
+;
+[screen start_libs]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1Build Libraries^0
+{At 5,5}
+Press ENTER to begin building combined libraries.
+{include screen ent_exit}
+;
+;
+[screen creating_libs]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1Building Library^0
+{At 5,5}
+Creating Library %DFILE
+; this input field's <x,y> is where LIB.EXE's output shows up
+{input 0,1,1}
+
+;{At 8, 20}
+;Libraries built:
+;{At 0}
+;%LIBLIST
+{include screen exit}
+;
+;
+[screen build_err]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1Error Building Library^0
+{At 5,5}
+An error occurred while creating the library %DFILE.  The probable
+cause of this error is a 'not enough memory' or 'not enough disk'
+condition when SETUP tries to spawn the LIB utility.  SETUP + LIB
+requires at least 490K of available memory and enough disk to load
+both the components and the combined libraries.
+
+An ASCII text log file, called ^1'XLIBLOGX.XYZ'^0 contains the output
+of the LIB utility.  You can check this file for any errors that
+may have occurred during the LIB process.
+
+You may try to build other combined libraries, continue
+SETUP without building libraries, or exit SETUP.
+
+{input 15,35,5}
+{include menu build_err_m}
+{include screen ent_sel_exit}
+;
+;
+[screen libs_built]
+{help nohelp}
+{include screen header}
+{at 35,1}
+^1Libraries Built^0
+{At 5,5}
+SETUP has successfully installed the libraries for
+Microsoft FORTRAN %VERS.
+
+
+Press ENTER to return to the main SETUP menu,
+or press CTRL+C to exit SETUP.
+{include screen ent_exit}
+;
+;

@@ -1,0 +1,33 @@
+	Packing List for Microsoft QuickWin Ver. 3.0 (Fortran)
+	Copyright (C) Microsoft Corp. 1991-1992. All rights reserved.
+
+
+
+Program Disk
+
+ Files                        Description
+ -----                        -----------
+
+README.TXT                    Installation information
+SETUP.EXE                     QuickWin installation utility
+PACKING.LST                   This listing of files
+DECOMP.EXE                    Decompression program used by SETUP
+LIB.EXE                       Microsoft Librarian
+QWIN.LIB                      QuickWin component library
+QWIN.HLP                      QuickWin Online Help File
+FGRAPH.FD                     New graphics header file
+FGRAPH.FI                     New graphics header file
+LFUPDATE.RSP                  Repsponse file for QuickWin library
+SAMPLES.TXT                   Sample program notes
+FONTZ.FOR                     Updated Graphics sample
+INCHAR.FOR                    New QuickWin Graphics sample
+REALG.FOR                     Updated Graphics sample
+SAMPLER.FOR                   Updated Graphics sample
+CURSOR.FOR                    Updated Graphics sample
+FONTDEMO.FOR                  New QuickWin Graphics sample
+QWGDEMO.FOR                   New QuickWin Graphics sample
+SINE.FOR                      Updated Graphics sample
+WRAP.FOR                      Updated Graphics sample
+VERTTEXT.FOR                  New QuickWin Graphics sample
+MSD.EXE                       Microsoft Diagnostic Tool
+MSD.TXT                       Microsoft Diagnostic Tool notes

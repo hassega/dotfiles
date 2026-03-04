@@ -34,3 +34,16 @@ highlight CursorLineNr guibg=#0000AA guifg=#FFFF00 cterm=bold
 
 " Garante que o fundo não fique transparente ao sair do texto
 set background=dark
+
+" --- REGRAS RÍGIDAS FORTRAN 77/5.1 ---
+set colorcolumn=7,72    " Cria uma linha vertical na col 7 e col 72
+highlight ColorColumn ctermbg=Red guibg=#440000 " Linha guia discreta
+
+" --- ATALHO PARA PULAR PRO CÓDIGO ---
+" Aperte a tecla TAB para pular direto para a coluna 7 (início do código)
+inoremap <Tab> <C-O>6\|
+
+" --- IDENTAÇÃO AUTOMÁTICA ---
+filetype plugin indent on
+let fortran_free_source=0
+let fortran_have_tabs=1

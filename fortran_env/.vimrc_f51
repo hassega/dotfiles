@@ -20,8 +20,17 @@ set softtabstop=4
 set tabstop=4
 set autoindent
 
-" --- ATALHOS MÁGICOS ---
-" F5: Salva e tenta rodar o ambiente (via seu script magic)
-map <F5> :w<CR>:!bash ~/Fortran/magicfort.sh<CR>
-" F2: Salva rápido (estilo Office antigo)
-map <F2> :w<CR>
+" --- FORÇAR AZUL SÓLIDO (MATAR TRANSPARÊNCIA NO KONSOLE) ---
+set termguicolors
+" Comandos para o Vim 'conversar' melhor com o terminal moderno
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+
+" Pintando o fundo com Azul Sólido (#0000AA é o azul original do DOS)
+highlight Normal guibg=#0000AA guifg=#FFFFFF
+highlight NonText guibg=#0000AA
+highlight LineNr guibg=#0000AA guifg=#AAAAAA
+highlight CursorLineNr guibg=#0000AA guifg=#FFFF00 cterm=bold
+
+" Garante que o fundo não fique transparente ao sair do texto
+set background=dark

@@ -32,14 +32,14 @@ set background=dark
 set colorcolumn=7,72    " Cria uma linha vertical na col 7 e col 72
 highlight ColorColumn ctermbg=Red guibg=#440000 " Linha guia discreta
 
-" --- CONFIGURAÇÃO DE SALTO PARA COLUNA 7 ---
+" --- RESET DE INDENTAÇÃO (CORRIGIDO PARA VIM) ---
 set nocompatible
-set autoindent off
+set noautoindent
 set nosmartindent
 set nocindent
 set noexpandtab
-set tabstop=1
-set softtabstop=0
+filetype indent off
 
-" O comando definitivo: No modo de inserção, Tab pula para a Coluna 7
+" --- O SALTO DEFINITIVO PARA A COLUNA 7 ---
+" Sai para o modo normal, pula para a coluna 7 e volta para o modo insert
 inoremap <Tab> <Esc>7|i

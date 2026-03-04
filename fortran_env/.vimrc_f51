@@ -13,13 +13,6 @@ highlight Statement ctermfg=White ctermbg=Blue cterm=bold
 highlight LineNr ctermfg=Grey ctermbg=Blue
 highlight CursorLineNr ctermfg=Yellow ctermbg=Blue cterm=bold
 
-" --- COMPORTAMENTO FORTRAN 77 (Colunas e Tabs) ---
-set expandtab
-set shiftwidth=4
-set softtabstop=4
-set tabstop=4
-set autoindent
-
 " --- FORÇAR AZUL SÓLIDO (MATAR TRANSPARÊNCIA NO KONSOLE) ---
 set termguicolors
 " Comandos para o Vim 'conversar' melhor com o terminal moderno
@@ -39,15 +32,14 @@ set background=dark
 set colorcolumn=7,72    " Cria uma linha vertical na col 7 e col 72
 highlight ColorColumn ctermbg=Red guibg=#440000 " Linha guia discreta
 
-" --- ATALHO PARA PULAR PRO CÓDIGO ---
-" Aperte a tecla TAB para pular direto para a coluna 7 (início do código)
-" Força o Tab a saltar para a coluna 7 em qualquer situação no modo de inserção
-set softtabstop=0
+" --- CONFIGURAÇÃO DE SALTO PARA COLUNA 7 ---
+set nocompatible
+set autoindent off
+set nosmartindent
+set nocindent
 set noexpandtab
-inoremap <Tab> <C-O>:call cursor(0, 7)<CR>
+set tabstop=1
+set softtabstop=0
 
-
-" --- IDENTAÇÃO AUTOMÁTICA ---
-filetype plugin indent on
-let fortran_free_source=0
-let fortran_have_tabs=1
+" O comando definitivo: No modo de inserção, Tab pula para a Coluna 7
+inoremap <Tab> <Esc>7|i

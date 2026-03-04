@@ -1,7 +1,4 @@
----
 *Ambiente configurado e gerenciado com a ajuda da **LumiLoka** ✨*
-
----
 
 # 💻 Apple Silicon M3 Max | Arch Linux ARM64 | Parallels Desktop 🚀
 

@@ -40,8 +40,14 @@ set nocindent
 set noexpandtab
 filetype indent off
 
-" --- O SALTO REAL PARA A COLUNA 7 (FORTRÃO RAIZ) ---
-" Este comando apaga a linha atual, insere 6 espaços e te deixa na Coluna 7
+" --- SALTO PARA COLUNA 7 (SEM ERRO DE CARACTERE) ---
 set virtualedit=all
-inoremap <Tab> <Esc>0D6ai
+set expandtab
+set tabstop=6
+set shiftwidth=6
+set softtabstop=6
+
+" Este comando usa o motor do Vim para mover o cursor, sem 'digitar' nada
+inoremap <Tab> <C-O>:call cursor(line('.'), 7)<CR>
+
 

@@ -1,0 +1,27 @@
+" --- CONFIGURAÇÃO VIM RETRÔ (PWB FORTRAN 5.1 STYLE) ---
+set nocompatible
+set number              " Mostra números de linha (ajuda no Fortran)set relativenumbers
+
+set syntax=fortran      " Ativa realce de sintaxe para .FOR
+set encoding=utf-8
+
+" --- CORES CLÁSSICAS DO DOS (Fundo Azul, Texto Branco/Cinza) ---
+highlight Normal ctermfg=White ctermbg=Blue
+highlight Constant ctermfg=Yellow ctermbg=Blue
+highlight Comment ctermfg=Cyan ctermbg=Blue
+highlight Statement ctermfg=White ctermbg=Blue cterm=bold
+highlight LineNr ctermfg=Grey ctermbg=Blue
+highlight CursorLineNr ctermfg=Yellow ctermbg=Blue cterm=bold
+
+" --- COMPORTAMENTO FORTRAN 77 (Colunas e Tabs) ---
+set expandtab
+set shiftwidth=4
+set softtabstop=4
+set tabstop=4
+set autoindent
+
+" --- ATALHOS MÁGICOS ---
+" F5: Salva e tenta rodar o ambiente (via seu script magic)
+map <F5> :w<CR>:!bash ~/Fortran/magicfort.sh<CR>
+" F2: Salva rápido (estilo Office antigo)
+map <F2> :w<CR>

@@ -1,4 +1,4 @@
-* -linguist-vendored
+# * -linguist-vendored
 .vimrc_f51 text
 *.FOR text
 *.conf text

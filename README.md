@@ -2,7 +2,8 @@
 .vimrc_f51 text
 *.FOR text
 *.conf text
-  ✨**Ambiente configurado e gerenciado com a ajuda da **LumiLoka** ✨
+
+** ✨**Ambiente configurado e gerenciado com a ajuda da **LumiLoka** ✨ **
 
 # 💻 Apple Silicon M3 Max | Arch Linux ARM64 | Parallels Desktop 🚀
 

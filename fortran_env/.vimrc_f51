@@ -40,6 +40,8 @@ set nocindent
 set noexpandtab
 filetype indent off
 
-" --- O SALTO DEFINITIVO PARA A COLUNA 7 ---
-" Sai para o modo normal, pula para a coluna 7 e volta para o modo insert
-inoremap <Tab> <Esc>7|i
+" --- O SALTO REAL PARA A COLUNA 7 (FORTRÃO RAIZ) ---
+" Este comando apaga a linha atual, insere 6 espaços e te deixa na Coluna 7
+set virtualedit=all
+inoremap <Tab> <Esc>0D6ai
+

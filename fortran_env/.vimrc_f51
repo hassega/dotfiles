@@ -1,53 +1,83 @@
-" --- CONFIGURAÇÃO VIM RETRÔ (PWB FORTRAN 5.1 STYLE) ---
-set nocompatible
-set number              " Mostra números de linha (ajuda no Fortran)set relativenumbers
+" ===============================================================
+" CONFIGURAÇÃO VIM RETRÔ PWB FORTRAN - VERSÃO FINAL AJUSTADA
+" ===============================================================
 
-set syntax=fortran      " Ativa realce de sintaxe para .FOR
+set nocompatible
 set encoding=utf-8
+syntax on
 
-" --- CORES CLÁSSICAS DO DOS (Fundo Azul, Texto Branco/Cinza) ---
-highlight Normal ctermfg=White ctermbg=Blue
-highlight Constant ctermfg=Yellow ctermbg=Blue
-highlight Comment ctermfg=Cyan ctermbg=Blue
-highlight Statement ctermfg=White ctermbg=Blue cterm=bold
-highlight LineNr ctermfg=Grey ctermbg=Blue
-highlight CursorLineNr ctermfg=Yellow ctermbg=Blue cterm=bold
+" --- 1. INTERFACE E NÚMEROS (O QUE VOCÊ PEDIU) ---
+set number
+set relativenumber
+set laststatus=2
+set showcmd
 
-" --- FORÇAR AZUL SÓLIDO (MATAR TRANSPARÊNCIA NO KONSOLE) ---
+" --- 2. CORES CLÁSSICAS (AZUL PWB SEM MARROM) ---
 set termguicolors
-" Comandos para o Vim 'conversar' melhor com o terminal moderno
-let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 
-" Pintando o fundo com Azul Sólido (#0000AA é o azul original do DOS)
-highlight Normal guibg=#0000AA guifg=#FFFFFF
-highlight NonText guibg=#0000AA
-highlight LineNr guibg=#0000AA guifg=#AAAAAA
-highlight CursorLineNr guibg=#0000AA guifg=#FFFF00 cterm=bold
+" Fundo Azul e Texto Branco
+highlight Normal       guibg=#0000AA guifg=#FFFFFF ctermbg=Blue ctermfg=White
+" Coluna de Números (Garante que o Relativenumber apareça no azul)
+highlight LineNr       guibg=#0000AA guifg=#888888 ctermbg=Blue ctermfg=Grey
+highlight CursorLineNr guibg=#0000AA guifg=#FFFF00 ctermbg=Blue ctermfg=Yellow gui=bold
 
-" Garante que o fundo não fique transparente ao sair do texto
-set background=dark
+" Colunas Guia 7 e 72 (Saímos do marrom para um Vermelho Vinho discreto)
+set colorcolumn=7,72
+highlight ColorColumn  guibg=#550000 ctermbg=DarkRed
 
-" --- REGRAS RÍGIDAS FORTRAN 77/5.1 ---
-set colorcolumn=7,72    " Cria uma linha vertical na col 7 e col 72
-highlight ColorColumn ctermbg=Red guibg=#440000 " Linha guia discreta
+" Pontinhos (....) em Azul Escuro para não cansar a vista
+set list
+set listchars=space:·,tab:»\ 
+highlight SpecialKey   guifg=#0044FF ctermfg=DarkBlue
 
-" --- RESET DE INDENTAÇÃO (CORRIGIDO PARA VIM) ---
-set nocompatible
-set noautoindent
-set nosmartindent
-set nocindent
-set noexpandtab
-filetype indent off
-
-" --- SALTO PARA COLUNA 7 (SEM ERRO DE CARACTERE) ---
+" --- 3. REGRAS RÍGIDAS FORTRAN E TAB ---
 set virtualedit=all
 set expandtab
 set tabstop=6
 set shiftwidth=6
 set softtabstop=6
 
-" Este comando usa o motor do Vim para mover o cursor, sem 'digitar' nada
+" O seu Tab 'Voador': pula direto para a coluna 7 no modo inserção
 inoremap <Tab> <C-O>:call cursor(line('.'), 7)<CR>
 
+" --- 4. COMPORTAMENTO DO MODO VISUAL ---
+" Se você estiver revisando e quiser editar, aperte 'i' e ele não apaga o texto
+vnoremap i <Esc>i
+vnoremap a <Esc>a
+
+" --- FINALIZAÇÃO ---
+set background=dark
+filetype indent off
+
+" --- MÁGICA DO F5: SALVAR E RODAR (FORTRAN OU BASH) ---
+" Se o arquivo termina em .sh, roda com o bash.
+" Se termina em .for ou .f90, compila com gfortran e roda.
+function! ExecutarCodigo()
+    exec "w"
+    if &filetype == 'sh' || expand('%:e') == 'sh'
+        exec "!bash %"
+    elseif &filetype == 'fortran' || expand('%:e') =~ 'for\|f90'
+        exec "!gfortran % -o %< && ./%<"
+    else
+        echo "LumiLoka: Formato não reconhecido para F5!"
+    endif
+endfunction
+
+nnoremap <F5> :call ExecutarCodigo()<CR>
+inoremap <F5> <Esc>:call ExecutarCodigo()<CR>
+
+function! ExecutarCodigo()
+    exec "w"
+    " Roda direto no buffer azul, sem limpar a tela
+    if &filetype == 'sh' || expand('%:e') == 'sh'
+        exec "!bash %"
+    elseif &filetype == 'fortran' || expand('%:e') =~ 'for\|f90'
+        exec "!gfortran % -o %< && ./%<"
+    else
+        echo "LumiLoka: Formato não reconhecido!"
+    endif
+endfunction
+
+nnoremap <F5> :call ExecutarCodigo()<CR>
+inoremap <F5> <Esc>:call ExecutarCodigo()<CR>
 

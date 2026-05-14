@@ -1,7 +1,7 @@
 "==============================================================================
 	" CONFIGURAÇÃO NEOVIM FINAL - CERBERO (M3 MAX) - VERSÃO CORRIGIDA
 "==============================================================================
-let g:python3_host_prog = expand('~/EXAMESPDF/venv/bin/python')
+
 let g:loaded_netrw = 1
 let g:loaded_netrwPlugin = 1
 
@@ -12,7 +12,6 @@ set laststatus=2
 syntax on
 filetype plugin indent on
 set clipboard=unnamedplus
-set expandtab
 
 "01. --- WRAP VISUAL GERAL ---
 set wrap
@@ -36,7 +35,6 @@ Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'L3MON4D3/LuaSnip'
-Plug 'David-Kunz/gen.nvim'
 call plug#end()
 
 "03. --- CORES E INTERFACE ---
@@ -48,6 +46,7 @@ highlight IblIndent guifg=#51afef gui=nocombine
 highlight IblScope guifg=#00ffff gui=nocombine
 set guicursor=n-v-c-i:block-Cursor
 highlight Cursor guibg=#ffff00 guifg=black
+
 
 " --- INÍCIO DO BLOCO LUA PARA PLUGINS ---
 lua << LUA
@@ -133,18 +132,8 @@ if status_tel then
     })
 end
 
--- 09. --- OLLAMA CODER
-require('gen').setup({
-  model = "qwen2.5-coder:32b-instruct-q4_K_M", -- Nome exato do Ollama
-  display_mode = "float", -- Janela flutuante (bom para o seu setup de colunas)
-  show_model = true,
-  width = 80,
-  height = 25,
-})
-
 LUA
-
-"10. ---. ATALHOS GERAIS ---
+"08. ---. ATALHOS GERAIS ---
 nnoremap <Tab> <C-w>w
 nnoremap <S-Tab> <C-w>W
 nnoremap <C-b> :vsp<cr>
@@ -156,13 +145,13 @@ nnoremap <C-n> :call GerarEvolucaoMedica()<CR>
 
 nnoremap <C-p> :lua require('telescope.builtin').find_files({ cwd = vim.fn.expand('~/COBOL/cob') })<CR>
 
-"11. ---. AMBIENTE PYTHON ---
+"09. ---. AMBIENTE PYTHON ---
 nnoremap <C-r> :update <bar> botright split <bar> term python3 %<CR>
 nnoremap <F5> :update <bar> botright split <bar> term python3 %<CR>
 tnoremap <Esc> <C-\><C-n>
 autocmd TermOpen * startinsert
 
-"12. ---. AMBIENTE COBOL (COMPILAÇÃO E WRAP FÍSICO) ---
+"10. ---. AMBIENTE COBOL (COMPILAÇÃO E WRAP FÍSICO) ---
 let g:cobol_autoupper = 0
 let g:cobol_fold = 0
 
@@ -176,47 +165,29 @@ endfunction
 
 augroup cobol_logic
     autocmd!
-    "12.1. Unificação: Aplica margem 72, wrap físico (t) e autoindent em um só bloco
-    "Adicione isso na seção de COBOL:
-    autocmd FileType cobol setlocal textwidth=72
-    autocmd FileType cobol setlocal formatoptions+=tc autoindent
+    "10.1. Unificação: Aplica margem 72, wrap físico (t) e autoindent em um só bloco
+    autocmd FileType cobol setlocal textwidth=72 formatoptions+=tc autoindent
     autocmd FileType cobol setlocal wrap linebreak colorcolumn=7,8,12,72
     
-    "12.2. Configurações para Indentação em Escada (Estilo Python)
+    "10.2. Configurações para Indentação em Escada (Estilo Python)
     """"" Define que o Tab terá 4 espaços e converterá tabs em espaços para manter o alinhamento
     autocmd FileType cobol setlocal shiftwidth=4 tabstop=4 expandtab
     
-    "12.3. Atalho F10
+    "10.3. Atalho F10
     autocmd FileType cobol nnoremap <buffer> <F10> :call RodarCobol()<CR>
 augroup END
 
-"13. ---. TEMPLATE COBOL ---
+"11. ---. TEMPLATE COBOL ---
 function! CreateCobolTemplate()
     if line('$') == 1 && getline(1) == ''
         let l:prog = toupper(expand("%:t:r"))
-        call append(0, [
-            \ "       IDENTIFICATION DIVISION.",
-            \ "       PROGRAM-ID. " . l:prog . ".",
-            \ "       AUTHOR. CERBERO.",
-            \ "      *",
-            \ "       ENVIRONMENT DIVISION.",
-            \ "      *",
-            \ "       DATA DIVISION.",
-            \ "       WORKING-STORAGE SECTION.",
-            \ "      *",
-            \ "       PROCEDURE DIVISION.",
-            \ "       MAIN-PROCEDURE.",
-            \ "           DISPLAY 'OLA NEOVIM'.",
-            \ "           STOP RUN.",
-            \ "       END PROGRAM " . l:prog . "."
-            \ ])
+        call append(0, ["       IDENTIFICATION DIVISION.", "       PROGRAM-ID. " . l:prog . ".", "       AUTHOR. CERBERO.", "       *", "       ENVIRONMENT DIVISION.", "       *", "       DATA DIVISION.", "       WORKING-STORAGE SECTION.", "       *", "       PROCEDURE DIVISION.", "       MAIN-PROCEDURE.", "           DISPLAY 'OLA NEOVIM'.", "           STOP RUN.", "       END PROGRAM " . l:prog . "."])
         call cursor(12, 11)
     endif
 endfunction
-
 autocmd BufNewFile *.cob,*.cbl call CreateCobolTemplate()
 
-"14. ---. EVOLUÇÃO MÉDICA (Versão Corrigida) ---
+"12. ---. EVOLUÇÃO MÉDICA (Versão Corrigida) ---
 function! GerarEvolucaoMedica()
     let l:paciente = input("Nome do Paciente: ")
     if l:paciente == "" | return | endif
@@ -241,34 +212,30 @@ function! GerarEvolucaoMedica()
 endfunction
 
 " ==============================================================
-"15. ---. CONFIGURAÇÃO FINAL DE ATALHOS - CERBERO
+" CONFIGURAÇÃO FINAL DE ATALHOS - CERBERO
 " ==============================================================
 
-" 16. ---. DEFINE A TECLA DE ESPACO COMO LEADER
+" 13. ---. DEFINE A TECLA DE ESPACO COMO LEADER
 let mapleader = " "
 
-" 18. ---. EVOLUÇÃO MÉDICA (Chama o novo script Python 1983)
+" 14. ---. EVOLUÇÃO MÉDICA (Chama o novo script Python 1983)
 " Atalho: Espaço + e + v
 nnoremap <leader>ev :call GerarEvolucaoMedica()<CR>
 
-" 19. ---. CONFIGURAÇÃO (Abre o init.vim em divisão vertical)
+" 15. ---. CONFIGURAÇÃO (Abre o init.vim em divisão vertical)
 " Atalho: Espaço + c + v (de Config Vim)
 " Use o caminho completo para evitar telas em branco
 nnoremap <leader>cv :edit ~/.config/nvim/init.vim<cr>
 
-" 20. --. RECARREGAR (Aplica mudanças do init.vim sem fechar)
+" 16. --. RECARREGAR (Aplica mudanças do init.vim sem fechar)
 " Atalho: Espaço + s + v
 nnoremap <leader>sv :source $MYVIMRC<cr>
 
-" 21. -- Executa o script que está guardado dentro da pasta do programa
+" 17. -- Executa o script que está guardado dentro da pasta do programa
 " Atalho: Espaço + b + g
 nnoremap <leader>bg :silent !~/BLOODGAS/rodar_bg.sh<CR>
 
-" 22. -- Executa o script que roda o Python correto
-" Atalho: Espaço + r roda o script com o Python correto
-nnoremap <leader>r :split \| terminal ~/EXAMESPDF/venv/bin/python ~/EXAMESPDF/gerar_evolucao.py TUDO<CR>
-
-" 23. --. BACKUP (Comando :Bkp para rodar seu script de backup)
+" 18. --. BACKUP (Comando :Bkp para rodar seu script de backup)
 " Uso: Digite :Bkp no modo normal
 command! Bkp :!bkp
 

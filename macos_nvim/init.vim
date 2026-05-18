@@ -1,4 +1,4 @@
-"==============================================================================
+"=============================================================================
 	" CONFIGURAÇÃO NEOVIM FINAL - CERBERO (M3 MAX) - VERSÃO CORRIGIDA
 "==============================================================================
 let g:python3_host_prog = expand('~/EXAMESPDF/venv/bin/python')
@@ -37,11 +37,24 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'L3MON4D3/LuaSnip'
 Plug 'David-Kunz/gen.nvim'
+" Adicione esta linha junto aos outros blocos de Plug
+Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
+
 call plug#end()
 
-"03. --- CORES E INTERFACE ---
-silent! colorscheme blue
+"03.CORES E INTERFACE
+set termguicolors
+let g:tokyonight_style = "moon" " Opções: storm, night, moon, day
+
+" Aplica o tema Tokyo Night
+colorscheme tokyonight
+
+" Garante a transparência do fundo que você já utilizava
 hi Normal guibg=NONE
+hi NonText guibg=NONE
+hi NormalNC guibg=NONE
+
+" Suas marcações de colunas médicas e margens personalizadas
 set colorcolumn=7,8,12,72
 highlight ColorColumn guibg=#5f0000 ctermbg=52
 highlight IblIndent guifg=#51afef gui=nocombine
@@ -60,7 +73,7 @@ local status_lspconfig, lspconfig = pcall(require, "lspconfig")
 if status_mason and status_mason_lsp and status_lspconfig then
     mason.setup()
     mason_lsp.setup({
-        ensure_installed = { "cobol_ls", "pyright" },
+        ensure_installed = { "cobol_ls", "pyright", "rust_analyzer" },
         handlers = {
             function(server_name)
                 lspconfig[server_name].setup {}
@@ -95,7 +108,7 @@ end
 local status_ts, ts = pcall(require, "nvim-treesitter.configs")
 if status_ts then
     ts.setup({
-        ensure_installed = { "cobol", "python", "lua", "vim", "vimdoc" },
+        ensure_installed = { "cobol", "python", "lua", "vim", "vimdoc", "rust" },
         highlight = { enable = true },
         indent = { enable = true }
     })
@@ -156,11 +169,12 @@ nnoremap <C-n> :call GerarEvolucaoMedica()<CR>
 
 nnoremap <C-p> :lua require('telescope.builtin').find_files({ cwd = vim.fn.expand('~/COBOL/cob') })<CR>
 
-"11. ---. AMBIENTE PYTHON ---
-nnoremap <C-r> :update <bar> botright split <bar> term python3 %<CR>
-nnoremap <F5> :update <bar> botright split <bar> term python3 %<CR>
+"11.AMBIENTE PYTHON
+nnoremap <C-r>: update <bar> botright split <bar> term python3 %<CR>
+nnoremap <F5>: update <bar> botright split <bar> term python3 %<CR>
 tnoremap <Esc> <C-\><C-n>
-autocmd TermOpen * startinsert
+autocmd FileType rust nnoremap <buffer> <F5> :update <bar> botright split <bar> term cargo run<CR>
+autocmd Termopen * startinsert
 
 "12. ---. AMBIENTE COBOL (COMPILAÇÃO E WRAP FÍSICO) ---
 let g:cobol_autoupper = 0
@@ -271,4 +285,3 @@ nnoremap <leader>r :split \| terminal ~/EXAMESPDF/venv/bin/python ~/EXAMESPDF/ge
 " 23. --. BACKUP (Comando :Bkp para rodar seu script de backup)
 " Uso: Digite :Bkp no modo normal
 command! Bkp :!bkp
-

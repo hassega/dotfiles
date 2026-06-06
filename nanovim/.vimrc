@@ -319,3 +319,5 @@ augroup END
 "------------------------------------------------------------------------------
 "execute 'source '.$RCPATH.fnameescape('icomplete.vim')
 
+" Azhrael editou
+" Azhrael editou

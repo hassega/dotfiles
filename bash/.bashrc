@@ -236,21 +236,21 @@ alias dotcheck='cd ~/dotfiles && git fetch && git status && cd -'
 function dotsave() {
     local curr_dir=$(pwd)
     cd ~/dotfiles || return 1
-    
+
     echo "🔄 Checando mudanças locais..."
     if [[ -n $(git status --porcelain) ]]; then
         git add .
         git commit -m "Update configs: $(date +'%d/%m/%Y %H:%M')"
         echo "✓ Commit local criado"
     fi
-    
+
     echo "🔄 Sincronizando com GitHub..."
     git pull --rebase origin main || {
         echo "❌ Conflito no rebase. Resolve com 'git status' em ~/dotfiles"
         cd "$curr_dir"
         return 1
     }
-    
+
     git push origin main && echo "Tudo salvo na nuvem, mestre! ✨" || echo "Nada novo pra subir 🌟"
     cd "$curr_dir"
 }

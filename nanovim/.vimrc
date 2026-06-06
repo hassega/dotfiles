@@ -1,3 +1,67 @@
+"configuration file for vim
+set nomodeline  "CVE-2007-2438
+set nocompatible     " Use Vim defaults instead of 100% vi compatibility
+set backspace=indent,eol,start      "more powerful backspacing
+" Don't write backup file if vim is being called by "crontab -e"
+au BufWrite /private/tmp/crontab.* set nowritebackup nobackup
+" Don't write backup file if vim is being called vy "chpass
+au BufWrite /private/etc/pw.* set nowritebackup nobackup
+let skip_defaults_vim=1
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"               ██╗    ██╗  ██╗  ███╗   ███╗  
+"               ██║    ██║  ██║  ████╗ ████║
+"               ██║    ██╝  ██║  ██╔████╝██║     
+"               ╚██╗  ██╝   ██║  ██║╚██╝ ██║    
+"                 ╚███╝     ██║  ██║ ╚╝  ██║
+"                  ╚═╝      ╚═╝  ╚═╝     ╚═╝
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""" CONFIGURACAO DO VIM COMO IDE PARA HASSEGA BY BLAU """"""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""''"
+" ==============================================================================
+" 1. GERENCIADOR DE PLUGINS (Vim-Plug)
+" ==============================================================================
+call plug#begin('~/.vim/plugged')
+
+" --- Temas --------------------------------------------------------------------
+Plug 'ghifarit53/tokyonight-vim'
+Plug 'gruvbox-community/gruvbox' " Novo: Plugin do Tema Gruvbox
+
+" --- Explorador de Arquivos e Ícones ------------------------------------------
+Plug 'preservim/nerdtree'      " Novo: Abre arquivos/pastas na lateral
+Plug 'sickill/vim-monokai'
+Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'agude/vim-eldar'
+Plug 'ryanoasis/vim-devicons'  " Novo: Adiciona ícones de arquivos (deve vir por último)
+
+call plug#end()
+
+" ==============================================================================
+" 2. CONFIGURAÇÕES DE CORES E TEMA (Melhorado)
+" ==============================================================================
+if has('termguicolors')
+    set termguicolors
+else
+    set t_Co=256
+endif
+
+" Ativar o estilo Moon do Tokyonight
+" let g:tokyonight_style = 'night' " 'storm' ou 'night' aproximam o visual Moon no Vim clássico
+" let g:tokyonight_enable_italic = 1
+" let g:tokyonight_transparent_background = 1 " Mantém seu fundo transparente
+" colorscheme tokyonight          "Ativa o Tokyonight
+
+" Ativar o tema GruvBox
+" set background=dark          " Define o fundo como escuro (ou 'light' para claro)
+" let g:gruvbox_transparent_bg = 1 " Mantém o fundo transparente se o seu terminal for
+" colorscheme gruvbox          " Ativa o Gruvbox
+
+" Ativar demais temas
+" colorscheme dracula
+" colorscheme monokai
+colorscheme eldar
+
 "-------------  CONFIGURACOES GERAIS  ------------------------------------------
 filetype plugin on
 filetype indent on
@@ -14,40 +78,6 @@ set splitright
 set mouse=a
 set number
 set relativenumber
-
-" -------------  Configuration file for vim ------------------------------------------
-set nomodeline  "CVE-2007-2438
-
-" Normally we use vim-extensions. If you want true vi-compatibility
-" remove change the following statements
-" set vi-comaptibility\n
-
-set nocompatible     " Use Vim defaults instead of 100% vi compatibility
-set backspace=2      "more powerful backspacing
-
-" Don't write backup file if vim is being called by "crontab -e"
-au BufWrite /private/tmp/crontab.* set nowritebackup nobackup
-" Don't write backup file if vim is being called vy "chpass
-au BufWrite /private/etc/pw.* set nowritebackup nobackup
-
-let skip_defaults_vim=1
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"               ██╗    ██╗  ██╗  ███╗   ███╗  
-"               ██║    ██║  ██║  ████╗ ████║
-"               ██║    ██╝  ██║  ██╔████╝██║     
-"               ╚██╗  ██╝   ██║  ██║╚██╝ ██║    
-"                 ╚███╝     ██║  ██║ ╚╝  ██║
-"                  ╚═╝      ╚═╝  ╚═╝     ╚═╝
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""""""""""""""" CONFIGURACAO DO VIM COMO IDE PARA HASSEGA BY BLAU """"""""""""""
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""''"
-"-------------  DEFINACAO DAS CORES DO TERMINAL --------------------------------
-if has('termguicolors')
-    set termguicolors
-else
-    set t_Co=256
-endif
 
 "-------------  CAMINHOS  ------------------------------------------------------
 set path=.,**
@@ -76,7 +106,7 @@ map <F5> :term ./%<cr>
 "------------- ALTERNAR CARACTERES INVISIVEIS ----------------------------------
 map <F6> :set list<cr>
 
-"------------- EXIB ESTATISTICAS DO ARQUIVO ----------------------------------
+"------------- EXIBE ESTATISTICAS DO ARQUIVO ----------------------------------
 map  <F7> g<c-g>
 imap <F7> <c-o>g<c-g>
 
@@ -95,6 +125,9 @@ nnoremap <C-r> :!python3 % <cr>
 "------------- ABRIR TERMINAL LADO DIREITO E ESQUERDO --------------------------
 nnoremap <C-b> :vsp<cr>
 nnoremap <C-d> :belowright<cr>
+
+" Atalho para abrir/fechar o NERDTree com Control + N
+nnoremap <C-n> :NERDTreeToggle<CR>
 
 "------------- SALVAR COM CTRL + S ---------------------------------------------
 nnoremap <C-s> :w!<cr>
@@ -142,8 +175,6 @@ set listchars=tab:›-,space:·,trail:◀,eol:↲   " caracteres nao imprimiveis
 set fillchars=vert:│,fold:-,eob:~,lastline:@
 
 "-------------  NUMERACOES LINHAS E CURSOR  ------------------------------------
-set number 
-set relativenumber
 set scrolloff=2
 set cursorline
 
@@ -171,9 +202,9 @@ let @/ = ""
 "-------------  ORTOGRAFIA  ----------------------------------------------------
 set nospell
 set spelllang=pt_br,en
-"set complete+=kspell
-"set completeopt=menuone,longest
-"set shortmess+=c
+" set complete+=kspell
+" set completeopt=menuone,longest
+" set shortmess+=c
 " Insert completion...
 
 "------------- MAPEAMENTO BASICO AUTOCOMPLETE ----------------------------------
@@ -182,6 +213,7 @@ inoremap [ []<left>
 inoremap { {}<left>
 inoremap " ""<left>
 inoremap ' ''<left>
+inoremap ` ``<left>
 
 "-------------  ALTERNAR CORRECAO ORTOGRAFICA  ---------------------------------
 map <F3> :set spell!<cr>
@@ -211,14 +243,6 @@ imap <c-F12> <c-r>=Hashbangs()<cr>
 set wildmenu
 set wildmode=longest,full
 set wildoptions=pum
-
-"------------- COLOR THEMES ----------------------------------------------------
-" https://github.com/sainnhe/edge.git 
-" set background=dark
-" colorscheme edge
-
-"------------------------------------------------------------------------------
-colorscheme darkblue 
 
 "-------------  BARRA DE STATUS  -----------------------------------------------
 set noshowmode
@@ -286,7 +310,7 @@ call LoadStatusLine()
 hi Normal guibg=NONE ctermbg=NONE
 
 "-------------  LINHA DO CURSOR  -----------------------------------------------
-hi CursorLine guibg=#202130
+hi CursorLine guibg=#2e2a24            """"""""202130
 
 "-------------  COMENTARIOS EM ITALICO  ----------------------------------------
 hi Comment cterm=italic gui=italic
@@ -308,4 +332,18 @@ augroup filetype_vim
     autocmd FileType vim setlocal foldmethod=marker
     autocmd FileType vim set foldlevelstart=30
     autocmd FileType vim setlocal foldmarker={{{,}}}
+augroup END
+
+" ============================================================================
+" BACKUP AUTOMÁTICO AO FECHAR CONFIGURAÇÕES E O SCRIPT DE EVOLUÇÃO
+" ============================================================================
+augroup AutoVimBackup
+    autocmd!
+    " Executa antes de salvar e fechar arquivos de configuração ou o script médico
+    " autocmd BufWritePre *vimrc,init.vim,gerar_evolucao.py,gerar_fluxo.py silent! !mkdir -p ~/vim_backups
+    autocmd BufWritePre *vimrc  silent! !mkdir -p ~/vim_backups
+    
+    " Cria o snapshot com data e hora na pasta de segurança
+    " autocmd BufWritePre *vimrc,init.vim,gerar_evolucao.py,gerar_fluxo_py execute "!cp % ~/vim_backups/" . substitute(expand('%:t'), '^\.', '', '') . "_auto_" . strftime('%Y-%m-%d_%Hh%M')
+    autocmd BufWritePre *vimrc execute "!cp % ~/vim_backups/" . substitute(expand('%:t'), '^\.', '', '') . "_auto_" . strftime('%Y-%m-%d_%Hh%M')
 augroup END

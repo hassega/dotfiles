@@ -309,16 +309,3 @@ augroup filetype_vim
     autocmd FileType vim set foldlevelstart=30
     autocmd FileType vim setlocal foldmarker={{{,}}}
 augroup END
-
-"------------- ARQUIVOS EXTERNOS  ----------------------------------------------
-"execute 'source '.$RCPATH.fnameescape('autocmds.vim')
-"execute 'source '.$RCPATH.fnameescape('customcolors.vim')
-"execute 'source '.$RCPATH.fnameescape('statusbar.vim')
-"execute 'source '.$RCPATH.fnameescape('mappings.vim')
-
-"------------------------------------------------------------------------------
-"execute 'source '.$RCPATH.fnameescape('icomplete.vim')
-
-" Azhrael editou
-" Azhrael editou
-# teste

@@ -1,0 +1,145 @@
+GUIA COMPLETO: DOTFILES + STOW + GIT - SETUP AZHRAEL
+
+
+OBJETIVO
+
+Centralizar .bashrc, .vimrc, .nanorc no ~/dotfiles
+Gerenciar com GNU Stow e sincronizar no GitHub com 1 comando
+
+ESTRUTURA FINAL
+
+~/dotfiles/
+├── bash/
+│   └── .bashrc
+└── nanovim/
+    ├── .vimrc
+    └── .nanorc
+
+PASSO 1: CRIAR REPO E ESTRUTURA
+
+# 1. Cria pasta do repo
+mkdir -p ~/dotfiles/bash ~/dotfiles/nanovim
+
+# 2. Inicia git e conecta no GitHub
+cd ~/dotfiles
+git init
+git remote add origin git@github.com:hassega/dotfiles.git
+# Troca 'hassega/dotfiles' pelo teu repo
+
+PASSO 2: MIGRAR ARQUIVOS EXISTENTES
+
+# Move os configs atuais pra dentro do dotfiles
+mv ~/.bashrc ~/dotfiles/bash/.bashrc
+mv ~/.vimrc ~/dotfiles/nanovim/.vimrc  
+mv ~/.nanorc ~/dotfiles/nanovim/.nanorc
+
+# Se der erro "are the same file" é pq já eram symlinks. Normal.
+
+PASSO 3: ATIVAR STOW
+
+cd ~/dotfiles
+stow bash
+stow nanovim
+
+# O que o stow faz: cria symlinks
+# ~/.bashrc -> ~/dotfiles/bash/.bashrc
+# ~/.vimrc -> ~/dotfiles/nanovim/.vimrc
+# ~/.nanorc -> ~/dotfiles/nanovim/.nanorc
+
+# Conferir se deu certo:
+ls -la ~ | grep -E '.bashrc|.vimrc|.nanorc'
+# Tem que aparecer lrwxrwxrwx ... -> dotfiles/...
+
+PASSO 4: CRIAR COMANDO DOTSAVE
+
+# Edita o ~/.bashrc
+nano ~/dotfiles/bash/.bashrc
+
+# Cola essa função no final do arquivo:
+function dotsave() {
+    local curr_dir=$(pwd)
+    cd ~/dotfiles || return 1
+    
+    echo "🔄 Checando mudanças locais..."
+    if [[ -n $(git status --porcelain) ]]; then
+        git add .
+        git commit -m "Update configs: $(date +'%d/%m/%Y %H:%M')"
+        echo "✓ Commit local criado"
+    else
+        echo "✓ Nada novo pra commitar localmente"
+    fi
+    
+    echo "🔄 Sincronizando com GitHub..."
+    git pull --rebase origin main || {
+        echo "❌ Conflito no rebase. Resolve com 'git status' em ~/dotfiles"
+        cd "$curr_dir"
+        return 1
+    }
+    
+    git push origin main && echo "Tudo salvo na nuvem, mestre! ✨" || echo "Nada novo pra subir 🌟"
+    cd "$curr_dir"
+}
+
+# Recarrega o bashrc:
+source ~/.bashrc
+
+PASSO 5: PROMPT COM STATUS GIT
+
+# Adiciona no ~/.bashrc pra mostrar branch e status:
+PS1='╭─ 💁 \u at 💻 \h in 📁 \w on (🌿 $(git branch --show-current 2>/dev/null || echo "no git") $(if [[ -n $(git status --porcelain 2>/dev/null) ]]; then echo "•"; else echo "✓"; fi))\n╰λ '
+
+# ✓ = repo limpo
+# • = tem mudanças não commitadas
+
+USO NO DIA A DIA
+
+1. Edita qualquer config normal:
+   nano ~/.vimrc
+   
+2. Salva no GitHub com 1 comando:
+   dotsave
+   
+3. O dotsave faz: add → commit → pull --rebase → push
+
+INSTALAR EM MÁQUINA NOVA
+
+git clone git@github.com:hassega/dotfiles.git ~/dotfiles
+cd ~/dotfiles
+stow bash nanovim
+
+COMANDOS ÚTEIS DO NANO
+
+Ctrl + K         = Apaga linha inteira
+Alt + A          = Marca início de seleção
+Ctrl + K         = Corta seleção
+Ctrl + U         = Cola o que cortou
+Alt + U          = Desfaz
+Ctrl + O         = Salva arquivo
+Ctrl + X         = Sai do nano
+
+TROUBLESHOOTING
+
+Erro "cannot pull with rebase: unstaged changes"
+Solução: O dotsave corrigido já commita antes do pull. Se ainda der, roda:
+cd ~/dotfiles && git add . && git commit -m "fix" && git pull --rebase
+
+Erro "are the same file" no mv
+Significa que o stow já linkou. Pode ignorar.
+
+ADICIONAR NOVOS PACOTES
+
+1. Cria pasta: mkdir ~/dotfiles/tmux
+2. Move config: mv ~/.tmux.conf ~/dotfiles/tmux/
+3. Ativa stow: cd ~/dotfiles && stow tmux
+4. dotsave
+
+BACKUP
+
+cp ~/.bashrc ~/.bashrc.backup
+# Sempre faz backup antes de mexer no bashrc
+
+FIM
+---
+Criado em: 06/06/2026
+Máquina: azhrael
+User: cerbero

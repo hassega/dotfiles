@@ -272,3 +272,4 @@ alias v-for='vim -u "$HOME/dotfiles/fortran_env/.vimrc_f51"'
 
 # Homebrew
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash)"
+export PATH=~/.npm-global/bin:$PATH

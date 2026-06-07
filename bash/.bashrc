@@ -232,7 +232,6 @@ alias cobol='code /home/cerbero/cobolProjects'
 alias dotconf='cd ~/dotfiles && git fetch && git status && cd -' # Checa status remoto
 alias dotcheck='cd ~/dotfiles && git fetch && git status && cd -'
 
-
 function dotsave() {
     local curr_dir=$(pwd)
     cd ~/dotfiles || return 1
@@ -251,7 +250,7 @@ function dotsave() {
         return 1
     }
 
-    git push origin main && echo "Tudo salvo na nuvem, mestre! ✨" || echo "Nada novo pra subir 🌟" || echo "Azhrael tá voando 🚀" 
+    git push origin main && echo "Tudo salvo na nuvem, mestre! ✨" || echo "Nada novo pra subir 🌟" || echo "Azhrael tá voando 🚀"
     cd "$curr_dir"
 }
 

@@ -212,6 +212,8 @@ alias temp='lscpu | grep "CPU MHz" || echo "M3 Max voando baixo!"'
 alias wipe='printf "\033c"'              # Limpa tela e buffer (não dá pra rolar pra cima)
 alias eb="nano ~/.bashrc"                # Abre este arquivo para editar
 alias sb="source ~/.bashrc"              # Aplica as mudanças no terminal na hora
+alias nvim="/home/cerbero/Appimage/neovim"
+
 alias init='nvim ~/.config/nvim/init.vim'
 
 # --- CONFIGURAÇÕES COBOL (Arch ARM) ---

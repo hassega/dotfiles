@@ -251,7 +251,7 @@ function dotsave() {
         return 1
     }
 
-    git push origin main && echo "Tudo salvo na nuvem, mestre! ✨" || echo "Nada novo pra subir 🌟"
+    git push origin main && echo "Tudo salvo na nuvem, mestre! ✨" || echo "Nada novo pra subir 🌟" || echo "Azhrael tá voando 🚀" 
     cd "$curr_dir"
 }
 
@@ -270,4 +270,3 @@ alias v-for='vim -u "$HOME/dotfiles/fortran_env/.vimrc_f51"'
 
 # Homebrew
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash)"
-# Azhrael tá voando

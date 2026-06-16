@@ -48,3 +48,4 @@ git clone git@github.com:hassega/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 stow hypr waybar rofi fortran_env
  
+ 

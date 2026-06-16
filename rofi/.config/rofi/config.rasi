@@ -1,7 +1,9 @@
 configuration {
     show-icons: true;
     icon-theme: "buuf";
-    font: "JetBrains Mono Nerd Font 22"; /* Adicione esta linha com sua fonte e tamanho */
+    font: "JetBrains Mono Nerd Font 14"; /* Adicione esta linha com sua fonte e tamanho */
 }
+
+//@theme "/usr/share/rofi/themes/DarkBlue.rasi"
 
 @theme "/usr/share/rofi/themes/DarkBlue.rasi"

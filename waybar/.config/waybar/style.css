@@ -336,3 +336,11 @@ label:focus {
 #privacy-item.audio-out {
     background-color: #0069d4;
 }
+
+#custom-power {
+    font-size: 20px;       /* Ajuste este valor para o tamanho que desejar */
+    padding-left: 12px;    /* Dá mais área de clique nas laterais */
+    padding-right: 12px;
+    margin-left: 4px;      /* Afasta o botão do módulo anterior */
+    margin-right: 4px;
+}

@@ -17,7 +17,7 @@ let skip_defaults_vim=1
 "                 ╚███╝     ██║  ██║ ╚╝  ██║
 "                  ╚═╝      ╚═╝  ╚═╝     ╚═╝
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""""""""""""""" CONFIGURACAO DO VIM COMO IDE PARA HASSEGA BY BLAU """"""""""""""
+" CONFIGURACAO DO VIM COMO IDE PARA PARA SCRIPT, PYTHON & RUST HASSEGA BY BLAU "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""''"
 " ==============================================================================
 " 1. GERENCIADOR DE PLUGINS (Vim-Plug)
@@ -35,15 +35,23 @@ Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'agude/vim-eldar'
 Plug 'ryanoasis/vim-devicons'  " Novo: Adiciona ícones de arquivos (deve vir por último)
 
+" --- Suporte Avançado e Sintaxe Dinâmica para Python (Novo) ------------------
+Plug 'vim-python/python-syntax' " Destaca sintaxe moderna do Python 3
+" Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins' } " Cores inteligentes para variáveis
+
+" ––– Programacao Rust———————————————————————————————————————————-
+Plug 'rust-lang/rust.vim'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
 call plug#end()
 
 " ==============================================================================
 " 2. CONFIGURAÇÕES DE CORES E TEMA (Melhorado)
 " ==============================================================================
 if has('termguicolors')
-    set termguicolors
+ set termguicolors
 else
-    set t_Co=256
+ set t_Co=256
 endif
 
 " Ativar o estilo Moon do Tokyonight
@@ -182,15 +190,37 @@ set cursorline
 let &t_SI="\e[6 q"
 let &t_EI="\e[2 q"
 
-"-------------  INDENTACAO  ---------------------------------------------------
+"-------------  INDENTACAO & TABULACAO ---------------------------------------------------
 set autoindent
 set smartindent
-
-"-------------  TABULACAO  ----------------------------------------------------
 set expandtab
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
+
+"-------------  AUTOMACOES PARA SHELL SCRIPT -----------------------------------
+function! IniciarScriptShell()
+    " Insere a hashbang na primeira linha
+    call setline(1, '#!/bin/bash')
+    " Adiciona uma linha em branco abaixo
+    call append(1, '')
+    " Move o cursor para a linha 2, coluna 1
+    call cursor(2, 1)
+    " Entra no modo de insercao
+    startinsert
+endfunction
+
+augroup ShellScripting
+    autocmd!
+    " 1. Chama a funcao acima ao criar um arquivo .sh novo
+    autocmd BufNewFile *.sh call IniciarScriptShell()
+
+    " 2. Torna o script executavel automaticamente ao salvar pela primeira vez
+    autocmd BufWritePost *.sh silent! !chmod +x %
+
+    " 3. Roda o ShellCheck automaticamente (se instalado) ao salvar para exibir erros
+    autocmd BufWritePost *.sh silent! make | redraw!
+augroup END
 
 "-------------  BUSCA COM CAIXA TEXTO DIFER. MAISC E MIN  ----------------------
 set ignorecase
@@ -215,27 +245,26 @@ inoremap " ""<left>
 inoremap ' ''<left>
 inoremap ` ``<left>
 
-"-------------  ALTERNAR CORRECAO ORTOGRAFICA  ---------------------------------
+"------------- ALTERNAR CORRECAO ORTOGRAFICA ---------------------------------
 map <F3> :set spell!<cr>
 
 "------------- SELECAO COM SETAS UP E DOWN -------------------------------------
 inoremap <expr> <up> pumvisible() ? '<c-p>' : '<up>'
 inoremap <expr> <down> pumvisible() ? '<c-n>' : '<down>'
 
-"------------- ACEITAR COM SETA DIREITA OU ENTER  -----------------------------
+"------------- ACEITAR COM SETA DIREITA OU ENTER -----------------------------
 inoremap <expr> <right> pumvisible() ? '<c-y>' : '<right>'
 inoremap <expr> <cr> pumvisible() ? '<c-y>' : '<cr>'
 
-"--------------  CANCELAR COMPLETION COM SETA ESQUERDA  ------------------------
+"-------------- CANCELAR COMPLETION COM SETA ESQUERDA ------------------------
 inoremap <expr> <left> pumvisible() ? '<c-e>' : '<left>'
 
-"---------------  HASHBANGS  ----------------------------------------------------
+"--------------- HASHBANGS ----------------------------------------------------
 function! Hashbangs()
     let hb = ['#!/bin/bash', '#!/usr/bin/env bash', '#!/bin/sh', '#!/usr/bin/awk -f']
     call complete(col('.'), hb)
     return ''
-endfunction     
-
+endfunction 
 "imap <c-x>c <c-r>=Hashbangs()<cr>
 imap <c-F12> <c-r>=Hashbangs()<cr>
 
@@ -244,11 +273,10 @@ set wildmenu
 set wildmode=longest,full
 set wildoptions=pum
 
-"-------------  BARRA DE STATUS  -----------------------------------------------
+"------------- BARRA DE STATUS -----------------------------------------------
 set noshowmode
 set laststatus=2
-
-hi statusline   cterm=NONE ctermfg=0 ctermbg=7   guibg=#C1C2D0 guifg=#000000
+hi statusline cterm=NONE ctermfg=0 ctermbg=7 guibg=#C1C2D0 guifg=#000000
 hi statuslinenc cterm=NONE ctermfg=0 ctermbg=240 guibg=#616270 guifg=#000000
 
 augroup ModeEvents
@@ -260,70 +288,60 @@ augroup ModeEvents
 augroup end
 
 function! LoadStatusLine()
-
     let g:left_sep='\'
     let g:right_sep='/'
-
     let g:currentmode={
-        \ 'n'  : 'Normal',
-        \ 'no' : 'Normal-Operator Pending',
-        \ 'v'  : 'Visual',
-        \ 'V'  : 'V-Line',
-        \ '' : 'V-Block',
-        \ 's'  : 'Select',
-        \ 'S'  : 'S-Line',
-        \ '' : 'S-Block',
-        \ 'i'  : 'Insert',
-        \ 'R'  : 'Replace',
-        \ 'Rv' : 'V-Replace',
-        \ 'c'  : 'Command',
-        \ 'cv' : 'Vim Ex',
-        \ 'ce' : 'Ex',
-        \ 'r'  : 'Prompt',
-        \ 'rm' : 'More',
-        \ 'r?' : 'Confirm',
-        \ '!'  : 'Shell',
-        \ 't'  : 'Terminal'
-        \}
-
+    \ 'n' : 'Normal',
+    \ 'no' : 'Normal-Operator Pending',
+    \ 'v' : 'Visual',
+    \ 'V' : 'V-Line',
+    \ '' : 'V-Block',
+    \ 's' : 'Select',
+    \ 'S' : 'S-Line',
+    \ '' : 'S-Block',
+    \ 'i' : 'Insert',
+    \ 'R' : 'Replace',
+    \ 'Rv' : 'V-Replace',
+    \ 'c' : 'Command',
+    \ 'cv' : 'Vim Ex',
+    \ 'ce' : 'Ex',
+    \ 'r' : 'Prompt',
+    \ 'rm' : 'More',
+    \ 'r?' : 'Confirm',
+    \ '!' : 'Shell',
+    \ 't' : 'Terminal'
+    \}
     set statusline=\ %{toupper(g:currentmode[mode()])}
-    set statusline=\ %{toupper(mode())}
-    set statusline+=\ %{left_sep}
+    set statusline+=\ %{toupper(mode())}
+    set statusline+=\ \\
     set statusline+=\ %n
-    set statusline+=\ %{left_sep}
+    set statusline+=\ \\
     set statusline+=\ %f%m\ %y
-    set statusline+=\ %{left_sep}
-    set statusline+=\ %{&ff}\ %{&fenc!=''?&fenc:&enc}
-    set statusline+=\ %{left_sep}
+    set statusline+=\ \\
+    set statusline+=\ %ff\ %{&fenc!=''?&fenc:&enc}
+    set statusline+=\ \\
     set statusline+=\ %=
-    set statusline+=\ %{right_sep}
+    set statusline+=\ /
     set statusline+=\ %l/%L,%v
-    set statusline+=\ %{right_sep}
+    set statusline+=\ /
     set statusline+=\ %P\ 
-
 endfunction
-
 call LoadStatusLine()
 
-"-------------  ESQUEMA DE CORES  ----------------------------------------------
-"-------------  FUNDO TRANSPARENTE  --------------------------------------------
+"------------- ESQUEMA DE CORES ----------------------------------------------
+"------------- FUNDO TRANSPARENTE --------------------------------------------
 hi Normal guibg=NONE ctermbg=NONE
-
-"-------------  LINHA DO CURSOR  -----------------------------------------------
-hi CursorLine guibg=#2e2a24            """"""""202130
-
-"-------------  COMENTARIOS EM ITALICO  ----------------------------------------
+"------------- LINHA DO CURSOR -----------------------------------------------
+hi CursorLine guibg=#2e2a24 """"""""202130
+"------------- COMENTARIOS EM ITALICO ----------------------------------------
 hi Comment cterm=italic gui=italic
-
-"-------------  DIVISAO VERTICAL DE JANELAS  -----------------------------------
+"------------- DIVISAO VERTICAL DE JANELAS -----------------------------------
 hi VertSplit ctermbg=NONE guibg=NONE ctermfg=7 guifg=#c1c2d0
-
-"-------------  BARRA DE ABAS  -------------------------------------------------
-hi TabLine      guifg=#9192a0 guibg=#303140 gui=none
-hi TabLineSel   guifg=#a1a2b0 guibg=#101120 gui=bold
-hi TabLineFill  guifg=#9192a0 guibg=#303140 gui=none
-
-"-------------  SELECAO MODO VISIAL  -------------------------------------------
+"------------- BARRA DE ABAS -------------------------------------------------
+hi TabLine guifg=#9192a0 guibg=#303140 gui=none
+hi TabLineSel guifg=#a1a2b0 guibg=#101120 gui=bold
+hi TabLineFill guifg=#9192a0 guibg=#303140 gui=none
+"------------- SELECAO MODO VISIAL -------------------------------------------
 hi Visual guifg=NONE guibg=#303140
 
 "------------- HABILITAR O METODO DE MARCACAO PARA DOBRAMENTO CODIGO -----------
@@ -339,11 +357,110 @@ augroup END
 " ============================================================================
 augroup AutoVimBackup
     autocmd!
-    " Executa antes de salvar e fechar arquivos de configuração ou o script médico
-    " autocmd BufWritePre *vimrc,init.vim,gerar_evolucao.py,gerar_fluxo.py silent! !mkdir -p ~/vim_backups
-    autocmd BufWritePre *vimrc  silent! !mkdir -p ~/vim_backups
-    
-    " Cria o snapshot com data e hora na pasta de segurança
-    " autocmd BufWritePre *vimrc,init.vim,gerar_evolucao.py,gerar_fluxo_py execute "!cp % ~/vim_backups/" . substitute(expand('%:t'), '^\.', '', '') . "_auto_" . strftime('%Y-%m-%d_%Hh%M')
+    autocmd BufWritePre *vimrc silent! !mkdir -p ~/vim_backups
     autocmd BufWritePre *vimrc execute "!cp % ~/vim_backups/" . substitute(expand('%:t'), '^\.', '', '') . "_auto_" . strftime('%Y-%m-%d_%Hh%M')
 augroup END
+
+" ==============================================================================
+" RUST: PROGRAMAR E COMPILAR
+" ==============================================================================
+let g:rustfmt_autosave = 1 " Roda rustfmt ao salvar
+let g:rustfmt_emit_files = 1
+let g:rustfmt_fail_silently = 0
+let g:cargo_makeprg_params = 'check' " :make usa cargo check por padrão
+let g:coc_rust_analyzer_server_path = $HOME . '/.cargo/bin/rust-analyzer'
+
+augroup RustAutoCmds
+    autocmd!
+    " Define makeprg pra arquivos .rs
+    autocmd FileType rust compiler cargo
+ 
+    " Habilita números e quebra só pra Rust
+    autocmd FileType rust setlocal colorcolumn=100
+ 
+    " Fecha quickfix ao sair do insert se estiver vazio
+    autocmd InsertLeave *.rs cwindow
+augroup END
+
+" --- MAPEAMENTOS SÓ PRA RUST ---
+" <F5> = cargo run no arquivo atual ou projeto
+autocmd FileType rust nnoremap <buffer> <F5> :RustRun<CR>
+" <F6> = cargo test
+autocmd FileType rust nnoremap <buffer> <F6> :Cargo test<CR>
+" <F9> = cargo build --release
+autocmd FileType rust nnoremap <buffer> <F9> :Cargo build --release<CR>
+" <leader>cb = cargo build
+autocmd FileType rust nnoremap <buffer> <leader>cb :Cargo build<CR>
+" <leader>cc = cargo check
+autocmd FileType rust nnoremap <buffer> <leader>cc :Cargo check<CR>
+" <leader>cf = :RustFmt manual
+autocmd FileType rust nnoremap <buffer> <leader>cf :RustFmt<CR>
+" <leader>ct = cargo test um teste específico sob cursor
+autocmd FileType rust nnoremap <buffer> <leader>ct :RustTest<CR>
+" <leader>cr = cargo run com args
+autocmd FileType rust nnoremap <buffer> <leader>cr :RustRun 
+" --- 5. COC.NVIM PRA LSP RUST ---
+autocmd FileType rust nmap <buffer> gd <Plug>(coc-definition)
+autocmd FileType rust nmap <buffer> gr <Plug>(coc-references)
+autocmd FileType rust nmap <buffer> K :call CocActionAsync('doHover')<CR>
+autocmd FileType rust nmap <buffer> <leader>rn <Plug>(coc-rename)
+autocmd FileType rust nmap <buffer> <leader>a <Plug>(coc-codeaction)
+autocmd FileType rust nmap <buffer> <leader>f <Plug>(coc-format)
+" Mostra erro na linha com <leader>e
+autocmd FileType rust nnoremap <buffer> <leader>e :CocDiagnostics<CR> 
+
+" ==============================================================================
+" PYTHON: PROGRAMAR, AUTOMAÇÃO E COMPILAÇÃO (NOVO COMPLETO)
+" ==============================================================================
+let g:python_highlight_all = 1 " Liga o destaque de sintaxe avançado para Python 3
+
+augroup PythonAutoCmds
+    autocmd!
+    " Aplica as regras de indentação PEP 8 de forma estrita em arquivos .py
+    autocmd FileType python setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab textwidth=79 colorcolumn=80
+augroup END
+
+" --- MAPEAMENTOS EXCLUSIVOS PARA PYTHON ---
+" <F5> = Executa o script Python atual dentro do terminal embutido splitado do Vim
+autocmd FileType python nnoremap <buffer> <F5> :term python3 %<CR>
+" <leader>py = Salva o script e executa de forma direta no shell tradicional externo
+autocmd FileType python nnoremap <buffer> <leader>py :w<CR>:!python3 %<CR>
+" Integração completa com o motor CoC para pular direto para funções/métodos Python
+autocmd FileType python nmap <buffer> gd <Plug>(coc-definition)
+autocmd FileType python nmap <buffer> gr <Plug>(coc-references)
+
+" --- GERAÇÃO AUTOMÁTICA DE CABEÇALHOS EM NOVOS ARQUIVOS ---
+function! IniciarScriptPython()
+    call setline(1, '#!/usr/bin/env python3')
+    call append(1, '# -*- coding: utf-8 -*-')
+    call append(2, '')
+    call append(3, 'def main():')
+    call append(4, '    print("Olá, Python!")')
+    call append(5, '')
+    call append(6, 'if __name__ == "__main__":')
+    call append(7, '    main()')
+    call cursor(5, 5)
+    startinsert
+endfunction
+
+augroup PythonAutomations
+    autocmd!
+    " Insere a hashbang e esqueleto inicial automaticamente se o arquivo .py for novo
+    autocmd BufNewFile *.py call IniciarScriptPython()
+    " Garante que o script ganhe permissão de execução nativa +x no CachyOS ao salvar
+    autocmd BufWritePost *.py silent! !chmod +x %
+augroup END
+
+" ==============================================================================
+" CONFIGURAÇÃO GERAL COMPARTILHADA DO COC.NVIM
+" ==============================================================================
+set updatetime=300
+set signcolumn=yes
+autocmd CursorHold * silent call CocActionAsync('highlight')
+inoremap <silent><expr> . coc#refresh()
+inoremap <silent><expr> :: coc#refresh()
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
+inoremap <silent><expr> <TAB> coc#pum#visible() ? coc#pum#next(1) : "\<Tab>"
+inoremap <silent><expr> <S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+
+

@@ -1,348 +1,466 @@
-## Sample initialization file for GNU nano.
-##
-## For the options that take parameters, the default value is shown.
-## Other options are unset by default.  To make sure that an option
-## is disabled, you can use "unset <option>".
-##
-## Characters that are special in a shell should not be escaped here.
-## Inside string parameters, quotes should not be escaped -- the last
-## double quote on the line will be seen as the closing quote.
-
-## If you want ^F, ^B, M-F and M-B to do what they did before version 8.0:
-# bind ^F forward main
-# bind ^B back main
-# bind M-F formatter main
-# bind M-B linter main
-
-## Make 'nextword' (Ctrl+Right) and 'chopwordright' (Ctrl+Delete)
-## stop at word ends instead of at beginnings.
-# set afterends
+"configuration file for vim
+set nomodeline  "CVE-2007-2438
+set nocompatible     " Use Vim defaults instead of 100% vi compatibility
+set backspace=indent,eol,start      "more powerful backspacing
+" Don't write backup file if vim is being called by "crontab -e"
+au BufWrite /private/tmp/crontab.* set nowritebackup nobackup
+" Don't write backup file if vim is being called vy "chpass
+au BufWrite /private/etc/pw.* set nowritebackup nobackup
+let skip_defaults_vim=1
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"               ██╗    ██╗  ██╗  ███╗   ███╗  
+"               ██║    ██║  ██║  ████╗ ████║
+"               ██║    ██╝  ██║  ██╔████╝██║     
+"               ╚██╗  ██╝   ██║  ██║╚██╝ ██║    
+"                 ╚███╝     ██║  ██║ ╚╝  ██║
+"                  ╚═╝      ╚═╝  ╚═╝     ╚═╝
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" CONFIGURACAO DO VIM COMO IDE PARA PARA SCRIPT, PYTHON & RUST HASSEGA BY BLAU "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""''"
+" ==============================================================================
+" 1. GERENCIADOR DE PLUGINS (Vim-Plug)
+" ==============================================================================
+call plug#begin('~/.vim/plugged')
+
+" --- Temas --------------------------------------------------------------------
+Plug 'ghifarit53/tokyonight-vim'
+Plug 'gruvbox-community/gruvbox' " Novo: Plugin do Tema Gruvbox
+
+" --- Explorador de Arquivos e Ícones ------------------------------------------
+Plug 'preservim/nerdtree'      " Novo: Abre arquivos/pastas na lateral
+Plug 'sickill/vim-monokai'
+Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'agude/vim-eldar'
+Plug 'ryanoasis/vim-devicons'  " Novo: Adiciona ícones de arquivos (deve vir por último)
+
+" --- Suporte Avançado e Sintaxe Dinâmica para Python (Novo) ------------------
+Plug 'vim-python/python-syntax' " Destaca sintaxe moderna do Python 3
+" Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins' } " Cores inteligentes para variáveis
+
+" ––– Programacao Rust———————————————————————————————————————————-
+Plug 'rust-lang/rust.vim'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+call plug#end()
+
+" ==============================================================================
+" 2. CONFIGURAÇÕES DE CORES E TEMA (Melhorado)
+" ==============================================================================
+if has('termguicolors')
+ set termguicolors
+else
+ set t_Co=256
+endif
+
+" Ativar o estilo Moon do Tokyonight
+" let g:tokyonight_style = 'night' " 'storm' ou 'night' aproximam o visual Moon no Vim clássico
+" let g:tokyonight_enable_italic = 1
+" let g:tokyonight_transparent_background = 1 " Mantém seu fundo transparente
+" colorscheme tokyonight          "Ativa o Tokyonight
+
+" Ativar o tema GruvBox
+" set background=dark          " Define o fundo como escuro (ou 'light' para claro)
+" let g:gruvbox_transparent_bg = 1 " Mantém o fundo transparente se o seu terminal for
+" colorscheme gruvbox          " Ativa o Gruvbox
+
+" Ativar demais temas
+" colorscheme dracula
+" colorscheme monokai
+colorscheme eldar
+
+"-------------  CONFIGURACOES GERAIS  ------------------------------------------
+filetype plugin on
+filetype indent on
+syntax on
+set title
+set encoding=utf-8
+set fileencoding=utf-8
+set backspace=indent,eol,start
+set noerrorbells
+set confirm
+set hidden
+set splitbelow
+set splitright
+set mouse=a
+set number
+set relativenumber
+
+"-------------  CAMINHOS  ------------------------------------------------------
+set path=.,**
+set noswapfile
+set nobackup
+set undodir=~/.vim/undodir
+set undofile
+
+"-------------  VARIAVEIS  -----------------------------------------------------
+"let $RCPATH = '~/.vim/'
+"let $RC = $RCPATH. 'vimrc'
+
+"-------------  QUEBRA DE LINHAS  ----------------------------------------------
+set nowrap
+set linebreak
 
-## When soft line wrapping is enabled, make it wrap lines at blanks
-## (tabs and spaces) instead of always at the edge of the screen.
-# set atblanks
+"-------------  ALTERNAR QUEBRA DE LINHA  --------------------------------------
+map <F3> :set wrap!<cr>
 
-## Automatically indent a newly created line to the same number of
-## tabs and/or spaces as the preceding line -- or as the next line
-## if the preceding line is the beginning of a paragraph.
-# set autoindent
+"-------------  ABRIR TERMINAL  ------------------------------------------------  
+map <F4> :term<cr>  "control D fecha terminal
 
-## Back up files to the current filename plus a tilde.
-# set backup
+"------------- ABRIR TERMINAL PARA EXECUTAR A SCRIPT EM EDICAO  ----------------
+map <F5> :term ./%<cr>
 
-## The directory to put unique backup files in.
-# set backupdir ""
+"------------- ALTERNAR CARACTERES INVISIVEIS ----------------------------------
+map <F6> :set list<cr>
 
-## Use bold text instead of reverse video text.
-# set boldtext
-
-## Treat any line with leading whitespace as the beginning of a paragraph.
-# set bookstyle
+"------------- EXIBE ESTATISTICAS DO ARQUIVO ----------------------------------
+map  <F7> g<c-g>
+imap <F7> <c-o>g<c-g>
 
-## The characters treated as closing brackets when justifying paragraphs.
-## This may not include any blank characters.  Only closing punctuation,
-## optionally followed by these closing brackets, can end sentences.
-# set brackets ""')>]}"
-
-## Automatically hard-wrap the current line when it becomes overlong.
-# set breaklonglines
+"------------- ABRE DEBUGER NO TERMINAL ----------------------------------------
+map <F8> :term gdb<cr>
 
-## Do case-sensitive searches by default.
-# set casesensitive
+"------------- EXECUTAR MAKE (REQUER MAKEFILE NO DIRETORIO ---------------------
+map <F9> :term make<cr>
 
-## Interpret digits given on the command line after a colon after a filename
-## as the line number to go to in that file.
-# set colonparsing
+"------------- MAPEAMENTO DA TECLA DE ATALHO -----------------------------------
+let mapleader = ' '
 
-## Constantly report the cursor position, in the status bar or minibar.
-set constantshow
+"------------- ATALHO PARA EXECUTAR RUN NO PYTHON (:!python3 %) ----------------
+nnoremap <C-r> :!python3 % <cr>
 
-## Use cut-from-cursor-to-end-of-line by default.
-# set cutfromcursor
+"------------- ABRIR TERMINAL LADO DIREITO E ESQUERDO --------------------------
+nnoremap <C-b> :vsp<cr>
+nnoremap <C-d> :belowright<cr>
+
+" Atalho para abrir/fechar o NERDTree com Control + N
+nnoremap <C-n> :NERDTreeToggle<CR>
+
+"------------- SALVAR COM CTRL + S ---------------------------------------------
+nnoremap <C-s> :w!<cr>
+
+"------------- SAIR COM CRTL + q -----------------------------------------------
+nnoremap <C-q> :q<cr>
+
+"------------- RECORTAR PARA AREA DE TRANSFERENCIA -----------------------------
+nnoremap <C-x> :+y<cr>
+
+"------------- COLAR DA AREA DE TRANSFERENCIA ----------------------------------
+nnoremap <C-v> :+p<cr>
+
+"------------- COPIAR ----------------------------------------------------------
+nnoremap <C-c> :y<cr>
+
+"------------- DESTAQUE DE BUSCA -----------------------------------------------
+map <silent> <leader>hh :set hls!<cr>
+map <silent> <leader>hc :set @/ = ""<cr>
+
+"------------- COPIAR E RECORTAR SELECAO PARA AREA DE TRANSFERENCIA ------------
+vmap <silent> <leader>yy "+y
+vmap <silent> <leader>dd "+c
+
+"------------- SALVAR SOMENTE SE HOUVER MUDANCAS -------------------------------
+map <leader>w :update<cr>
+
+"------------- COLAR ULTIMA COPIA EM VEZ DE ULTIMO RECORTE --------------------- 
+map <leader>p "0p
+map <leader>P "0P
+
+"------------- NOVO BUFFER VAZIO -----------------------------------------------
+map <leader>bn :enew<cr>
+
+"------------- NAVEGAR ENTRE BUFFERS F1 e F2 -----------------------------------
+nnoremap <F1> :bp<cr>
+nnoremap <F2> :bn<cr>
+
+"------------- DESTAQUE DE COLUNA ----------------------------------------------
+map <silent> <leader>cc :execute "set cc=" . (&colorcolumn == "" ? "80" : "")<cr>
+
+"-------------  CARACTERES DE PREENCHIMENTO  -----------------------------------
+set nolist
+set listchars=tab:›-,space:·,trail:◀,eol:↲   " caracteres nao imprimiveis """""
+set fillchars=vert:│,fold:-,eob:~,lastline:@
+
+"-------------  NUMERACOES LINHAS E CURSOR  ------------------------------------
+set scrolloff=2
+set cursorline
+
+"-------------  MUDAR BLOCO PARA BARRA NO MODOS INS E VISUAL  -----------------
+let &t_SI="\e[6 q"
+let &t_EI="\e[2 q"
+
+"-------------  INDENTACAO & TABULACAO ---------------------------------------------------
+set autoindent
+set smartindent
+set expandtab
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+
+"-------------  AUTOMACOES PARA SHELL SCRIPT -----------------------------------
+function! IniciarScriptShell()
+    " Insere a hashbang na primeira linha
+    call setline(1, '#!/bin/bash')
+    " Adiciona uma linha em branco abaixo
+    call append(1, '')
+    " Move o cursor para a linha 2, coluna 1
+    call cursor(2, 1)
+    " Entra no modo de insercao
+    startinsert
+endfunction
+
+augroup ShellScripting
+    autocmd!
+    " 1. Chama a funcao acima ao criar um arquivo .sh novo
+    autocmd BufNewFile *.sh call IniciarScriptShell()
+
+    " 2. Torna o script executavel automaticamente ao salvar pela primeira vez
+    autocmd BufWritePost *.sh silent! !chmod +x %
+
+    " 3. Roda o ShellCheck automaticamente (se instalado) ao salvar para exibir erros
+    autocmd BufWritePost *.sh silent! make | redraw!
+augroup END
+
+"-------------  BUSCA COM CAIXA TEXTO DIFER. MAISC E MIN  ----------------------
+set ignorecase
+set smartcase
+set incsearch
+set hls
+let @/ = ""
+
+"-------------  ORTOGRAFIA  ----------------------------------------------------
+set nospell
+set spelllang=pt_br,en
+" set complete+=kspell
+" set completeopt=menuone,longest
+" set shortmess+=c
+" Insert completion...
+
+"------------- MAPEAMENTO BASICO AUTOCOMPLETE ----------------------------------
+inoremap ( ()<left>
+inoremap [ []<left>
+inoremap { {}<left>
+inoremap " ""<left>
+inoremap ' ''<left>
+inoremap ` ``<left>
+
+"------------- ALTERNAR CORRECAO ORTOGRAFICA ---------------------------------
+map <F3> :set spell!<cr>
+
+"------------- SELECAO COM SETAS UP E DOWN -------------------------------------
+inoremap <expr> <up> pumvisible() ? '<c-p>' : '<up>'
+inoremap <expr> <down> pumvisible() ? '<c-n>' : '<down>'
+
+"------------- ACEITAR COM SETA DIREITA OU ENTER -----------------------------
+inoremap <expr> <right> pumvisible() ? '<c-y>' : '<right>'
+inoremap <expr> <cr> pumvisible() ? '<c-y>' : '<cr>'
+
+"-------------- CANCELAR COMPLETION COM SETA ESQUERDA ------------------------
+inoremap <expr> <left> pumvisible() ? '<c-e>' : '<left>'
+
+"--------------- HASHBANGS ----------------------------------------------------
+function! Hashbangs()
+    let hb = ['#!/bin/bash', '#!/usr/bin/env bash', '#!/bin/sh', '#!/usr/bin/awk -f']
+    call complete(col('.'), hb)
+    return ''
+endfunction 
+"imap <c-x>c <c-r>=Hashbangs()<cr>
+imap <c-F12> <c-r>=Hashbangs()<cr>
+
+"------------- MENU SELVAGEM ---------------------------------------------------
+set wildmenu
+set wildmode=longest,full
+set wildoptions=pum
+
+"------------- BARRA DE STATUS -----------------------------------------------
+set noshowmode
+set laststatus=2
+hi statusline cterm=NONE ctermfg=0 ctermbg=7 guibg=#C1C2D0 guifg=#000000
+hi statuslinenc cterm=NONE ctermfg=0 ctermbg=240 guibg=#616270 guifg=#000000
+
+augroup ModeEvents
+    autocmd!
+    au InsertEnter * hi statusline cterm=NONE ctermfg=0 ctermbg=10 guibg=#7BC86F
+    au InsertLeave * hi statusline cterm=NONE ctermfg=0 ctermbg=7 guibg=#C1C2D0
+    au ModeChanged *:[vV\x16]* hi statusline cterm=NONE ctermfg=0 ctermbg=13 guibg=#C990DC
+    au Modechanged [vV\x16]*:* hi statusline cterm=NONE ctermfg=0 ctermbg=7 guibg=#C1C2D0
+augroup end
+
+function! LoadStatusLine()
+    let g:left_sep='\'
+    let g:right_sep='/'
+    let g:currentmode={
+    \ 'n' : 'Normal',
+    \ 'no' : 'Normal-Operator Pending',
+    \ 'v' : 'Visual',
+    \ 'V' : 'V-Line',
+    \ '' : 'V-Block',
+    \ 's' : 'Select',
+    \ 'S' : 'S-Line',
+    \ '' : 'S-Block',
+    \ 'i' : 'Insert',
+    \ 'R' : 'Replace',
+    \ 'Rv' : 'V-Replace',
+    \ 'c' : 'Command',
+    \ 'cv' : 'Vim Ex',
+    \ 'ce' : 'Ex',
+    \ 'r' : 'Prompt',
+    \ 'rm' : 'More',
+    \ 'r?' : 'Confirm',
+    \ '!' : 'Shell',
+    \ 't' : 'Terminal'
+    \}
+    set statusline=\ %{toupper(g:currentmode[mode()])}
+    set statusline+=\ %{toupper(mode())}
+    set statusline+=\ \\
+    set statusline+=\ %n
+    set statusline+=\ \\
+    set statusline+=\ %f%m\ %y
+    set statusline+=\ \\
+    set statusline+=\ %ff\ %{&fenc!=''?&fenc:&enc}
+    set statusline+=\ \\
+    set statusline+=\ %=
+    set statusline+=\ /
+    set statusline+=\ %l/%L,%v
+    set statusline+=\ /
+    set statusline+=\ %P\ 
+endfunction
+call LoadStatusLine()
+
+"------------- ESQUEMA DE CORES ----------------------------------------------
+"------------- FUNDO TRANSPARENTE --------------------------------------------
+hi Normal guibg=NONE ctermbg=NONE
+"------------- LINHA DO CURSOR -----------------------------------------------
+hi CursorLine guibg=#2e2a24 """"""""202130
+"------------- COMENTARIOS EM ITALICO ----------------------------------------
+hi Comment cterm=italic gui=italic
+"------------- DIVISAO VERTICAL DE JANELAS -----------------------------------
+hi VertSplit ctermbg=NONE guibg=NONE ctermfg=7 guifg=#c1c2d0
+"------------- BARRA DE ABAS -------------------------------------------------
+hi TabLine guifg=#9192a0 guibg=#303140 gui=none
+hi TabLineSel guifg=#a1a2b0 guibg=#101120 gui=bold
+hi TabLineFill guifg=#9192a0 guibg=#303140 gui=none
+"------------- SELECAO MODO VISIAL -------------------------------------------
+hi Visual guifg=NONE guibg=#303140
+
+"------------- HABILITAR O METODO DE MARCACAO PARA DOBRAMENTO CODIGO -----------
+augroup filetype_vim
+    autocmd!
+    autocmd FileType vim setlocal foldmethod=marker
+    autocmd FileType vim set foldlevelstart=30
+    autocmd FileType vim setlocal foldmarker={{{,}}}
+augroup END
+
+" ============================================================================
+" BACKUP AUTOMÁTICO AO FECHAR CONFIGURAÇÕES E O SCRIPT DE EVOLUÇÃO
+" ============================================================================
+augroup AutoVimBackup
+    autocmd!
+    autocmd BufWritePre *vimrc silent! !mkdir -p ~/vim_backups
+    autocmd BufWritePre *vimrc execute "!cp % ~/vim_backups/" . substitute(expand('%:t'), '^\.', '', '') . "_auto_" . strftime('%Y-%m-%d_%Hh%M')
+augroup END
+
+" ==============================================================================
+" RUST: PROGRAMAR E COMPILAR
+" ==============================================================================
+let g:rustfmt_autosave = 1 " Roda rustfmt ao salvar
+let g:rustfmt_emit_files = 1
+let g:rustfmt_fail_silently = 0
+let g:cargo_makeprg_params = 'check' " :make usa cargo check por padrão
+let g:coc_rust_analyzer_server_path = $HOME . '/.cargo/bin/rust-analyzer'
+
+augroup RustAutoCmds
+    autocmd!
+    " Define makeprg pra arquivos .rs
+    autocmd FileType rust compiler cargo
+ 
+    " Habilita números e quebra só pra Rust
+    autocmd FileType rust setlocal colorcolumn=100
+ 
+    " Fecha quickfix ao sair do insert se estiver vazio
+    autocmd InsertLeave *.rs cwindow
+augroup END
+
+" --- MAPEAMENTOS SÓ PRA RUST ---
+" <F5> = cargo run no arquivo atual ou projeto
+autocmd FileType rust nnoremap <buffer> <F5> :RustRun<CR>
+" <F6> = cargo test
+autocmd FileType rust nnoremap <buffer> <F6> :Cargo test<CR>
+" <F9> = cargo build --release
+autocmd FileType rust nnoremap <buffer> <F9> :Cargo build --release<CR>
+" <leader>cb = cargo build
+autocmd FileType rust nnoremap <buffer> <leader>cb :Cargo build<CR>
+" <leader>cc = cargo check
+autocmd FileType rust nnoremap <buffer> <leader>cc :Cargo check<CR>
+" <leader>cf = :RustFmt manual
+autocmd FileType rust nnoremap <buffer> <leader>cf :RustFmt<CR>
+" <leader>ct = cargo test um teste específico sob cursor
+autocmd FileType rust nnoremap <buffer> <leader>ct :RustTest<CR>
+" <leader>cr = cargo run com args
+autocmd FileType rust nnoremap <buffer> <leader>cr :RustRun 
+" --- 5. COC.NVIM PRA LSP RUST ---
+autocmd FileType rust nmap <buffer> gd <Plug>(coc-definition)
+autocmd FileType rust nmap <buffer> gr <Plug>(coc-references)
+autocmd FileType rust nmap <buffer> K :call CocActionAsync('doHover')<CR>
+autocmd FileType rust nmap <buffer> <leader>rn <Plug>(coc-rename)
+autocmd FileType rust nmap <buffer> <leader>a <Plug>(coc-codeaction)
+autocmd FileType rust nmap <buffer> <leader>f <Plug>(coc-format)
+" Mostra erro na linha com <leader>e
+autocmd FileType rust nnoremap <buffer> <leader>e :CocDiagnostics<CR> 
+
+" ==============================================================================
+" PYTHON: PROGRAMAR, AUTOMAÇÃO E COMPILAÇÃO (NOVO COMPLETO)
+" ==============================================================================
+let g:python_highlight_all = 1 " Liga o destaque de sintaxe avançado para Python 3
+
+augroup PythonAutoCmds
+    autocmd!
+    " Aplica as regras de indentação PEP 8 de forma estrita em arquivos .py
+    autocmd FileType python setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab textwidth=79 colorcolumn=80
+augroup END
+
+" --- MAPEAMENTOS EXCLUSIVOS PARA PYTHON ---
+" <F5> = Executa o script Python atual dentro do terminal embutido splitado do Vim
+autocmd FileType python nnoremap <buffer> <F5> :term python3 %<CR>
+" <leader>py = Salva o script e executa de forma direta no shell tradicional externo
+autocmd FileType python nnoremap <buffer> <leader>py :w<CR>:!python3 %<CR>
+" Integração completa com o motor CoC para pular direto para funções/métodos Python
+autocmd FileType python nmap <buffer> gd <Plug>(coc-definition)
+autocmd FileType python nmap <buffer> gr <Plug>(coc-references)
+
+" --- GERAÇÃO AUTOMÁTICA DE CABEÇALHOS EM NOVOS ARQUIVOS ---
+function! IniciarScriptPython()
+    call setline(1, '#!/usr/bin/env python3')
+    call append(1, '# -*- coding: utf-8 -*-')
+    call append(2, '')
+    call append(3, 'def main():')
+    call append(4, '    print("Olá, Python!")')
+    call append(5, '')
+    call append(6, 'if __name__ == "__main__":')
+    call append(7, '    main()')
+    call cursor(5, 5)
+    startinsert
+endfunction
+
+augroup PythonAutomations
+    autocmd!
+    " Insere a hashbang e esqueleto inicial automaticamente se o arquivo .py for novo
+    autocmd BufNewFile *.py call IniciarScriptPython()
+    " Garante que o script ganhe permissão de execução nativa +x no CachyOS ao salvar
+    autocmd BufWritePost *.py silent! !chmod +x %
+augroup END
+
+" ==============================================================================
+" CONFIGURAÇÃO GERAL COMPARTILHADA DO COC.NVIM
+" ==============================================================================
+set updatetime=300
+set signcolumn=yes
+autocmd CursorHold * silent call CocActionAsync('highlight')
+inoremap <silent><expr> . coc#refresh()
+inoremap <silent><expr> :: coc#refresh()
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
+inoremap <silent><expr> <TAB> coc#pum#visible() ? coc#pum#next(1) : "\<Tab>"
+inoremap <silent><expr> <S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 
-## Do not use the line below the title bar, leaving it entirely blank.
-# set emptyline
 
-## Set the target width for automatic hard-wrapping and for justifying
-## paragraphs.  If the specified value is 0 or less, the wrapping point
-## will be the terminal's width minus this number.
-# set fill -8
-
-## Draw a vertical stripe at the given column, to help judge text width.
-## (This option does not have a default value.)
-# set guidestripe 75
-
-## Remember the used search/replace strings for the next session.
-# set historylog
-
-## Display a "scrollbar" on the righthand side of the edit window.
-# set indicator
-
-## Scroll the buffer contents per half-screen instead of per line.
-# set jumpyscrolling
-
-## Display line numbers to the left (and any anchors in the margin).
-set linenumbers
-
-## Enable vim-style lock-files.  This is just to let a vim user know you
-## are editing a file [s]he is trying to edit and vice versa.  There are
-## no plans to implement vim-style undo state in these files.
-# set locking
-
-## Fall back to slow libmagic to try and determine an applicable syntax.
-# set magic
-
-## The opening and closing brackets that are found by a matching-bracket
-## search.  This may not contain blank characters.  The opening brackets
-## must come before the closing ones, and they must be in the same order.
-# set matchbrackets "(<[{)>]}"
-
-## Suppress the title bar and show the filename plus a cursor-position
-## percentage in the space of the status bar.
-# set minibar
-
-## Enable mouse support, if available for your system.  When enabled,
-## mouse clicks can be used to place the cursor, set the mark (with
-## two clicks), and execute shortcuts.  The mouse will work in the
-## X Window System, and on the console when gpm is running.
-# set mouse
-
-## Switch on multiple file buffers (inserting a file will put it into
-## a separate buffer).
-# set multibuffer
-
-## Don't convert files from DOS/Mac format.
-# set noconvert
-
-## Don't display the helpful shortcut lists at the bottom of the screen.
-# set nohelp
-
-## Don't automatically add a newline when a file does not end with one.
-# set nonewlines
-
-## Set operating directory.  nano will not read or write files outside
-## this directory and its subdirectories.  Also, the current directory
-## is changed to here, so any files are inserted from this dir.  A blank
-## string means the operating-directory feature is turned off.
-# set operatingdir ""
-
-## Remember the position of cursor and anchors for the next editing session.
-# set positionlog
-
-## Preserve the XON and XOFF keys (^Q and ^S).
-# set preserve
-
-## The characters treated as closing punctuation when justifying paragraphs.
-## This may not contain blank characters.  Only these terminating characters,
-## optionally followed by closing brackets, can end sentences.
-# set punct "!.?"
-
-## Make status-bar messages disappear after 1 keystroke instead of after 20.
-# set quickblank
-
-## The regular expression that matches quoting characters in email
-## or line-comment introducers in source code.  The default is:
-# set quotestr "^([ 	]*([!#%:;>|}]|//))+"
-
-## Try to work around a mismatching terminfo terminal description.
-# set rawsequences
-
-## Fix Backspace/Delete confusion problem.
-# set rebinddelete
-
-## Do regular-expression searches by default.
-## Regular expressions are of the extended type (ERE).
-# set regexp
-
-## Save a changed buffer automatically on exit; don't prompt.
-# set saveonexit
-
-## Put the cursor on the highlighted item in the file browser, and
-## show the cursor in the help viewer; useful for people who use a
-## braille display and people with poor vision.
-set showcursor
-
-## Make the Home key smarter: when Home is pressed anywhere but at the
-## very beginning of non-whitespace characters on a line, the cursor
-## will jump to that beginning (either forwards or backwards).  If the
-## cursor is already at that position, it will jump to the true start
-## of the line (the left edge).
-# set smarthome
-
-## Spread overlong lines over multiple screen lines.
-# set softwrap
-
-## Use this spelling checker instead of the internal one.  This option
-## does not have a default value.
-# set speller "aspell -x -c"
-
-## Use the end of the title bar for some state flags: I = auto-indenting,
-## M = mark, L = hard-wrapping long lines, R = recording, S = soft-wrapping.
-# set stateflags
-
-## Use this tab size instead of the default; it must be greater than 0.
-set tabsize 4
-
-## Convert each typed tab to the fitting number of spaces.
-set tabstospaces
-
-## Snip whitespace at the end of lines when justifying or hard-wrapping.
-# set trimblanks
-
-## Save files by default in Unix format (also when they were DOS or Mac).
-# set unix
-
-## The two single-column characters used to display the first characters
-## of tabs and spaces.  187 in ISO 8859-1 (0000BB in Unicode) and 183 in
-## ISO-8859-1 (0000B7 in Unicode) seem to be good values for these.
-## The default when in a UTF-8 locale:
-# set whitespace "»·"
-## The default otherwise:
-# set whitespace ">."
-
-## Detect word boundaries differently by treating punctuation
-## characters as parts of words.
-# set wordbounds
-
-## The characters (besides alphanumeric ones) that should be considered
-## as parts of words.  This option does not have a default value.  When
-## set, it overrides option 'set wordbounds'.
-# set wordchars "<_>."
-
-## Let an unmodified Backspace or Delete erase the marked region (instead
-## of a single character, and without affecting the cutbuffer).
-# set zap
-
-## Hide the bars plus help lines and use the whole terminal as edit area.
-# set zero
-
-
-## Paint the interface elements of nano.  These are examples; there are
-## no colors by default, except for errorcolor and spotlightcolor.
-set titlecolor bold,white,blue
-set promptcolor lightwhite,grey
-set statuscolor bold,white,blue
-set errorcolor bold,white,red
-set spotlightcolor black,lightyellow
-set selectedcolor lightwhite,#804
-set stripecolor ,#444
-set scrollercolor slate,#222
-set numbercolor bold,green
-set keycolor bold,white
-set functioncolor bold,green
-
-## In root's .nanorc you might want to use:
-set titlecolor bold,white,blue
-set promptcolor lightwhite,grey
-set statuscolor bold,white,blue
-set errorcolor bold,white,red
-set spotlightcolor black,lightyellow
-set selectedcolor lightwhite,#804
-set stripecolor ,#444
-set scrollercolor slate,#222
-set numbercolor bold,green
-set keycolor bold,white
-set functioncolor bold,green
-
-
-## === Syntax coloring ===
-## For all details, see 'man nanorc', section SYNTAX HIGHLIGHTING.
-
-## To include most of the existing syntax definitions, you can do:
-# include /usr/share/nano/*.nanorc
-
-## Or you can select just the ones you need.  For example:
-# include /usr/share/nano/html.nanorc
-# include /usr/share/nano/python.nanorc
-# include /usr/share/nano/sh.nanorc
-
-## In /usr/share/nano/extra/ you can find some syntaxes that are
-## specific for certain distros or for some less common languages.
-
-
-## If <Tab> should always produce four spaces when editing a Python file,
-## independent of the settings of 'tabsize' and 'tabstospaces':
-# extendsyntax python tabgives "    "
-
-
-## === Key bindings ===
-## For all details, see 'man nanorc', section REBINDING KEYS.
-
-## If you want to suspend nano with one keystroke (instead of with ^T^Z):
-# bind ^Z suspend main
-
-## The <Ctrl+Delete> keystroke deletes the word to the right of the cursor.
-## On some terminals the <Ctrl+Backspace> keystroke produces ^H, which is
-## the ASCII character for backspace, so it is bound by default to the
-## backspace function.  The <Backspace> key itself produces a different
-## keycode, which is hard-bound to the backspace function.  So, if you
-## normally use <Backspace> for backspacing and not ^H, you can make
-## <Ctrl+Backspace> delete the word to the left of the cursor with:
-# bind ^H chopwordleft main
-
-## For a more mnemonic Comment keystroke (overriding Cut-from-cursor):
-# bind M-K comment main
-
-## If you want ^L to just refresh the screen and not center the cursor:
-# bind ^L refresh main
-
-## When you sometimes type M-J instead of M-K, or M-T instead of M-R:
-# unbind M-J main
-# unbind M-T main
-## (Those functions are still accessible through ^T^J and ^T^V.)
-
-## For quickly uppercasing or lowercasing the word that the cursor is on.
-## (These effectively select a word and pipe it through a sed command.)
-# bind Sh-M-U "{nextword}{mark}{prevword}{execute}| sed 's/.*/\U&/' {enter}" main
-# bind Sh-M-L "{nextword}{mark}{prevword}{execute}| sed 's/.*/\L&/' {enter}" main
-
-## For copying a marked region to the system clipboard:
-# bind Sh-M-C "{execute}| xsel -ib {enter}{undo}" main
-
-## For copying text to the local clipboard via OSC 52 (if terminal supports it):
-# bind M-* "{execute}|| printf "\033]52;c;%s\007" "$(base64 | tr -d '\n')" {enter}{undo}" main
-
-## For normalizing Unicode to precomposed characters:
-# bind Sh-M-N "{execute}| uconv -x nfc {enter}" main
-
-## For wiping all anchors in a buffer:
-# bind Sh-M-W "{execute}| cat {enter}" main
-
-## For snipping trailing blanks when you save a file:
-# bind ^S "{execute}| sed 's/\s\+$//' {enter}{savefile}" main
-
-## If you would like nano to have keybindings that are more "usual",
-## such as ^O for Open, ^F for Find, ^H for Help, and ^Q for Quit,
-## then uncomment these:
-# bind ^X cut main
-# bind ^C copy main
-# bind ^V paste all
-# bind ^Q exit all
-# bind ^S savefile main
-# bind ^W writeout main
-# bind ^O insert main
-# set multibuffer
-# bind ^H help all
-# bind ^H exit help
-# bind ^F whereis all
-# bind ^G findnext all
-# bind ^B wherewas all
-# bind ^D findprevious all
-# bind ^R replace main
-# unbind ^U all
-# unbind ^N main
-# unbind ^Y all
-# unbind M-J main
-# unbind M-T main
-# bind ^A mark main
-# bind ^P location main
-# bind ^T gotoline main
-# bind ^T gotodir browser
-# bind ^T cutrestoffile execute
-# bind ^L linter execute
-# bind ^E execute main
-# bind ^K "{mark}{end}{zap}" main
-# bind ^U "{mark}{home}{zap}" main
-# bind ^Z undo main
-# bind ^Y redo main
-# include "/usr/share/nano/*.nanorc"

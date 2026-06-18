@@ -25,13 +25,13 @@
 ## Automatically indent a newly created line to the same number of
 ## tabs and/or spaces as the preceding line -- or as the next line
 ## if the preceding line is the beginning of a paragraph.
-set autoindent
+# set autoindent
 
 ## Back up files to the current filename plus a tilde.
-set backup
+# set backup
 
 ## The directory to put unique backup files in.
-set backupdir "~/.BkpNano"
+# set backupdir ""
 
 ## Use bold text instead of reverse video text.
 # set boldtext
@@ -95,7 +95,7 @@ set linenumbers
 ## The opening and closing brackets that are found by a matching-bracket
 ## search.  This may not contain blank characters.  The opening brackets
 ## must come before the closing ones, and they must be in the same order.
-set matchbrackets "(<[{)>]}"
+# set matchbrackets "(<[{)>]}"
 
 ## Suppress the title bar and show the filename plus a cursor-position
 ## percentage in the space of the status bar.
@@ -105,7 +105,7 @@ set matchbrackets "(<[{)>]}"
 ## mouse clicks can be used to place the cursor, set the mark (with
 ## two clicks), and execute shortcuts.  The mouse will work in the
 ## X Window System, and on the console when gpm is running.
-set mouse
+# set mouse
 
 ## Switch on multiple file buffers (inserting a file will put it into
 ## a separate buffer).
@@ -155,7 +155,7 @@ set mouse
 # set regexp
 
 ## Save a changed buffer automatically on exit; don't prompt.
-set saveonexit
+# set saveonexit
 
 ## Put the cursor on the highlighted item in the file browser, and
 ## show the cursor in the help viewer; useful for people who use a
@@ -170,7 +170,7 @@ set showcursor
 # set smarthome
 
 ## Spread overlong lines over multiple screen lines.
-set softwrap
+# set softwrap
 
 ## Use this spelling checker instead of the internal one.  This option
 ## does not have a default value.
@@ -216,6 +216,7 @@ set tabstospaces
 ## Hide the bars plus help lines and use the whole terminal as edit area.
 # set zero
 
+
 ## Paint the interface elements of nano.  These are examples; there are
 ## no colors by default, except for errorcolor and spotlightcolor.
 set titlecolor bold,white,blue
@@ -230,7 +231,7 @@ set numbercolor bold,green
 set keycolor bold,white
 set functioncolor bold,green
 
-# in root's .nanorc you might want to use
+## In root's .nanorc you might want to use:
 set titlecolor bold,white,blue
 set promptcolor lightwhite,grey
 set statuscolor bold,white,blue

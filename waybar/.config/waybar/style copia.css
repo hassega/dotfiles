@@ -1,7 +1,7 @@
 * {
     /* `otf-font-awesome` is required to be installed for icons */
     font-family: JetBrainsMono Nerd Font, FontAwesome, Roboto, Helvetica, Arial, sans-serif;
-    font-weight: 800;
+    font-weight: 800; /* Adicione esta linha */
     font-size: 14px;
 }
 
@@ -12,13 +12,24 @@ window#waybar {
     transition-property: background-color;
     transition-duration: .5s;
     
+    /* ADICIONE AS DUAS LINHAS ABAIXO: */
     margin-top: -4px;
     margin-bottom: -4px;
 }
 
+
 window#waybar.hidden {
     opacity: 0.2;
 }
+
+/*
+window#waybar.empty {
+    background-color: transparent;
+}
+window#waybar.solo {
+    background-color: #FFFFFF;
+}
+*/
 
 window#waybar.termite {
     background-color: #3F3F3F;
@@ -30,71 +41,41 @@ window#waybar.chromium {
 }
 
 button {
+    /* Use box-shadow instead of border so the text isn't offset */
     box-shadow: inset 0 -3px transparent;
+    /* Avoid rounded borders under each button name */
     border: none;
     border-radius: 0;
 }
 
+/* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
 button:hover {
     background: inherit;
     box-shadow: inset 0 -3px #ffffff;
 }
 
-/* ========================================================================= */
-/*                   CONFIGURAÇÃO REFEITA DOS WORKSPACES                     */
-/* ========================================================================= */
+/* you can set a style on hover for any module like this */
+#pulseaudio:hover {
+    background-color: #a37800;
+}
 
 #workspaces button {
-    padding: 0 10px;
+    padding: 0 5px;
     background-color: transparent;
-    border-radius: 4px;
-    margin: 0 2px;
-    transition: all 0.2s ease;
+    color: #fcfa7b;
 }
 
-/* LIVRE: Workspace vazio (sem nenhuma janela aberta) -> Texto fica VERMELHO */
-#workspaces button.empty {
-    color: #ff5555; 
+#workspaces button:hover {
+    background: rgba(255, 3, 3, 0.979);
 }
 
-/* OCUPADO: Workspace com janelas abertas -> Texto fica VERDE */
-#workspaces button:not(.empty),
-#workspaces button.visible,
-#workspaces button.active {
-    color: #50fa7b; 
-}
-
-/* WORKSPACE ATUALMENTE EM FOCO: Destaca um fundo sutil para saber onde você está */
-#workspaces button.active {
-    background-color: rgba(255, 255, 255, 0.15);
+#workspaces button.focused {
+    background-color: #75fa09;
     box-shadow: inset 0 -3px #ffffff;
 }
 
-/* ALERTA URGENTE: Janelas pedindo atenção */
 #workspaces button.urgent {
     background-color: #eb4d4b;
-    color: #ffffff;
-}
-
-/* INTERAÇÃO AO PASSAR O MOUSE (HOVER) */
-#workspaces button:hover {
-    background-color: rgba(255, 255, 255, 0.25);
-}
-
-/* Passar o mouse no vazio: Vermelho mais vivo */
-#workspaces button.empty:hover {
-    color: #ff3333;
-}
-
-/* Passar o mouse no ocupado: Verde mais vivo */
-#workspaces button:not(.empty):hover {
-    color: #33ff77;
-}
-
-/* ========================================================================= */
-
-#pulseaudio:hover {
-    background-color: #a37800;
 }
 
 #mode {
@@ -123,6 +104,7 @@ button:hover {
     color: #ffffff;
     min-height: 0px;
     
+    /* ADICIONE ESTAS DUAS LINHAS ABAIXO: */
     margin-top: -4px;
     margin-bottom: -4px;
 }
@@ -132,10 +114,12 @@ button:hover {
     margin: 0 4px;
 }
 
+/* If workspaces is the leftmost module, omit left margin */
 .modules-left > widget:first-child > #workspaces {
     margin-left: 0;
 }
 
+/* If workspaces is the rightmost module, omit right margin */
 .modules-right > widget:last-child > #workspaces {
     margin-right: 0;
 }
@@ -161,6 +145,7 @@ button:hover {
     }
 }
 
+/* Using steps() instead of linear as a timing function to limit cpu usage */
 #battery.critical:not(.charging) {
     background-color: #f53c3c;
     color: #ffffff;
@@ -353,9 +338,9 @@ label:focus {
 }
 
 #custom-power {
-    font-size: 20px;
-    padding-left: 12px;
+    font-size: 20px;       /* Ajuste este valor para o tamanho que desejar */
+    padding-left: 12px;    /* Dá mais área de clique nas laterais */
     padding-right: 12px;
-    margin-left: 4px;
+    margin-left: 4px;      /* Afasta o botão do módulo anterior */
     margin-right: 4px;
 }

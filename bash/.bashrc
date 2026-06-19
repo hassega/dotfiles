@@ -12,7 +12,7 @@ if [[ "$TERMINAL_EMULATOR" == "JetBrains-JediTerm" ]]; then
 fi
 
 # Path to your oh-my-bash installation.
-export OSH='/home/cerbero/.oh-my-bash'
+export OSH="${HOME}/.oh-my-bash"
 
 # Set name of the theme to load
 OSH_THEME="lambda"
@@ -33,6 +33,7 @@ aliases=(general)
 plugins=(git bashmarks)
 
 # Carrega oh-my-bash - SÓ UMA VEZ
+#source "$OSH"/home/cerbero/.oh-my-bash/oh-my-bash.sh
 source "$OSH"/oh-my-bash.sh
 
 # --- VARIÁVEIS DE AMBIENTE E PATH ---
@@ -48,6 +49,7 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash)"
 
 # --- MEUS ALIASES ---
 alias Hyprland="start-hyprland"
+alias bkp="sudo snapper -c root create --description \"Manual: \$(date +'%d/%m/%Y %H:%M')\""
 
 # --- NAVEGAÇÃO E LISTAGEM ---
 alias ..="cd .."
@@ -62,18 +64,25 @@ alias mv="mv -i"
 
 # --- UTILITÁRIOS E MONITORAMENTO ---
 alias c="clear"
-alias h="history"
+alias h="history -c"
 alias meuip="curl ifconfig.me; echo"
 alias mem="free -h"
 alias cpu="top -bn1 | grep 'Cpu(s)'"
 alias temp='lscpu | grep "CPU MHz" || echo "M3 Max voando baixo!"'
 
 # --- LIMPEZA E GESTÃO DO BASH ---
-alias wipe='printf "\033c"'
 alias eb="nano ~/.bashrc"
 alias sb="source ~/.bashrc"
-alias nvim="/home/cerbero/Appimage/neovim"
-alias init='nvim ~/.config/nvim/init.vim'
+#alias nvim="/home/cerbero/AppImages/neovim"
+#alias init='nvim ~/.config/nvim/init.vim'
+
+alias ombb='rm /Users/hassega/.oh-my-bash/log/update.lock'
+alias ombu='omb update'
+#alias olp='ollama pull qwen2.5-coder:32b-instruct-q4_K_M' export OLLAMA_COLORS= 'template=bold;fg=cyan:response=bold;fg=yellow
+alias olr='ollama run qwen2.5-coder:32b-instruct-q4_K_M'
+
+# Alias para colocar a Qwen para dormir e avisar no terminal
+alias oll="curl -s -m 2 http://localhost:11434/api/generate -d '{\"model\": \"qwen2.5-coder:32b-instruct-q4_K_M\", \"keep_alive\": 0}' > /dev/null & echo ' 💤💤💤 IA DORMIU!'"
 
 # --- CONFIGURAÇÕES COBOL ---
 alias cobrun='~/cobolProjects/run.sh'

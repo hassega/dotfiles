@@ -1,4 +1,4 @@
-"configuration file for vim
+" configuration file for vim
 set nomodeline  "CVE-2007-2438
 set nocompatible     " Use Vim defaults instead of 100% vi compatibility
 set backspace=indent,eol,start      "more powerful backspacing
@@ -38,6 +38,7 @@ Plug 'ryanoasis/vim-devicons'  " Novo: Adiciona ícones de arquivos (deve vir po
 " --- Suporte Avançado e Sintaxe Dinâmica para Python (Novo) ------------------
 Plug 'vim-python/python-syntax' " Destaca sintaxe moderna do Python 3
 " Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins' } " Cores inteligentes para variáveis
+Plug 'dense-analysis/ale'       "Ativa o ALE (Asynchronous Lint Engine)"
 
 " ––– Programacao Rust———————————————————————————————————————————-
 Plug 'rust-lang/rust.vim'
@@ -237,7 +238,7 @@ set spelllang=pt_br,en
 " set shortmess+=c
 " Insert completion...
 
-"------------- MAPEAMENTO BASICO AUTOCOMPLETE ----------------------------------
+"------------- MAPEAMENTO BASICO AUTOCOMPLETE ---------------------------------- 
 inoremap ( ()<left>
 inoremap [ []<left>
 inoremap { {}<left>
@@ -412,11 +413,25 @@ autocmd FileType rust nnoremap <buffer> <leader>e :CocDiagnostics<CR>
 " ==============================================================================
 " PYTHON: PROGRAMAR, AUTOMAÇÃO E COMPILAÇÃO (NOVO COMPLETO)
 " ==============================================================================
-let g:python_highlight_all = 1 " Liga o destaque de sintaxe avançado para Python 3
+" Define o flake8 como o linter padrão para Python
+let g:ale_linters = {
+\   'python': ['flake8'],
+\}
+
+" Diz ao Vim exatamente onde encontrar o flake8 instalado pelo pipx
+let g:ale_python_flake8_executable = '~/.local/bin/flake8'
+
+" Customização visual: Ícones na lateral para erros e avisos
+let g:ale_sign_error = '❌'
+let g:ale_sign_warning = '⚠️'
+
+" Atalhos para navegar entre os erros apontados pelo flake8
+autocmd FileType python nnoremap <silent> <buffer> <C-j> :ALENextWrap<CR>
+autocmd FileType python nnoremap <silent> <buffer> <C-k> :ALEPreviousWrap<CR>
 
 augroup PythonAutoCmds
     autocmd!
-    " Aplica as regras de indentação PEP 8 de forma estrita em arquivos .py
+" Aplica as regras de indentação PEP 8 de forma estrita em arquivos .py
     autocmd FileType python setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab textwidth=79 colorcolumn=80
 augroup END
 
@@ -463,4 +478,35 @@ inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
 inoremap <silent><expr> <TAB> coc#pum#visible() ? coc#pum#next(1) : "\<Tab>"
 inoremap <silent><expr> <S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 
+" ==============================================================================
+" OLLAMA VIA CURL - FUNCIONA NO VIM PURO
+" ==============================================================================
+function! OllamaFix() range
+    let l:code = join(getline(a:firstline, a:lastline), "\n")
+    let l:prompt = "Analisa e corrige esse código. Retorna só o código corrigido com # CORREÇÃO: nos locais alterados e depois liste as linhas corrigidas:\n\n" . l:code
+    let l:json = json_encode({'model': 'qwen-coder-br', 'prompt': l:prompt, 'stream': v:false})
+    let l:cmd = "curl -s http://localhost:11434/api/generate -d " . shellescape(l:json)
+    echo "Corrigindo com qwen-coder-br..."
+    let l:response = system(l:cmd)
+    let l:output = json_decode(l:response)['response']
+    execute a:firstline . "," . a:lastline . "delete"
+    call append(a:firstline-1, split(l:output, "\n"))
+endfunction
+
+function! OllamaAsk()
+    let l:prompt = input('Pergunta pro qwen-coder-br: ')
+    if l:prompt == '' | return | endif
+    let l:json = json_encode({'model': 'qwen-coder-br', 'prompt': l:prompt, 'stream': v:false})
+    let l:cmd = "curl -s http://localhost:11434/api/generate -d " . shellescape(l:json)
+    echo "Pensando..."
+    let l:response = system(l:cmd)
+    let l:output = json_decode(l:response)['response']
+    new
+    setlocal buftype=nofile bufhidden=wipe noswapfile
+    call append(0, split(l:output, "\n"))
+endfunction
+
+" Mapeamentos
+vnoremap <leader>af :call OllamaFix()<CR>
+nnoremap <leader>ao :call OllamaAsk()<CR>
 

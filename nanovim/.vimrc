@@ -19,6 +19,23 @@ let skip_defaults_vim=1
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " CONFIGURACAO DO VIM COMO IDE PARA PARA SCRIPT, PYTHON & RUST HASSEGA BY BLAU "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""''"
+"-------------  CONFIGURACOES GERAIS  ------------------------------------------
+filetype plugin on
+filetype plugin indent on
+syntax on
+set title
+set encoding=utf-8
+set fileencoding=utf-8
+set backspace=indent,eol,start
+set noerrorbells
+set confirm
+set hidden
+set splitbelow
+set splitright
+set mouse=a
+set number
+set relativenumber
+
 " ==============================================================================
 " 1. GERENCIADOR DE PLUGINS (Vim-Plug)
 " ==============================================================================
@@ -27,6 +44,7 @@ call plug#begin('~/.vim/plugged')
 " --- Temas --------------------------------------------------------------------
 Plug 'ghifarit53/tokyonight-vim'
 Plug 'gruvbox-community/gruvbox' " Novo: Plugin do Tema Gruvbox
+Plug 'joshdick/onedark.vim'
 
 " --- Explorador de Arquivos e Ícones ------------------------------------------
 Plug 'preservim/nerdtree'      " Novo: Abre arquivos/pastas na lateral
@@ -39,6 +57,7 @@ Plug 'ryanoasis/vim-devicons'  " Novo: Adiciona ícones de arquivos (deve vir po
 Plug 'vim-python/python-syntax' " Destaca sintaxe moderna do Python 3
 " Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins' } " Cores inteligentes para variáveis
 Plug 'dense-analysis/ale'       "Ativa o ALE (Asynchronous Lint Engine)"
+Plug 'Yggdroot/indentLine'      " Indentacao fisica " 
 
 " ––– Programacao Rust———————————————————————————————————————————-
 Plug 'rust-lang/rust.vim'
@@ -55,27 +74,25 @@ else
  set t_Co=256
 endif
 
-" Ativar demais temas
+" =========== Ativar demais temas " ============================================
 " colorscheme dracula
 " colorscheme monokai
 colorscheme eldar
+" colorscheme default
+" colorscheme onedark
+" colorscheme darkblue
+" colorscheme tokyonight
 
-"-------------  CONFIGURACOES GERAIS  ------------------------------------------
-filetype plugin on
-filetype indent on
-syntax on
-set title
-set encoding=utf-8
-set fileencoding=utf-8
-set backspace=indent,eol,start
-set noerrorbells
-set confirm
-set hidden
-set splitbelow
-set splitright
-set mouse=a
-set number
-set relativenumber
+" =========== Configuração do indentLine ---
+let g:indentLine_enabled = 1
+let g:indentLine_char = '│' " Desenha uma linha vertical contínua fina
+let g:indentLine_color_term = 4 " Força a cor azul (ID 4 no terminal ANSI)
+
+" Configuração de cor robusta (Azul)
+let g:indentLine_color_gui = '#0000FF'
+
+" ----------- Evita que o plugin esconda as aspas das f-strings do Python
+let g:indentLine_setConceal = 0
 
 "-------------  CAMINHOS  ------------------------------------------------------
 set path=.,**
@@ -160,10 +177,21 @@ nnoremap <F2> :bn<cr>
 "------------- DESTAQUE DE COLUNA ----------------------------------------------
 map <silent> <leader>cc :execute "set cc=" . (&colorcolumn == "" ? "80" : "")<cr>
 
-"-------------  CARACTERES DE PREENCHIMENTO  -----------------------------------
-set nolist
-set listchars=tab:â€º-,space:Â·,trail:â—€,eol:â†²   " caracteres nao imprimiveis """""
-set fillchars=vert:â”‚,fold:-,eob:~,lastline:@
+"============ LINHAS DE INDENTAÇÃO NATIVAS ==================================
+set list
+set autoindent
+set expandtab
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+set listchars=tab:›-,space:·,trail:◀,eol:↲,leadmultispace:│\ \ \ 
+" Mantém as suas divisórias de painéis (fillchars)
+set fillchars=vert:│,fold:-,eob:~,lastline:@
+" Define a cor AZUL para os caracteres do listchars (incluindo as linhas verticais)
+highlight SpecialKey ctermfg=blue guifg=blue
+highlight NonText ctermfg=blue guifg=blue
+" set listchars=tab:›-,space:·,trail:◀,eol:↲   " caracteres nao imprimiveis
+" set fillchars=vert:│,fold:-,eob:~,lastline:@
 
 "-------------  NUMERACOES LINHAS E CURSOR  ------------------------------------
 set scrolloff=2
@@ -172,14 +200,6 @@ set cursorline
 "-------------  MUDAR BLOCO PARA BARRA NO MODOS INS E VISUAL  -----------------
 let &t_SI="\e[6 q"
 let &t_EI="\e[2 q"
-
-"-------------  INDENTACAO & TABULACAO ---------------------------------------------------
-set autoindent
-set smartindent
-set expandtab
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
 
 "-------------  AUTOMACOES PARA SHELL SCRIPT -----------------------------------
 function! IniciarScriptShell()
@@ -269,25 +289,25 @@ function! LoadStatusLine()
     let g:left_sep='\'
     let g:right_sep='/'
     let g:currentmode={
-    \ 'n' : 'Normal',
+    \ 'n'  : 'Normal',
     \ 'no' : 'Normal-Operator Pending',
-    \ 'v' : 'Visual',
-    \ 'V' : 'V-Line',
-    \ ' ' : 'V-Block',
-    \ 's' : 'Select',
-    \ 'S' : 'S-Line',
-    \ ' ' : 'S-Block',
-    \ 'i' : 'Insert',
-    \ 'R' : 'Replace',
+    \ 'v'  : 'Visual',
+    \ 'V'  : 'V-Line',
+    \ "\<C-v>" : 'V-Block',
+    \ 's'  : 'Select',
+    \ 'S'  : 'S-Line',
+    \ "\<C-s>" : 'S-Block',
+    \ 'i'  : 'Insert',
+    \ 'R'  : 'Replace',
     \ 'Rv' : 'V-Replace',
-    \ 'c' : 'Command',
+    \ 'c'  : 'Command',
     \ 'cv' : 'Vim Ex',
     \ 'ce' : 'Ex',
-    \ 'r' : 'Prompt',
+    \ 'r'  : 'Prompt',
     \ 'rm' : 'More',
     \ 'r?' : 'Confirm',
-    \ '!' : 'Shell',
-    \ 't' : 'Terminal'
+    \ '!'  : 'Shell',
+    \ 't'  : 'Terminal'
     \}
     set statusline=\ %{toupper(g:currentmode[mode()])}
     set statusline+=\ %{toupper(mode())}
@@ -374,6 +394,7 @@ autocmd FileType rust nnoremap <buffer> <leader>cc :Cargo check<CR>
 autocmd FileType rust nnoremap <buffer> <leader>cf :RustFmt<CR>
 autocmd FileType rust nnoremap <buffer> <leader>ct :RustTest<CR>
 autocmd FileType rust nnoremap <buffer> <leader>cr :RustRun 
+
 " --- COC.NVIM PRA LSP RUST ---
 autocmd FileType rust nmap <buffer> gd <Plug>(coc-definition)
 autocmd FileType rust nmap <buffer> gr <Plug>(coc-references)
@@ -409,10 +430,10 @@ augroup PythonAutoCmds
     autocmd FileType python setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab textwidth=79 colorcolumn=80 nosmartindent
 augroup END
 
-" --- INTEGRAÇÃO COM O BLACK FORMATTER (PIPX) ---
-" Cria os comandos :F e :Format para indentar e formatar com Black, recarregando a tela em seguida
-autocmd FileType python command! -buffer -nargs=0 F silent !~/.local/bin/black -q % | edit!
-autocmd FileType python command! -buffer -nargs=0 Format silent !~/.local/bin/black -q % | edit!
+" --- INTEGRAÇÃO COM O BLACK FORMATTER (PIPX EXATO) ---
+" Cria os comandos :F e :Format usando o caminho real do pipx
+autocmd FileType python command! -buffer -nargs=0 F silent !~/.local/share/pipx/venvs/black/bin/black -q % | edit!
+autocmd FileType python command! -buffer -nargs=0 Format silent !~/.local/share/pipx/venvs/black/bin/black -q % | edit!
 
 " --- MAPEAMENTOS EXCLUSIVOS PARA PYTHON ---
 " Control + R = Primeiro indenta/formata com o Black e depois executa o script Python
@@ -486,3 +507,18 @@ function! OllamaAsk()
     setlocal buftype=nofile bufhidden=wipe noswapfile
     call append(0, split(l:output, "\n"))
 endfunction
+
+" --- ATALHOS PARA CHAMAR O OLLAMA ---
+" Selecione as linhas no Modo Visual e digite :OllamaFix para corrigir o código selecionado
+command! -range OllamaFix <line1>,<line2>call OllamaFix()
+
+" Digite :OllamaAsk em qualquer lugar para abrir uma janela de chat com o modelo local
+command! OllamaAsk call OllamaAsk()
+
+" --- ATALHO PARA CORRIGIR O ARQUIVO INTEIRO ---
+" Digite :OllamaFixAll no modo normal para corrigir todo o arquivo atual
+command! OllamaFixAll 1,$call OllamaFix()
+
+" Atalho rápido de teclado: Espaço + ox (Ollama Fix) corrige todo o código na hora
+nnoremap <leader>cv :OllamaFixAll<CR>
+

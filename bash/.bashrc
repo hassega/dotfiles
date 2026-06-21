@@ -5,11 +5,11 @@ case $- in
 esac
 
 # Desabilita oh-my-bash no terminal do PyCharm/JetBrains
-if [[ "$TERMINAL_EMULATOR" == "JetBrains-JediTerm" ]]; then
-    PS1='\[\e[0;32m\]\u@\h\[\e[0m\]:\[\e[0;34m\]\w\[\e[0m\]\$ '
-    [[ -z "$VIRTUAL_ENV" && -f "venv/bin/activate" ]] && source venv/bin/activate
-    return
-fi
+#if [[ "$TERMINAL_EMULATOR" == "JetBrains-JediTerm" ]]; then
+ #   PS1='\[\e[0;32m\]\u@\h\[\e[0m\]:\[\e[0;34m\]\w\[\e[0m\]\$ '
+  #  [[ -z "$VIRTUAL_ENV" && -f "venv/bin/activate" ]] && source venv/bin/activate
+   # return
+#fi
 
 # Path to your oh-my-bash installation.
 export OSH="${HOME}/.oh-my-bash"

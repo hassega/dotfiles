@@ -55,17 +55,6 @@ else
  set t_Co=256
 endif
 
-" Ativar o estilo Moon do Tokyonight
-" let g:tokyonight_style = 'night' " 'storm' ou 'night' aproximam o visual Moon no Vim clássico
-" let g:tokyonight_enable_italic = 1
-" let g:tokyonight_transparent_background = 1 " Mantém seu fundo transparente
-" colorscheme tokyonight          "Ativa o Tokyonight
-
-" Ativar o tema GruvBox
-" set background=dark          " Define o fundo como escuro (ou 'light' para claro)
-" let g:gruvbox_transparent_bg = 1 " Mantém o fundo transparente se o seu terminal for
-" colorscheme gruvbox          " Ativa o Gruvbox
-
 " Ativar demais temas
 " colorscheme dracula
 " colorscheme monokai
@@ -95,22 +84,15 @@ set nobackup
 set undodir=~/.vim/undodir
 set undofile
 
-"-------------  VARIAVEIS  -----------------------------------------------------
-"let $RCPATH = '~/.vim/'
-"let $RC = $RCPATH. 'vimrc'
-
 "-------------  QUEBRA DE LINHAS  ----------------------------------------------
 set nowrap
 set linebreak
 
-"-------------  ALTERNAR QUEBRA DE LINHA  --------------------------------------
+"-------------  ALTERNAR QUEBRA DE LINE  --------------------------------------
 map <F3> :set wrap!<cr>
 
 "-------------  ABRIR TERMINAL  ------------------------------------------------  
 map <F4> :term<cr>  "control D fecha terminal
-
-"------------- ABRIR TERMINAL PARA EXECUTAR A SCRIPT EM EDICAO  ----------------
-map <F5> :term ./%<cr>
 
 "------------- ALTERNAR CARACTERES INVISIVEIS ----------------------------------
 map <F6> :set list<cr>
@@ -129,7 +111,7 @@ map <F9> :term make<cr>
 let mapleader = ' '
 
 "------------- ATALHO PARA EXECUTAR RUN NO PYTHON (:!python3 %) ----------------
-nnoremap <C-r> :!python3 % <cr>
+"  nnoremap <C-r> :!python3 % <cr>   (ver mapeamento com black linha  (*Mapeamento exclusivo para Python*)
 
 "------------- ABRIR TERMINAL LADO DIREITO E ESQUERDO --------------------------
 nnoremap <C-b> :vsp<cr>
@@ -180,8 +162,8 @@ map <silent> <leader>cc :execute "set cc=" . (&colorcolumn == "" ? "80" : "")<cr
 
 "-------------  CARACTERES DE PREENCHIMENTO  -----------------------------------
 set nolist
-set listchars=tab:›-,space:·,trail:◀,eol:↲   " caracteres nao imprimiveis """""
-set fillchars=vert:│,fold:-,eob:~,lastline:@
+set listchars=tab:â€º-,space:Â·,trail:â—€,eol:â†²   " caracteres nao imprimiveis """""
+set fillchars=vert:â”‚,fold:-,eob:~,lastline:@
 
 "-------------  NUMERACOES LINHAS E CURSOR  ------------------------------------
 set scrolloff=2
@@ -233,10 +215,6 @@ let @/ = ""
 "-------------  ORTOGRAFIA  ----------------------------------------------------
 set nospell
 set spelllang=pt_br,en
-" set complete+=kspell
-" set completeopt=menuone,longest
-" set shortmess+=c
-" Insert completion...
 
 "------------- MAPEAMENTO BASICO AUTOCOMPLETE ---------------------------------- 
 inoremap ( ()<left>
@@ -266,7 +244,6 @@ function! Hashbangs()
     call complete(col('.'), hb)
     return ''
 endfunction 
-"imap <c-x>c <c-r>=Hashbangs()<cr>
 imap <c-F12> <c-r>=Hashbangs()<cr>
 
 "------------- MENU SELVAGEM ---------------------------------------------------
@@ -296,10 +273,10 @@ function! LoadStatusLine()
     \ 'no' : 'Normal-Operator Pending',
     \ 'v' : 'Visual',
     \ 'V' : 'V-Line',
-    \ '' : 'V-Block',
+    \ ' ' : 'V-Block',
     \ 's' : 'Select',
     \ 'S' : 'S-Line',
-    \ '' : 'S-Block',
+    \ ' ' : 'S-Block',
     \ 'i' : 'Insert',
     \ 'R' : 'Replace',
     \ 'Rv' : 'V-Replace',
@@ -332,16 +309,21 @@ call LoadStatusLine()
 "------------- ESQUEMA DE CORES ----------------------------------------------
 "------------- FUNDO TRANSPARENTE --------------------------------------------
 hi Normal guibg=NONE ctermbg=NONE
+
 "------------- LINHA DO CURSOR -----------------------------------------------
 hi CursorLine guibg=#2e2a24 """"""""202130
+
 "------------- COMENTARIOS EM ITALICO ----------------------------------------
 hi Comment cterm=italic gui=italic
+
 "------------- DIVISAO VERTICAL DE JANELAS -----------------------------------
 hi VertSplit ctermbg=NONE guibg=NONE ctermfg=7 guifg=#c1c2d0
+
 "------------- BARRA DE ABAS -------------------------------------------------
 hi TabLine guifg=#9192a0 guibg=#303140 gui=none
 hi TabLineSel guifg=#a1a2b0 guibg=#101120 gui=bold
 hi TabLineFill guifg=#9192a0 guibg=#303140 gui=none
+
 "------------- SELECAO MODO VISIAL -------------------------------------------
 hi Visual guifg=NONE guibg=#303140
 
@@ -384,30 +366,21 @@ augroup RustAutoCmds
 augroup END
 
 " --- MAPEAMENTOS SÓ PRA RUST ---
-" <F5> = cargo run no arquivo atual ou projeto
 autocmd FileType rust nnoremap <buffer> <F5> :RustRun<CR>
-" <F6> = cargo test
 autocmd FileType rust nnoremap <buffer> <F6> :Cargo test<CR>
-" <F9> = cargo build --release
 autocmd FileType rust nnoremap <buffer> <F9> :Cargo build --release<CR>
-" <leader>cb = cargo build
 autocmd FileType rust nnoremap <buffer> <leader>cb :Cargo build<CR>
-" <leader>cc = cargo check
 autocmd FileType rust nnoremap <buffer> <leader>cc :Cargo check<CR>
-" <leader>cf = :RustFmt manual
 autocmd FileType rust nnoremap <buffer> <leader>cf :RustFmt<CR>
-" <leader>ct = cargo test um teste específico sob cursor
 autocmd FileType rust nnoremap <buffer> <leader>ct :RustTest<CR>
-" <leader>cr = cargo run com args
 autocmd FileType rust nnoremap <buffer> <leader>cr :RustRun 
-" --- 5. COC.NVIM PRA LSP RUST ---
+" --- COC.NVIM PRA LSP RUST ---
 autocmd FileType rust nmap <buffer> gd <Plug>(coc-definition)
 autocmd FileType rust nmap <buffer> gr <Plug>(coc-references)
 autocmd FileType rust nmap <buffer> K :call CocActionAsync('doHover')<CR>
 autocmd FileType rust nmap <buffer> <leader>rn <Plug>(coc-rename)
 autocmd FileType rust nmap <buffer> <leader>a <Plug>(coc-codeaction)
 autocmd FileType rust nmap <buffer> <leader>f <Plug>(coc-format)
-" Mostra erro na linha com <leader>e
 autocmd FileType rust nnoremap <buffer> <leader>e :CocDiagnostics<CR> 
 
 " ==============================================================================
@@ -431,15 +404,23 @@ autocmd FileType python nnoremap <silent> <buffer> <C-k> :ALEPreviousWrap<CR>
 
 augroup PythonAutoCmds
     autocmd!
-" Aplica as regras de indentação PEP 8 de forma estrita em arquivos .py
-    autocmd FileType python setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab textwidth=79 colorcolumn=80
+    " Aplica as regras de indentação PEP 8 de forma estrita em arquivos .py
+    " IMPORTANTE: 'nosmartindent' evita problemas com comentários '#' jogados no início da linha
+    autocmd FileType python setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab textwidth=79 colorcolumn=80 nosmartindent
 augroup END
 
+" --- INTEGRAÇÃO COM O BLACK FORMATTER (PIPX) ---
+" Cria os comandos :F e :Format para indentar e formatar com Black, recarregando a tela em seguida
+autocmd FileType python command! -buffer -nargs=0 F silent !~/.local/bin/black -q % | edit!
+autocmd FileType python command! -buffer -nargs=0 Format silent !~/.local/bin/black -q % | edit!
+
 " --- MAPEAMENTOS EXCLUSIVOS PARA PYTHON ---
-" <F5> = Executa o script Python atual dentro do terminal embutido splitado do Vim
-autocmd FileType python nnoremap <buffer> <F5> :term python3 %<CR>
+" Control + R = Primeiro indenta/formata com o Black e depois executa o script Python
+autocmd FileType python nnoremap <buffer> <C-r> :F<CR>:w<CR>:!python3 %<CR>
+
 " <leader>py = Salva o script e executa de forma direta no shell tradicional externo
 autocmd FileType python nnoremap <buffer> <leader>py :w<CR>:!python3 %<CR>
+
 " Integração completa com o motor CoC para pular direto para funções/métodos Python
 autocmd FileType python nmap <buffer> gd <Plug>(coc-definition)
 autocmd FileType python nmap <buffer> gr <Plug>(coc-references)
@@ -505,8 +486,3 @@ function! OllamaAsk()
     setlocal buftype=nofile bufhidden=wipe noswapfile
     call append(0, split(l:output, "\n"))
 endfunction
-
-" Mapeamentos
-vnoremap <leader>af :call OllamaFix()<CR>
-nnoremap <leader>ao :call OllamaAsk()<CR>
-

@@ -2,11 +2,6 @@
 	" CONFIGURAÇÃO NEOVIM FINAL - CERBERO (M3 MAX) - VERSÃO CORRIGIDA
 "==============================================================================
 let g:python3_host_prog = expand('~/EXAMESPDF/venv/bin/python')
-
-" Variáveis para o validador de COBOL achar os arquivos COPY:
-let $COB_COPY_DIR = '/Users/hassega/COBOL'
-let $COB_MAIN_DIR = '/Users/hassega/COBOL'
-
 let g:loaded_netrw = 1
 let g:loaded_netrwPlugin = 1
 
@@ -158,12 +153,6 @@ require('gen').setup({
   show_model = true,
   width = 80,
   height = 25,
-  options = {
-        temperature = 0.0,       
-        top_p = 0.9,             
-        num_ctx = 4096,          -- Limite ideal para não estourar os 36GB de RAM
-        num_predict = 1024,      -- Limita o tamanho da resposta para ser mais rápido
-    }
 })
 
 LUA
@@ -296,18 +285,3 @@ nnoremap <leader>r :split \| terminal ~/EXAMESPDF/venv/bin/python ~/EXAMESPDF/ge
 " 23. --. BACKUP (Comando :Bkp para rodar seu script de backup)
 " Uso: Digite :Bkp no modo normal
 command! Bkp :!bkp
-
-" ============================================================================
-" 24. BACKUP AUTOMÁTICO AO FECHAR CONFIGURAÇÕES E SCRIPTS PYTHON
-" ============================================================================
-augroup AutoVimBackup
-    autocmd!
-    " Executa antes de salvar e fechar arquivos de configuração ou scripts do projeto
-    autocmd BufWritePre *vimrc,init.vim,gerar_evolucao.py,gerar_fluxo.py silent! !mkdir -p ~/vim_backups
-    
-    " Cria o snapshot com data e hora na pasta de segurança
-    autocmd BufWritePre *vimrc,init.vim,gerar_evolucao.py,gerar_fluxo.py execute "!cp % ~/vim_backups/" . substitute(expand('%:t'), '^\.', '', '') . "_auto_" . strftime('%Y-%m-%d_%Hh%M')
-augroup END
-" Atalho de comando para corrigir o script inteiro sem estourar o erro de Lua
-command! Fix execute "normal! ggVG" | Gen Enhance_Code
-

@@ -1,0 +1,34 @@
+===================================================================
+      COLINHA DE ATALHOS - NEOVIM CERBERO (M3 MAX)
+===================================================================
+
+[ 💾 OS ESSENCIAIS - MODO NORMAL ]
+-------------------------------------------------------------------
+Control + s                 --> Salva o arquivo atual instantâneo
+Control + q                 --> Fecha o editor
+Espaço ➔ s ➔ v              --> Recarrega o init.vim (aplica mudanças)
+Espaço ➔ c ➔ v              --> Abre o seu init.vim para editar
+
+
+[ 🖥️ NAVEGAÇÃO E DIVISÃO DE TELAS ]
+-------------------------------------------------------------------
+Control + b                 --> Divide a tela na VERTICAL (lado a lado)
+Control + d                 --> Divide a tela na HORIZONTAL (abaixo)
+Tab                         --> Pula para a próxima janela dividida
+Shift + Tab                 --> Volta para a janela dividida anterior
+
+
+[ 🩺 FERRAMENTAS DO CERBERO ]
+-------------------------------------------------------------------
+Control + n                 --> Dispara a Evolução Médica do Paciente
+Espaço ➔ e ➔ v              --> Atalho alternativo para Evolução Médica
+Espaço ➔ b ➔ g              --> Roda a Gasometria de Sangue (bloodgas)
+Espaço ➔ r                  --> Executa o script com o Python do venv
+
+
+[ 📊 SEUS BACKUPS ]
+-------------------------------------------------------------------
+Ao Salvar e Sair (:wq)      --> Backup automático individual em:
+                                ~/vim_backups/
+Digite :Bkp (no comando)    --> Roda o script de backup global do sistema
+===================================================================

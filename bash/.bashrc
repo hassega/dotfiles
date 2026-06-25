@@ -78,11 +78,11 @@ alias sb="source ~/.bashrc"
 
 alias ombb='rm /Users/hassega/.oh-my-bash/log/update.lock'
 alias ombu='omb update'
-#alias olp='ollama pull qwen2.5-coder:32b-instruct-q4_K_M' export OLLAMA_COLORS= 'template=bold;fg=cyan:response=bold;fg=yellow
-alias olr='ollama run qwen2.5-coder:32b-instruct-q4_K_M'
+#alias olp='ollama pull qwen-coder-br:latest' export OLLAMA_COLORS= 'template=bold;fg=cyan:response=bold;fg=yellow
+alias olr='ollama run qwen-coder-br:latest'
 
 # Alias para colocar a Qwen para dormir e avisar no terminal
-alias oll="curl -s -m 2 http://localhost:11434/api/generate -d '{\"model\": \"qwen2.5-coder:32b-instruct-q4_K_M\", \"keep_alive\": 0}' > /dev/null & echo ' 💤💤💤 IA DORMIU!'"
+alias oll="curl -s -m 2 http://localhost:11434/api/generate -d '{\"model\": \"qwen-coder-br:latest\", \"keep_alive\": 0}' > /dev/null & echo ' 💤💤💤 IA DORMIU!'"
 
 # --- CONFIGURAÇÕES COBOL ---
 alias cobrun='~/cobolProjects/run.sh'

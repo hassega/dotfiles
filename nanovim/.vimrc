@@ -407,7 +407,7 @@ autocmd FileType rust nnoremap <buffer> <leader>e :CocDiagnostics<CR>
 " ==============================================================================
 " PYTHON: PROGRAMAR, AUTOMAÇÃO E COMPILAÇÃO (NOVO COMPLETO)
 " ==============================================================================
-" Define o flake8 como o linter padrão para Python
+            " Define o flake8 como o linter padrão para Python
 let g:ale_linters = {
 \   'python': ['flake8'],
 \}

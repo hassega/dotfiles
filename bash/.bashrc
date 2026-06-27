@@ -37,7 +37,8 @@ plugins=(git bashmarks)
 source "$OSH"/oh-my-bash.sh
 
 # --- VARIÁVEIS DE AMBIENTE E PATH ---
-export TERMINAL=konsole
+export TERMINAL=alacritty
+# export TERMINAL=konsole
 export SAL_USE_VCLPLUGIN=gtk3
 export PATH="$HOME/.local/bin:$HOME/.local/bin/script:~/.npm-global/bin:/usr/local/sbin:$PATH"
 
@@ -99,7 +100,7 @@ alias edit-for='nano ~/Fortran/PROGRAMA.FOR'
 alias v-for='vim -u "$HOME/dotfiles/fortran_env/.vimrc_f51"'
 
 # --- ATALHOS HYPRLAND/WAYBAR (Apontando para os locais ativos) ---
-alias conf-hypr='nano ~/.config/hypr/hyprland.conf'
+alias conf-hypr='nano ~/.config/hypr/hyprland.lua'
 alias conf-waybar='nano ~/.config/waybar/config.jsonc'
 alias style-waybar='nano ~/.config/waybar/style.css'
 

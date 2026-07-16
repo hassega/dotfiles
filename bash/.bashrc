@@ -159,6 +159,15 @@ function myscript() {
 }
 alias scp="myscript" # Atalho rápido mantido se você preferir digitar scp para os scripts
 
+export PATH="$HOME/.miktex/texmfs/install/bin/x86_64-linux:$PATH"
+
+# AMBIENTE Vim LateX - Atalho inteligente e portátil 
+tex() {
+    # Se você não passar nenhum arquivo como argumento, o padrão será tcc.tex
+    local arquivo="${1:-tcc.tex}"
+    vim -u /home/cerbero/vimtex/tex.vim "$arquivo"
+}
+
 # Auto ativa venv - DEIXA NO FINAL DE TUDO
 if [[ -z "$VIRTUAL_ENV" && -f "venv/bin/activate" ]]; then
     source venv/bin/activate

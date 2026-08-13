@@ -37,8 +37,8 @@ plugins=(git bashmarks)
 source "$OSH"/oh-my-bash.sh
 
 # --- VARIÁVEIS DE AMBIENTE E PATH ---
-export TERMINAL=alacritty
-# export TERMINAL=konsole
+# export TERMINAL=alacritty
+export TERMINAL=konsole
 export SAL_USE_VCLPLUGIN=gtk3
 export PATH="$HOME/.local/bin:$HOME/.local/bin/script:~/.npm-global/bin:/usr/local/sbin:$PATH"
 
@@ -86,18 +86,18 @@ alias olr='ollama run qwen-coder-br:latest'
 alias oll="curl -s -m 2 http://localhost:11434/api/generate -d '{\"model\": \"qwen-coder-br:latest\", \"keep_alive\": 0}' > /dev/null & echo ' 💤💤💤 IA DORMIU!'"
 
 # --- CONFIGURAÇÕES COBOL ---
-alias cobrun='~/cobolProjects/run.sh'
-alias cobclean='rm -rf ~/cobolProjects/build/* && echo "🧹 Pasta build limpa!"'
-alias cobcode='code ~/cobolProjects'
-alias cobc='gcobol'
-alias cobol='code /home/cerbero/cobolProjects'
+# alias cobrun='~/cobolProjects/run.sh'
+# alias cobclean='rm -rf ~/cobolProjects/build/* && echo "🧹 Pasta build limpa!"'
+# alias cobcode='code ~/cobolProjects'
+# alias cobc='gcobol'
+# alias cobol='code /home/cerbero/cobolProjects'
 
 # --- AMBIENTE FORTRAN 5.1 ---
-alias magic='bash ~/Fortran/magicfort.sh'
-alias cdf='cd ~/Fortran'
-alias conf-f51='nano ~/dosprojs/fortran.conf'
-alias edit-for='nano ~/Fortran/PROGRAMA.FOR'
-alias v-for='vim -u "$HOME/dotfiles/fortran_env/.vimrc_f51"'
+# alias magic='bash ~/Fortran/magicfort.sh'
+# alias cdf='cd ~/Fortran'
+# alias conf-f51='nano ~/dosprojs/fortran.conf'
+# alias edit-for='nano ~/Fortran/PROGRAMA.FOR'
+# alias v-for='vim -u "$HOME/dotfiles/fortran_env/.vimrc_f51"'
 
 # --- ATALHOS HYPRLAND/WAYBAR (Apontando para os locais ativos) ---
 alias conf-hypr='nano ~/.config/hypr/hyprland.lua'

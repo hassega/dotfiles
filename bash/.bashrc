@@ -6,45 +6,37 @@ esac
 
 # Desabilita oh-my-bash no terminal do PyCharm/JetBrains
 #if [[ "$TERMINAL_EMULATOR" == "JetBrains-JediTerm" ]]; then
- #   PS1='\[\e[0;32m\]\u@\h\[\e[0m\]:\[\e[0;34m\]\w\[\e[0m\]\$ '
-  #  [[ -z "$VIRTUAL_ENV" && -f "venv/bin/activate" ]] && source venv/bin/activate
-   # return
+#   PS1='\[\e[0;32m\]\u@\h\[\e[0m\]:\[\e[0;34m\]\w\[\e[0m\]\$ '
+#   [[ -z "$VIRTUAL_ENV" && -f "venv/bin/activate" ]] && source venv/bin/activate
+#   return
 #fi
 
 # Path to your oh-my-bash installation.
 export OSH="${HOME}/.oh-my-bash"
-
 # Set name of the theme to load
 OSH_THEME="lambda"
-
 # History config - formato BR + tamanho decente
 HIST_STAMPS='[dd/mm/yyyy]'
 HISTSIZE=10000
 HISTFILESIZE=20000
 export HISTCONTROL=ignorespace:ignoredups
-
 # Which completions would you like to load?
 completions=(git composer ssh)
-
 # Which aliases would you like to load?
 aliases=(general)
-
 # Which plugins would you like to load?
 plugins=(git bashmarks)
-
 # Carrega oh-my-bash - SÓ UMA VEZ
-#source "$OSH"/home/cerbero/.oh-my-bash/oh-my-bash.sh
 source "$OSH"/oh-my-bash.sh
 
 # --- VARIÁVEIS DE AMBIENTE E PATH ---
-# export TERMINAL=alacritty
 export TERMINAL=konsole
 export SAL_USE_VCLPLUGIN=gtk3
-export PATH="$HOME/.local/bin:$HOME/.local/bin/script:~/.npm-global/bin:/usr/local/sbin:$PATH"
+export PATH="$HOME/.local/bin:$HOME/.local/bin/script:$HOME/.npm-global/bin:/usr/local/sbin:$PATH"
+export PATH="$HOME/.miktex/texmfs/install/bin/x86_64-linux:$PATH"
 
 # Homebrew Engine
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash)"
-
 # Carrega o ambiente do Rust/Cargo
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 
@@ -65,7 +57,7 @@ alias mv="mv -i"
 
 # --- UTILITÁRIOS E MONITORAMENTO ---
 alias c="clear"
-alias h="history -c"
+alias h="history"
 alias meuip="curl ifconfig.me; echo"
 alias mem="free -h"
 alias cpu="top -bn1 | grep 'Cpu(s)'"
@@ -77,9 +69,10 @@ alias sb="source ~/.bashrc"
 #alias nvim="/home/cerbero/AppImages/neovim"
 #alias init='nvim ~/.config/nvim/init.vim'
 
-alias ombb='rm /Users/hassega/.oh-my-bash/log/update.lock'
+alias ombb="rm -f $HOME/.oh-my-bash/log/update.lock"
 alias ombu='omb update'
-#alias olp='ollama pull qwen-coder-br:latest' export OLLAMA_COLORS= 'template=bold;fg=cyan:response=bold;fg=yellow
+alias olp='ollama pull qwen-coder-br:latest'
+export OLLAMA_COLORS='template=bold;fg=cyan:response=bold;fg=yellow'
 alias olr='ollama run qwen-coder-br:latest'
 
 # Alias para colocar a Qwen para dormir e avisar no terminal
@@ -154,10 +147,10 @@ function myscript() {
             echo "#!/bin/bash" > "$arq"
             chmod +x "$arq"
         fi
-        v-for "$arq"
+        nano "$arq"
     fi
 }
-alias scp="myscript" # Atalho rápido mantido se você preferir digitar scp para os scripts
+alias msc="myscript"
 
 export PATH="$HOME/.miktex/texmfs/install/bin/x86_64-linux:$PATH"
 

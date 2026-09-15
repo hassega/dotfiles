@@ -1,153 +1,217 @@
-// -*- mode: jsonc -*-
 {
-    "height": 24,
-    "width": 1950,
-    "margin": 2,
-    "spacing": 2,
-    "modules-left": [ "hyprland/workspaces" ],
-    "modules-center": [ "hyprland/window" ],
-    "modules-right": [
-        "bluetooth",
-        "pulseaudio",
-        "network",
-        "cpu",
-        "memory",
-        "temperature",
-        "battery",
-        "clock",
-        "tray",
-        "custom/power"
-    ],
-    "keyboard-state": {
-        "numlock": true,
-        "capslock": true,
-        "format": "{name} {icon}",
-        "format-icons": {
-            "locked": "",
-            "unlocked": ""
-        }
-    },
-    "sway/mode": {
-        "format": "<span style=\"italic\">{}</span>"
-    },
-    "sway/scratchpad": {
-        "format": "{icon} {count}",
-        "show-empty": false,
-        "format-icons": ["", ""],
-        "tooltip": true,
-        "tooltip-format": "{app}: {title}"
-    },
-    "hyprland/workspaces": {
-        "format": "{name}",
-        "on-scroll-up": "hyprctl dispatch workspace e+1",
-        "on-scroll-down": "hyprctl dispatch workspace e-1",
-        "show-special": true,
-        "on-click": "hyprctl dispatch workspace {name}",
-        "persistent-workspaces": {
-            "*": 10    
-        }
-    },
-    "mpd": {
-        "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ {volume}% ",
-        "format-disconnected": "Disconnected ",
-        "format-stopped": "{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}Stopped ",
-        "unknown-tag": "N/A",
-        "interval": 5,
-        "consume-icons": { "on": " " },
-        "random-icons": { "off": "<span color=\"#f53c3c\"></span> ", "on": " " },
-        "repeat-icons": { "on": " " },
-        "single-icons": { "on": "1 " },
-        "state-icons": { "paused": "", "playing": "" },
-        "tooltip-format": "MPD (connected)",
-        "tooltip-format-disconnected": "MPD (disconnected)"
-    },
-    "idle_inhibitor": {
-        "format": "{icon}",
-        "format-icons": { "activated": "", "deactivated": "" }
-    },
-    "tray": { "spacing": 10 },
-    "clock": {
-        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-        "format-alt": "{:%Y-%m-%d}"
-    },
-    "cpu": { "format": "{usage}% ", "tooltip": false },
-    "memory": { "format": "{}% " },
-    "temperature": {
-        "critical-threshold": 80,
-        "format": "{temperatureC}°C {icon}",
-        "format-icons": ["", "", ""]
-    },
-    "backlight": {
-        "format": "{percent}% {icon}",
-        "format-icons": ["", "", "", "", "", "", "", "", ""]
-    },
-    "battery": {
-        "states": { "warning": 30, "critical": 15 },
-        "format": "{capacity}% {icon}",
-        "format-full": "{capacity}% {icon}",
-        "format-charging": "{capacity}% ",
-        "format-plugged": "{capacity}% ",
-        "format-alt": "{time} {icon}",
-        "format-icons": ["", "", "", "", ""]
-    },
-    "battery#bat2": { "bat": "BAT2" },
-    "power-profiles-daemon": {
-        "format": "{icon}",
-        "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
-        "tooltip": true,
-        "format-icons": {
-            "default": "",
-            "performance": "",
-            "balanced": "",
-            "power-saver": ""
-        }
-    }, // <- AQUI FALTAVA FECHAR E VIRGULA
-    "bluetooth": {
-        "format": " {status}",
-        "format-disabled": "",
-        "format-connected": " {device_alias}",
-        "tooltip-format": "{controller_alias}\t{controller_address}",
-        "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
-        "on-click": "blueman-manager",
-        "on-click-right": "blueman-applet",
-        "interval": 30
-    },
-    "network": {
-        "format-wifi": "{essid} ({signalStrength}%) ",
-        "format-ethernet": "{ipaddr}/{cidr} ",
-        "tooltip-format": "{ifname} via {gwaddr} ",
-        "format-linked": "{ifname} (No IP) ",
-        "format-disconnected": "Disconnected ⚠",
-        "format-alt": "{ifname}: {ipaddr}/{cidr}"
-    },
-    "pulseaudio": {
-        "format": "{volume}% {icon} {format_source}",
-        "format-bluetooth": "{volume}% {icon} {format_source}",
-        "format-bluetooth-muted": " {icon} {format_source}",
-        "format-muted": " {format_source}",
-        "format-source": "{volume}% ",
-        "format-source-muted": "",
-        "format-icons": {
-            "headphone": "",
-            "hands-free": "",
-            "headset": "",
-            "phone": "",
-            "portable": "",
-            "car": "",
-            "default": ["", "", ""]
-        },
-        "on-click": "pavucontrol"
-    },
-    "custom/media": {
-        "format": "{icon} {text}",
-        "return-type": "json",
-        "max-length": 40,
-        "format-icons": { "spotify": "", "default": "🎜" },
-        "escape": true,
-        "exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null"
-    },
-    "custom/power": {
-        "format" : "⏻ ",
-        "on-click": "nwg-bar"
+  "height": 24,
+  "width": 1950,
+  "margin": 2,
+  "spacing": 2,
+  "modules-left": [
+    "hyprland/workspaces"
+  ],
+  "modules-center": [
+    "hyprland/window"
+  ],
+  "modules-right": [
+    "bluetooth",
+    "pulseaudio",
+    "network",
+    "cpu",
+    "memory",
+    "temperature",
+    "battery",
+    "clock",
+    "tray",
+    "custom/power",
+    "custom/hyprwhspr"
+  ],
+  "keyboard-state": {
+    "numlock": true,
+    "capslock": true,
+    "format": "{name} {icon}",
+    "format-icons": {
+      "locked": "\uf023",
+      "unlocked": "\uf09c"
     }
+  },
+  "sway/mode": {
+    "format": "<span style=\"italic\">{}</span>"
+  },
+  "sway/scratchpad": {
+    "format": "{icon} {count}",
+    "show-empty": false,
+    "format-icons": [
+      "",
+      "\uf2d2"
+    ],
+    "tooltip": true,
+    "tooltip-format": "{app}: {title}"
+  },
+  "hyprland/workspaces": {
+    "format": "{name}",
+    "on-scroll-up": "hyprctl dispatch workspace e+1",
+    "on-scroll-down": "hyprctl dispatch workspace e-1",
+    "show-special": true,
+    "on-click": "hyprctl dispatch workspace {name}",
+    "persistent-workspaces": {
+      "*": 10
+    }
+  },
+  "mpd": {
+    "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) \u2e28{songPosition}|{queueLength}\u2e29 {volume}% \uf001",
+    "format-disconnected": "Disconnected \uf001",
+    "format-stopped": "{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}Stopped \uf001",
+    "unknown-tag": "N/A",
+    "interval": 5,
+    "consume-icons": {
+      "on": "\uf0c4 "
+    },
+    "random-icons": {
+      "off": "<span color=\"#f53c3c\">\uf074</span> ",
+      "on": "\uf074 "
+    },
+    "repeat-icons": {
+      "on": "\uf01e "
+    },
+    "single-icons": {
+      "on": "\uf01e1 "
+    },
+    "state-icons": {
+      "paused": "\uf04c",
+      "playing": "\uf04b"
+    },
+    "tooltip-format": "MPD (connected)",
+    "tooltip-format-disconnected": "MPD (disconnected)"
+  },
+  "idle_inhibitor": {
+    "format": "{icon}",
+    "format-icons": {
+      "activated": "\uf06e",
+      "deactivated": "\uf070"
+    }
+  },
+  "tray": {
+    "spacing": 10
+  },
+  "clock": {
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+    "format-alt": "{:%Y-%m-%d}"
+  },
+  "cpu": {
+    "format": "{usage}% \uf2db",
+    "tooltip": false
+  },
+  "memory": {
+    "format": "{}% \uf0c9"
+  },
+  "temperature": {
+    "critical-threshold": 80,
+    "format": "{temperatureC}\u00b0C {icon}",
+    "format-icons": [
+      "\uf76b",
+      "\uf2c9",
+      "\uf769"
+    ]
+  },
+  "backlight": {
+    "format": "{percent}% {icon}",
+    "format-icons": [
+      "\ue38d",
+      "\ue3d3",
+      "\ue3d1",
+      "\ue3cf",
+      "\ue3ce",
+      "\ue3cd",
+      "\ue3ca",
+      "\ue3c8",
+      "\ue39b"
+    ]
+  },
+  "battery": {
+    "states": {
+      "warning": 30,
+      "critical": 15
+    },
+    "format": "{capacity}% {icon}",
+    "format-full": "{capacity}% {icon}",
+    "format-charging": "{capacity}% \uf5e7",
+    "format-plugged": "{capacity}% \uf1e6",
+    "format-alt": "{time} {icon}",
+    "format-icons": [
+      "\uf244",
+      "\uf243",
+      "\uf242",
+      "\uf241",
+      "\uf240"
+    ]
+  },
+  "battery#bat2": {
+    "bat": "BAT2"
+  },
+  "power-profiles-daemon": {
+    "format": "{icon}",
+    "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
+    "tooltip": true,
+    "format-icons": {
+      "default": "\uf0e7",
+      "performance": "\uf0e7",
+      "balanced": "\uf24e",
+      "power-saver": "\uf06c"
+    }
+  },
+  "bluetooth": {
+    "format": "\uf294 {status}",
+    "format-disabled": "\uf294",
+    "format-connected": "\uf294 {device_alias}",
+    "tooltip-format": "{controller_alias}\t{controller_address}",
+    "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
+    "on-click": "blueman-manager",
+    "on-click-right": "blueman-applet",
+    "interval": 30
+  },
+  "network": {
+    "format-wifi": "{essid} ({signalStrength}%) \uf1eb",
+    "format-ethernet": "{ipaddr}/{cidr} \uf796",
+    "tooltip-format": "{ifname} via {gwaddr} \uf796",
+    "format-linked": "{ifname} (No IP) \uf796",
+    "format-disconnected": "Disconnected \u26a0",
+    "format-alt": "{ifname}: {ipaddr}/{cidr}"
+  },
+  "pulseaudio": {
+    "format": "{volume}% {icon} {format_source}",
+    "format-bluetooth": "{volume}% {icon}\uf294 {format_source}",
+    "format-bluetooth-muted": "\uf6a9 {icon}\uf294 {format_source}",
+    "format-muted": "\uf6a9 {format_source}",
+    "format-source": "{volume}% \uf130",
+    "format-source-muted": "\uf131",
+    "format-icons": {
+      "headphone": "\uf025",
+      "hands-free": "\uf590",
+      "headset": "\uf590",
+      "phone": "\uf095",
+      "portable": "\uf095",
+      "car": "\uf1b9",
+      "default": [
+        "\uf026",
+        "\uf027",
+        "\uf028"
+      ]
+    },
+    "on-click": "pavucontrol"
+  },
+  "custom/media": {
+    "format": "{icon} {text}",
+    "return-type": "json",
+    "max-length": 40,
+    "format-icons": {
+      "spotify": "\uf1bc",
+      "default": "\ud83c\udf9c"
+    },
+    "escape": true,
+    "exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null"
+  },
+  "custom/power": {
+    "format": "\u23fb ",
+    "on-click": "nwg-bar"
+  },
+  "include": [
+    "/home/cerbero/.config/waybar/hyprwhspr-module.jsonc"
+  ]
 }

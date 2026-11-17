@@ -71,12 +71,12 @@ alias sb="source ~/.bashrc"
 
 alias ombb="rm -f $HOME/.oh-my-bash/log/update.lock"
 alias ombu='omb update'
-alias olp='ollama launch opencode --model gemma4:26bb'
+alias olp='ollama launch opencode --model gemma2:9b'
 export OLLAMA_COLORS='template=bold;fg=cyan:response=bold;fg=yellow'
 #alias olr='ollama run gemma4:26b'
 
 # Alias para colocar a Qwen para dormir e avisar no terminal
-alias oll="curl -s -m 2 http://localhost:11434/api/generate -d '{\"model\": \"gemma4:26b\", \"keep_alive\": 0}' > /dev/null & echo ' 💤💤💤 IA DORMIU!'"
+alias oll="curl -s -m 2 http://localhost:11434/api/generate -d '{\"model\": \"gemma2:9b\", \"keep_alive\": 0}' > /dev/null & echo ' 💤💤💤 IA DORMIU!'"
 
 # --- CONFIGURAÇÕES COBOL ---
 # alias cobrun='~/cobolProjects/run.sh'
@@ -165,3 +165,6 @@ tex() {
 if [[ -z "$VIRTUAL_ENV" && -f "venv/bin/activate" ]]; then
     source venv/bin/activate
 fi
+alias ia="ollama run br"
+alias iac="ollama run br-coder"
+set +o noclobber

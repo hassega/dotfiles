@@ -2,8 +2,8 @@
 * {
     /* `otf-font-awesome` is required to be installed for icons */
     font-family: JetBrainsMono Nerd Font, FontAwesome, Roboto, Helvetica, Arial, sans-serif;
-    font-weight: 800;
-    font-size: 26px;
+    font-weight: 900;
+    font-size: 20px;
 }
 
 window#waybar {
@@ -13,8 +13,8 @@ window#waybar {
     transition-property: background-color;
     transition-duration: .5s;
     
-    margin-top: -4px;
-    margin-bottom: -4px;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 window#waybar.hidden {
@@ -46,6 +46,7 @@ button:hover {
 /* ========================================================================= */
 
 #workspaces button {
+    color: #ffffff;
     padding: 0 10px;
     background-color: transparent;
     border-radius: 4px;
@@ -124,8 +125,8 @@ button:hover {
     color: #ffffff;
     min-height: 0px;
     
-    margin-top: -4px;
-    margin-bottom: -4px;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 #window,
@@ -173,7 +174,7 @@ button:hover {
 }
 
 #power-profiles-daemon {
-    padding-right: 20px;
+    padding-right: 18px;
 }
 
 #power-profiles-daemon.performance {
@@ -359,4 +360,93 @@ label:focus {
     padding-right: 12px;
     margin-left: 4px;
     margin-right: 4px;
+}
+
+#workspaces {
+}
+
+/* OVERRIDE FINAL - força workspaces a aparecer */
+#workspaces {
+    background-color: rgba(0, 0, 0, 0.3);
+    margin: 0 4px;
+    padding: 0 4px;
+}
+#workspaces button {
+    font-size: 26px;
+    font-weight: 900;
+    min-width: 22px;
+    min-height: 36px;
+    padding: 0 10px;
+    color: #ffffff;
+    background-color: transparent;
+}
+#workspaces button.empty {
+    color: #ff5555;
+    opacity: 1;
+}
+#workspaces button.active {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.25);
+}
+
+/* OVERRIDE 2 - IGUALA TUDO NO TAMANHO ANTIGO */
+#workspaces button {
+    font-size: 32px;
+    font-weight: 900;
+    min-width: 44px;
+    min-height: 42px;
+    padding: 0 12px;
+}
+
+/* FIX FINAL - a letra tá no label dentro do button */
+#workspaces button label {
+    font-size: 32px;
+    font-weight: 900;
+}
+#workspaces button {
+    font-size: 32px;
+    min-width: 44px;
+    min-height: 42px;
+}
+
+/* OVERRIDE 3 - letra grande mas botão apertado pra caber 1-10 */
+#workspaces {
+    padding: 0;
+    margin: 0 2px;
+}
+#workspaces button {
+    font-size: 24px;
+    min-width: 28px;
+    min-height: 36px;
+    padding: 0 6px;
+    margin: 0;
+}
+#workspaces button label {
+    font-size: 24px;
+    font-weight: 900;
+    padding: 0;
+    margin: 0;
+}
+
+/* OVERRIDE 4 - barra baixa + direito em bold */
+#workspaces button {
+    min-height: 28px;
+    padding: 0 4px;
+}
+#workspaces button label {
+    font-size: 24px;
+    font-weight: 900;
+}
+
+/* lado direito todo em bold */
+.modules-right label,
+#cpu, #memory, #disk, #temperature, #backlight,
+#network, #pulseaudio, #wireplumber, #custom-media,
+#battery, #power-profiles-daemon, #clock,
+#custom-power, #mpd, #idle_inhibitor,
+#custom-hyprwhspr {
+    font-weight: 900;
+}
+.modules-right label {
+    font-weight: 900;
 }

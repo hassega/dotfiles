@@ -152,7 +152,6 @@ function myscript() {
 }
 alias msc="myscript"
 
-export PATH="$HOME/.miktex/texmfs/install/bin/x86_64-linux:$PATH"
 
 # AMBIENTE Vim LateX - Atalho inteligente e portátil 
 tex() {
@@ -168,3 +167,8 @@ fi
 alias ia="ollama run br"
 alias iac="ollama run br-coder"
 set +o noclobber
+
+# Remover duplicatas do PATH mantendo a ordem
+PATH=$(printf "%s" "$PATH" | awk -v RS=':' '!a[$0]++ {printf "%s%s", (NR==1 ? "" : ":"), $0}')
+export PATH
+export PATH="$HOME/.local/bin:$PATH"

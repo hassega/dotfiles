@@ -1,6 +1,5 @@
 {
-  "height": 34,
-  "width": 1700,
+  "height": 36,
   "margin": 2,
   "spacing": 2,
   "modules-left": [
@@ -16,7 +15,8 @@
     "cpu",
     "memory",
     "battery",
-    "custom/agenda",   
+    "custom/agenda",
+    "custom/limpeza",   
     "clock",
     "tray",
     "custom/power",
@@ -44,15 +44,24 @@
     "tooltip": true,
     "tooltip-format": "{app}: {title}"
   },
+  "hyprland/window": {
+    "format": "{title}",
+    "max-length": 20,
+    "separate-outputs": true,
+    "rewrite": {
+      "(.*) - Mozilla Firefox": "$1",
+      "(.*) - Konsole": "$1"
+    }
+  },
   "hyprland/workspaces": {
     "format": "{name}",
     "on-scroll-up": "hyprctl dispatch workspace e+1",
     "on-scroll-down": "hyprctl dispatch workspace e-1",
     "show-special": true,
-    "on-click": "hyprctl dispatch workspace {name}",
     "persistent-workspaces": {
-      "*": 10
-    }
+      "*": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    },
+    "on-click": "hyprctl dispatch workspace {name}"
   },
   "mpd": {
     "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) \u2e28{songPosition}|{queueLength}\u2e29 {volume}% \uf001",
@@ -94,12 +103,20 @@
     "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
     "format-alt": "{:%Y-%m-%d}"
   },
+  "custom/limpeza": {
+    "exec": "/home/cerbero/.local/bin/script/limpeza-status.sh",
+    "return-type": "json",
+    "interval": 60,
+    "format": "{}",
+    "on-click": "kitty ~/.local/bin/script/limpeza.sh"
+  },
   "custom/agenda": {
-    "exec": "~/.config/waybar/scripts/agenda.sh",
+    "exec": "/home/cerbero/.local/bin/script/gcal-next.sh",
+    "return-type": "json",
+    "return-type": "json",
     "interval": 30,
-    "format": "📅 {}",
-    "tooltip-format": "Clique para abrir a agenda",
-    "on-click": "gnome-calendar"
+    "format": "{}",
+    "on-click": "xdg-open https://calendar.google.com/calendar/u/0/r"
   },
   "cpu": {
     "format": "{usage}% \uf2db",
@@ -202,7 +219,7 @@
   "custom/media": {
     "format": "{icon} {text}",
     "return-type": "json",
-    "max-length": 40,
+    "max-length": 20,
     "format-icons": {
       "spotify": "\uf1bc",
       "default": "\ud83c\udf9c"

@@ -1,8 +1,9 @@
+@import "/usr/lib/hyprwhspr/config/waybar/hyprwhspr-style.css";
 * {
     /* `otf-font-awesome` is required to be installed for icons */
     font-family: JetBrainsMono Nerd Font, FontAwesome, Roboto, Helvetica, Arial, sans-serif;
-    font-weight: 800; /* Adicione esta linha */
-    font-size: 14px;
+    font-weight: 900;
+    font-size: 20px;
 }
 
 window#waybar {
@@ -12,24 +13,13 @@ window#waybar {
     transition-property: background-color;
     transition-duration: .5s;
     
-    /* ADICIONE AS DUAS LINHAS ABAIXO: */
-    margin-top: -4px;
-    margin-bottom: -4px;
+    margin-top: 0;
+    margin-bottom: 0;
 }
-
 
 window#waybar.hidden {
-    opacity: 0.2;
+    opacity: 0.4;
 }
-
-/*
-window#waybar.empty {
-    background-color: transparent;
-}
-window#waybar.solo {
-    background-color: #FFFFFF;
-}
-*/
 
 window#waybar.termite {
     background-color: #3F3F3F;
@@ -41,41 +31,72 @@ window#waybar.chromium {
 }
 
 button {
-    /* Use box-shadow instead of border so the text isn't offset */
     box-shadow: inset 0 -3px transparent;
-    /* Avoid rounded borders under each button name */
     border: none;
     border-radius: 0;
 }
 
-/* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
 button:hover {
     background: inherit;
     box-shadow: inset 0 -3px #ffffff;
 }
 
-/* you can set a style on hover for any module like this */
-#pulseaudio:hover {
-    background-color: #a37800;
-}
+/* ========================================================================= */
+/*                   CONFIGURAÇÃO REFEITA DOS WORKSPACES                     */
+/* ========================================================================= */
 
 #workspaces button {
-    padding: 0 5px;
+    color: #ffffff;
+    padding: 0 10px;
     background-color: transparent;
-    color: #fcfa7b;
+    border-radius: 4px;
+    margin: 0 2px;
+    transition: all 0.2s ease;
 }
 
-#workspaces button:hover {
-    background: rgba(255, 3, 3, 0.979);
+/* LIVRE: Workspace vazio (sem nenhuma janela aberta) -> Texto fica VERMELHO */
+#workspaces button.empty {
+    color: #ff5555; 
 }
 
-#workspaces button.focused {
-    background-color: #75fa09;
+/* OCUPADO: Workspace com janelas abertas -> Texto fica VERDE */
+#workspaces button:not(.empty),
+#workspaces button.visible,
+#workspaces button.active {
+    color: #50fa7b; 
+}
+
+/* WORKSPACE ATUALMENTE EM FOCO: Destaca um fundo sutil para saber onde você está */
+#workspaces button.active {
+    background-color: rgba(255, 255, 255, 0.15);
     box-shadow: inset 0 -3px #ffffff;
 }
 
+/* ALERTA URGENTE: Janelas pedindo atenção */
 #workspaces button.urgent {
     background-color: #eb4d4b;
+    color: #ffffff;
+}
+
+/* INTERAÇÃO AO PASSAR O MOUSE (HOVER) */
+#workspaces button:hover {
+    background-color: rgba(255, 255, 255, 0.25);
+}
+
+/* Passar o mouse no vazio: Vermelho mais vivo */
+#workspaces button.empty:hover {
+    color: #ff3333;
+}
+
+/* Passar o mouse no ocupado: Verde mais vivo */
+#workspaces button:not(.empty):hover {
+    color: #33ff77;
+}
+
+/* ========================================================================= */
+
+#pulseaudio:hover {
+    background-color: #a37800;
 }
 
 #mode {
@@ -104,9 +125,8 @@ button:hover {
     color: #ffffff;
     min-height: 0px;
     
-    /* ADICIONE ESTAS DUAS LINHAS ABAIXO: */
-    margin-top: -4px;
-    margin-bottom: -4px;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 #window,
@@ -114,12 +134,10 @@ button:hover {
     margin: 0 4px;
 }
 
-/* If workspaces is the leftmost module, omit left margin */
 .modules-left > widget:first-child > #workspaces {
     margin-left: 0;
 }
 
-/* If workspaces is the rightmost module, omit right margin */
 .modules-right > widget:last-child > #workspaces {
     margin-right: 0;
 }
@@ -145,7 +163,6 @@ button:hover {
     }
 }
 
-/* Using steps() instead of linear as a timing function to limit cpu usage */
 #battery.critical:not(.charging) {
     background-color: #f53c3c;
     color: #ffffff;
@@ -157,7 +174,7 @@ button:hover {
 }
 
 #power-profiles-daemon {
-    padding-right: 20px;
+    padding-right: 18px;
 }
 
 #power-profiles-daemon.performance {
@@ -338,9 +355,98 @@ label:focus {
 }
 
 #custom-power {
-    font-size: 20px;       /* Ajuste este valor para o tamanho que desejar */
-    padding-left: 12px;    /* Dá mais área de clique nas laterais */
+    font-size: 20px;
+    padding-left: 12px;
     padding-right: 12px;
-    margin-left: 4px;      /* Afasta o botão do módulo anterior */
+    margin-left: 4px;
     margin-right: 4px;
+}
+
+#workspaces {
+}
+
+/* OVERRIDE FINAL - força workspaces a aparecer */
+#workspaces {
+    background-color: rgba(0, 0, 0, 0.3);
+    margin: 0 4px;
+    padding: 0 4px;
+}
+#workspaces button {
+    font-size: 26px;
+    font-weight: 900;
+    min-width: 22px;
+    min-height: 36px;
+    padding: 0 10px;
+    color: #ffffff;
+    background-color: transparent;
+}
+#workspaces button.empty {
+    color: #ff5555;
+    opacity: 1;
+}
+#workspaces button.active {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.25);
+}
+
+/* OVERRIDE 2 - IGUALA TUDO NO TAMANHO ANTIGO */
+#workspaces button {
+    font-size: 32px;
+    font-weight: 900;
+    min-width: 44px;
+    min-height: 42px;
+    padding: 0 12px;
+}
+
+/* FIX FINAL - a letra tá no label dentro do button */
+#workspaces button label {
+    font-size: 32px;
+    font-weight: 900;
+}
+#workspaces button {
+    font-size: 32px;
+    min-width: 44px;
+    min-height: 42px;
+}
+
+/* OVERRIDE 3 - letra grande mas botão apertado pra caber 1-10 */
+#workspaces {
+    padding: 0;
+    margin: 0 2px;
+}
+#workspaces button {
+    font-size: 24px;
+    min-width: 28px;
+    min-height: 36px;
+    padding: 0 6px;
+    margin: 0;
+}
+#workspaces button label {
+    font-size: 24px;
+    font-weight: 900;
+    padding: 0;
+    margin: 0;
+}
+
+/* OVERRIDE 4 - barra baixa + direito em bold */
+#workspaces button {
+    min-height: 28px;
+    padding: 0 4px;
+}
+#workspaces button label {
+    font-size: 24px;
+    font-weight: 900;
+}
+
+/* lado direito todo em bold */
+.modules-right label,
+#cpu, #memory, #disk, #temperature, #backlight,
+#network, #pulseaudio, #wireplumber, #custom-media,
+#battery, #power-profiles-daemon, #clock,
+#custom-power, #mpd, #idle_inhibitor,
+#custom-hyprwhspr {
+    font-weight: 900;
+}
+.modules-right label {
+    font-weight: 900;
 }
